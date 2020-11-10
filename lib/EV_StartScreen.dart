@@ -68,26 +68,40 @@ class _EVStartScreenState extends State<EVStartScreen> {
                             Padding(
                               padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
                               child:
-                              FlatButton(
-                                minWidth: 225.0,
-                                height: 45.0,
-                                shape: RoundedRectangleBorder(
+                              Container(
+                                decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(18.0),
-                                ),
-                                color: Color(0xff6dd9eB),
-                                onPressed: () {},
-                                child: Padding(
-                                  padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
-                                  child:
-                                    Text(
-                                    "I WANT TO SHARE",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1.5,
-                                      )
+                                  boxShadow: <BoxShadow>[
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 1,
+                                      blurRadius: 7,
+                                      offset: Offset(0, 3), // change shadow position
                                     )
+                                  ]
+                                ),
+                                child:
+                                FlatButton(
+                                  minWidth: 225.0,
+                                  height: 45.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                  ),
+                                  color: Color(0xff6dd9eB),
+                                  onPressed: () {},
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                                    child:
+                                      Text(
+                                      "I WANT TO SHARE",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 1.5,
+                                        )
+                                      )
+                                  )
                                 )
                               )
                             ),
@@ -100,7 +114,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                   boxShadow: <BoxShadow>[
                                     BoxShadow(
                                       color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 3,
+                                      spreadRadius: 1,
                                       blurRadius: 7,
                                       offset: Offset(0, 3), // changes position of shadow
                                     )
@@ -114,7 +128,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                     borderRadius: BorderRadius.circular(18.0),
                                   ),
                                   onPressed: () {},
-                                  color: Colors.grey[300],
+                                  color: Colors.grey[100],
                                   child: 
                                     Padding(
                                       padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
@@ -145,7 +159,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                       textAlign: TextAlign.right,
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 15,
+                        fontSize: 13,
                       )
                     )
                   ),
