@@ -27,6 +27,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
             padding: EdgeInsets.fromLTRB(25,40,12,12),
             child: Column(
               children: <Widget>[
+
                 Row(
                   children: <Widget>[
                     Text(
@@ -42,12 +43,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    
-                  ]
-                ),
+
                 Expanded(
                   child:
                     Column(
@@ -59,6 +55,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                             SizedBox()
                           ]
                         ),
+          
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
@@ -102,6 +99,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                 )
                               )
                             ),
+
                             Padding(
                               padding: EdgeInsets.fromLTRB(0, 15, 0, 50),
                               child:
@@ -148,6 +146,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                       ],
                     )
                 ),
+                
                 Container(
                   child: Align(
                     alignment: FractionalOffset.bottomRight,
