@@ -27,9 +27,6 @@ class _EVStartScreenState extends State<EVStartScreen> {
             padding: EdgeInsets.fromLTRB(25,40,12,12),
             child: Column(
               children: <Widget>[
-                SizedBox(
-                  height: 40,
-                ),
                 Row(
                   children: <Widget>[
                     Text(
