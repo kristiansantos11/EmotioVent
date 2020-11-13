@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  responsive_flutter: ^0.0.4
   flutter:
     sdk: flutter
 

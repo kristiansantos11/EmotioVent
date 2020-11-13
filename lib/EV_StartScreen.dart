@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_flutter/responsive_flutter.dart';
+
+import 'EV_ChooseEmotionScreen.dart';
 
 class EVStartScreen extends StatefulWidget {
   @override
@@ -7,9 +10,10 @@ class EVStartScreen extends StatefulWidget {
 
 class _EVStartScreenState extends State<EVStartScreen> {
 
-  void clickMe(){
-    print("Clicked!");
-    setState(() {});
+  void moveToChooseEmotion(ctx){
+    Navigator.push(
+      ctx, 
+      MaterialPageRoute(builder: (ctx) => EVChooseEmotionScreen()));
   }
 
   @override
@@ -24,7 +28,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
           ),
           child:
           Padding(
-            padding: EdgeInsets.fromLTRB(25,40,12,12),
+            padding: EdgeInsets.fromLTRB(25, ResponsiveFlutter.of(context).verticalScale(30) ,12,12),
             child: Column(
               children: <Widget>[
 
@@ -34,7 +38,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                       "How\nare\nyou\nfeeling\ntoday?",
                       style: TextStyle(
                         fontFamily: 'SegoeUIBlack',
-                        fontSize: 62,
+                        fontSize: ResponsiveFlutter.of(context).fontSize(8.5),
                         height: 1,
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.w900,
@@ -49,18 +53,13 @@ class _EVStartScreenState extends State<EVStartScreen> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox()
-                          ]
-                        ),
+                        
           
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                              padding: EdgeInsets.fromLTRB(0, ResponsiveFlutter.of(context).moderateScale(40), 0, 0),
                               child:
                               Container(
                                 decoration: BoxDecoration(
@@ -76,20 +75,20 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                 ),
                                 child:
                                 FlatButton(
-                                  minWidth: 225.0,
-                                  height: 45.0,
+                                  minWidth: ResponsiveFlutter.of(context).scale(225),
+                                  height: ResponsiveFlutter.of(context).scale(45),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(18.0),
                                   ),
                                   color: Color(0xff6dd9eB),
-                                  onPressed: () {},
+                                  onPressed: () {moveToChooseEmotion(context);},
                                   child: Padding(
                                     padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
                                     child:
                                       Text(
                                       "I WANT TO SHARE",
                                       style: TextStyle(
-                                        fontSize: 14,
+                                        fontSize: ResponsiveFlutter.of(context).scale(14),
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                         letterSpacing: 1.5,
@@ -101,7 +100,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                             ),
 
                             Padding(
-                              padding: EdgeInsets.fromLTRB(0, 15, 0, 50),
+                              padding: EdgeInsets.fromLTRB(0, ResponsiveFlutter.of(context).hp(1), 0, ResponsiveFlutter.of(context).verticalScale(10)),
                               child:
                               Container(
                                 decoration: BoxDecoration(
@@ -117,8 +116,8 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                 ),
                                 child:
                                 FlatButton(
-                                  minWidth: 225.0,
-                                  height: 45.0,
+                                  minWidth: ResponsiveFlutter.of(context).scale(225),
+                                  height: ResponsiveFlutter.of(context).scale(45),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(18.0),
                                   ),
@@ -155,7 +154,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                       textAlign: TextAlign.right,
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 13,
+                        fontSize: ResponsiveFlutter.of(context).scale(12),
                       )
                     )
                   ),
