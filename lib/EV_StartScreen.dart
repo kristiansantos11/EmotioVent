@@ -11,9 +11,8 @@ class EVStartScreen extends StatefulWidget {
 class _EVStartScreenState extends State<EVStartScreen> {
 
   void moveToChooseEmotion(ctx){
-    Navigator.push(
-      ctx, 
-      MaterialPageRoute(builder: (ctx) => EVChooseEmotionScreen()));
+    Navigator.push(context,
+      MaterialPageRoute(builder: (context) => EVChooseEmotionScreen()));
   }
 
   @override
@@ -58,6 +57,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
+                  
                             Padding(
                               padding: EdgeInsets.fromLTRB(0, ResponsiveFlutter.of(context).moderateScale(40), 0, 0),
                               child:
@@ -98,6 +98,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                 )
                               )
                             ),
+                            
 
                             Padding(
                               padding: EdgeInsets.fromLTRB(0, ResponsiveFlutter.of(context).hp(1), 0, ResponsiveFlutter.of(context).verticalScale(10)),
@@ -130,7 +131,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                         Text(
                                         "LATER",
                                         style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: ResponsiveFlutter.of(context).scale(14),
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                           letterSpacing: 1.5,
