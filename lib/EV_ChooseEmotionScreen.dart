@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 
+import 'EV_SignUp.dart';
+
 class EVChooseEmotionScreen extends StatefulWidget {
   @override
   _EVChooseEmotionScreenState createState() => _EVChooseEmotionScreenState();
@@ -17,14 +19,6 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(18.0),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 7,
-                      offset: Offset(0, 3), // change shadow position
-                    )
-                  ]
                 ),
                 child:
                 FlatButton(
@@ -34,7 +28,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> {
                     borderRadius: BorderRadius.circular(18.0),
                   ),
                   color: Color(color),
-                  onPressed: () {},
+                  onPressed: () {moveToRegister(ctx);},
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
                     child:
@@ -58,13 +52,42 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> {
     Navigator.pop(ctx);
   }
 
+  void moveToRegister(ctx){
+    Navigator.push(ctx,
+      MaterialPageRoute(builder: (ctx) => EVSignUp())
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: Stack(children: <Widget>[
+
+        Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/img/ChooseLoginSignupBG.jpg"), fit: BoxFit.cover
+                )
+              ),
+            ),
+
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              tileMode: TileMode.repeated,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: <Color>[
+                Colors.white.withAlpha(50),
+                Colors.white.withAlpha(150),
+              ]
+            )
+          ),
+        ),
+
+        SafeArea(
           child: Container(
             decoration: BoxDecoration(
-            color: Color(0xfff7f7f7)
             ),
             child: Padding(
               padding: EdgeInsets.fromLTRB(
@@ -99,7 +122,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18.0),
                                     ),
-                                    color: Color(0xff6dd9eB),
+                                    color: Color(0xff53B6AF),
                                     onPressed: () {backToStartScreen(context);},
                                     child: Padding(
                                       padding: EdgeInsets.fromLTRB(0,0,0,0),
@@ -133,7 +156,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> {
                                     "What do you feel?",
                                     style: TextStyle(
                                       fontFamily: 'Aileron',
-                                      color: Color(0xff00b8d6),
+                                      color: Color(0xff53B6AF),
                                       fontStyle: FontStyle.normal,
                                       letterSpacing: -0.5,
                                       fontSize: ResponsiveFlutter.of(context).scale(35.0),
@@ -151,7 +174,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> {
                                     fontFamily: 'Segoe UI',
                                     fontWeight: FontWeight.w500,
                                     fontStyle: FontStyle.normal,
-                                    color: Color(0xff00b8d6),
+                                    color: Color(0xff53B6AF),
                                     letterSpacing: 1,
                                     fontSize: ResponsiveFlutter.of(context).scale(15.0),
                                   ),
@@ -171,8 +194,8 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> {
                               Row(
                                 children: <Widget>[
                                   
-                                  emotionButton(context, 0xff70DB77, "Disgust"),
-                                  emotionButton(context, 0xffFF8B8B, "Anger"),
+                                  emotionButton(context, 0xc5D9D900, "Happy"),
+                                  emotionButton(context, 0xc5FF8B8B, "Anger"),
 
                                 ],
                               ),
@@ -189,8 +212,8 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> {
                               Row(
                                 children: <Widget>[
 
-                                  emotionButton(context, 0xffE593FB, "Fear"),
-                                  emotionButton(context, 0xff87A7FF, "Sad"),
+                                  emotionButton(context, 0xc5E593FB, "Fear"),
+                                  emotionButton(context, 0xc587A7FF, "Sad"),
 
                                 ],
                               ),
@@ -207,8 +230,8 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> {
                               Row(
                                 children: <Widget>[
 
-                                  emotionButton(context, 0xffD9D900, "Happy"),
-                                  emotionButton(context, 0xffEFA254, "Alone"),
+                                  emotionButton(context, 0xc570DB77, "Disgust"),
+                                  emotionButton(context, 0xc5EFA254, "Alone"),
                                   
                                 ],
                               ),
@@ -224,7 +247,9 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> {
               ),
             ),
           )
-      ),
+        )
+
+      ],)
     );
   }
 }

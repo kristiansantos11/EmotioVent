@@ -1,4 +1,4 @@
-package com.example.emotiovent
+package com.seven.emotiovent
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 
 import 'EV_ChooseEmotionScreen.dart';
+import 'EV_Login.dart';
 
 class EVStartScreen extends StatefulWidget {
   @override
@@ -11,160 +12,198 @@ class EVStartScreen extends StatefulWidget {
 class _EVStartScreenState extends State<EVStartScreen> {
 
   void moveToChooseEmotion(ctx){
-    Navigator.push(context,
-      MaterialPageRoute(builder: (context) => EVChooseEmotionScreen()));
+    Navigator.pushNamed(ctx, '/chooseemotion');
+  }
+
+  void moveToLogin(ctx){
+    Navigator.pushNamed(ctx, '/login');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/img/StartScreenBG.jpg"), fit: BoxFit.cover
-            )
-          ),
-          child:
-          Padding(
-            padding: EdgeInsets.fromLTRB(25, ResponsiveFlutter.of(context).verticalScale(30) ,12,12),
-            child: Column(
-              children: <Widget>[
+      body: Stack(
+          children: <Widget>[
 
-                Row(
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/img/StartScreenBG.jpg"), fit: BoxFit.cover
+                )
+              ),
+            ),
+
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  tileMode: TileMode.repeated,
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: <Color>[
+                    Colors.grey.withAlpha(25),
+                    Colors.black87,
+                  ]
+                )
+              ),
+            ),
+
+            SafeArea(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(25, ResponsiveFlutter.of(context).verticalScale(30) ,25,12),
+                child: Column(
                   children: <Widget>[
-                    Text(
-                      "How\nare\nyou\nfeeling\ntoday?",
-                      style: TextStyle(
-                        fontFamily: 'SegoeUIBlack',
-                        fontSize: ResponsiveFlutter.of(context).fontSize(8.5),
-                        height: 1,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w900,
-                        color: Color(0xfff308a2)
-                      )
-                    ),
-                  ],
-                ),
+                    
+                    Flexible(
+                      flex: 2,
+                      child:
+                        Container(
+                          alignment: Alignment.bottomCenter,
+                          padding: EdgeInsets.fromLTRB(
+                            ResponsiveFlutter.of(context).wp(5),
+                            ResponsiveFlutter.of(context).wp(1),
+                            ResponsiveFlutter.of(context).wp(5),
+                            ResponsiveFlutter.of(context).wp(1),
+                          ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
 
-                Expanded(
-                  child:
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        
-          
+
+                                Text(
+                                  "emotiovent",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'Nexa',
+                                    color: Colors.white,
+                                    fontSize: ResponsiveFlutter.of(context).scale(45),
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+
+
+                                Text(
+                                  "How are you feeling today?",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'Roboto',
+                                    fontSize: ResponsiveFlutter.of(context).scale(12),
+                                    height: 1,
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w900,
+                                    color: Colors.white
+                                  )
+                                ),
+
+                              ],
+                            ),
+                        )
+                    ),
+                    
+                    
+                    
+
+                    Flexible(
+                      flex: 5,
+                      child:
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                  
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(0, ResponsiveFlutter.of(context).moderateScale(40), 0, 0),
-                              child:
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                  boxShadow: <BoxShadow>[
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1,
-                                      blurRadius: 7,
-                                      offset: Offset(0, 3), // change shadow position
-                                    )
-                                  ]
-                                ),
-                                child:
-                                FlatButton(
-                                  minWidth: ResponsiveFlutter.of(context).scale(225),
-                                  height: ResponsiveFlutter.of(context).scale(45),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
-                                  ),
-                                  color: Color(0xff6dd9eB),
-                                  onPressed: () {moveToChooseEmotion(context);},
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
-                                    child:
-                                      Text(
-                                      "I WANT TO SHARE",
-                                      style: TextStyle(
-                                        fontSize: ResponsiveFlutter.of(context).scale(14),
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        letterSpacing: 1.5,
-                                        )
-                                      )
-                                  )
-                                )
-                              )
-                            ),
                             
-
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(0, ResponsiveFlutter.of(context).hp(1), 0, ResponsiveFlutter.of(context).verticalScale(10)),
-                              child:
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                  boxShadow: <BoxShadow>[
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1,
-                                      blurRadius: 7,
-                                      offset: Offset(0, 3), // changes position of shadow
-                                    )
-                                  ],
-                                ),
-                                child:
-                                FlatButton(
-                                  minWidth: ResponsiveFlutter.of(context).scale(225),
-                                  height: ResponsiveFlutter.of(context).scale(45),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
-                                  ),
-                                  onPressed: () {},
-                                  color: Colors.grey[100],
-                                  child: 
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
-                                      child:
-                                        Text(
-                                        "LATER",
-                                        style: TextStyle(
-                                          fontSize: ResponsiveFlutter.of(context).scale(14),
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          letterSpacing: 1.5,
+              
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                      
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(0, ResponsiveFlutter.of(context).moderateScale(40), 0, 0),
+                                  child:
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                    ),
+                                    child:
+                                    FlatButton(
+                                      minWidth: ResponsiveFlutter.of(context).scale(225),
+                                      height: ResponsiveFlutter.of(context).scale(50),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(25.0)),
+                                      ),
+                                      color: Color(0xff53B6AF),
+                                      onPressed: () {moveToChooseEmotion(context);},
+                                      child: Padding(
+                                        padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                                        child:
+                                          Text(
+                                          "REGISTER",
+                                          style: TextStyle(
+                                            fontFamily: 'Roboto',
+                                            fontStyle: FontStyle.normal,
+                                            fontSize: ResponsiveFlutter.of(context).scale(14),
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            letterSpacing: 1.5,
+                                            )
                                           )
-                                        )
+                                      )
                                     )
+                                  )
                                 ),
-                              )
+                                
+
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(0, ResponsiveFlutter.of(context).hp(2), 0, ResponsiveFlutter.of(context).verticalScale(10)),
+                                  child:
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                    ),
+                                    child:
+                                    FlatButton(
+                                      minWidth: ResponsiveFlutter.of(context).scale(225),
+                                      height: ResponsiveFlutter.of(context).scale(50),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(25.0)),
+                                        side: BorderSide(
+                                          color: Colors.white,
+                                          width: 3,
+                                        )
+                                      ),
+                                      onPressed: () {moveToLogin(context);},
+                                      child: 
+                                        Padding(
+                                          padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
+                                          child:
+                                            Text(
+                                              "LOGIN",
+                                              style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                fontStyle: FontStyle.normal,
+                                                fontSize: ResponsiveFlutter.of(context).scale(14),
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                letterSpacing: 1.5,
+                                                )
+                                            )
+                                        )
+                                    ),
+                                  )
+                                ),
+                              ]
                             ),
-                          ]
-                        ),
-                      ],
-                    )
-                ),
-                
-                Container(
-                  child: Align(
-                    alignment: FractionalOffset.bottomRight,
-                    child: Text(
-                      "Art:\nPaweł Czerwiński",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: ResponsiveFlutter.of(context).scale(12),
-                      )
-                    )
-                  ),
-                ),
-              ],
+                          ],
+                        )
+                    ),
+
+                  ],
+                )
+              ),
             )
-          )
-        )  
-      )
+
+            
+
+          ]
+
+        )
     );  
   }
 }

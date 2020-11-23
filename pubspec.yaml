@@ -24,6 +24,19 @@ dependencies:
   responsive_flutter: ^0.0.4
   flutter:
     sdk: flutter
+  
+  provider: ^4.3.2+2
+  
+  # Check that you have this dependency (added in the previous step)
+  firebase_core: ^0.5.2
+
+  # Add the dependency for the FlutterFire plugin for Google Analytics
+  firebase_analytics: ^6.2.0
+
+  # Add the dependencies for any other Firebase products you want to use in your app
+  # For example, to use Firebase Authentication and Cloud Firestore
+  firebase_auth: ^0.18.3
+  cloud_firestore: ^0.14.3
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -63,8 +76,64 @@ flutter:
   fonts:
     - family: SegoeUIBlack
       fonts:
-        - asset: assets/font/seguibl.ttf
+        - asset: assets/font/segoeui/seguibl.ttf
           style: normal
+    - family: Aileron
+      fonts:
+        - asset: assets/font/aileron/Aileron-Regular.otf
+          style: normal
+        - asset: assets/font/aileron/Aileron-Italic.otf
+          style: italic
+        - asset: assets/font/aileron/Aileron-Bold.otf
+          weight: 300
+        - asset: assets/font/aileron/Aileron-Black.otf
+          weight: 900
+        - asset: assets/font/aileron/Aileron-BlackItalic.otf
+          weight: 900
+          style: italic
+    - family: BalsamiqSans
+      fonts:
+        - asset: assets/font/balsamiq/BalsamiqSans-Regular.ttf
+          style: normal
+        - asset: assets/font/balsamiq/BalsamiqSans-Bold.ttf
+          weight: 700
+        - asset: assets/font/balsamiq/BalsamiqSans-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/font/balsamiq/BalsamiqSans-Italic.ttf
+          style: italic
+    - family: Roboto
+      fonts:
+        - asset: assets/font/roboto/Roboto-Regular.ttf
+          style: normal
+        - asset: assets/font/roboto/Roboto-Italic.ttf
+          style: italic
+        - asset: assets/font/roboto/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/font/roboto/Roboto-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/font/roboto/Roboto-Bold.ttf
+          weight: 700
+        - asset: assets/font/roboto/Roboto-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/font/roboto/Roboto-Light.ttf
+          weight: 100
+        - asset: assets/font/roboto/Roboto-LightItalic.ttf
+          weight: 100
+          style: italic
+        - asset: assets/font/roboto/Roboto-Black.ttf
+          weight: 900
+        - asset: assets/font/roboto/Roboto-BlackItalic.ttf
+          weight: 900
+          style: italic
+    - family: Nexa
+      fonts:
+        - asset: assets/font/nexa/Nexa-Bold.otf
+          weight: 700
+        - asset: assets/font/nexa/Nexa-Light.otf
+          weight: 100
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
