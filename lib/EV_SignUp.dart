@@ -1,5 +1,4 @@
 import 'package:emotiovent/EV_AuthService.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 
@@ -16,15 +15,10 @@ class EVSignUp extends StatefulWidget {
 
 class _EVSignUpState extends State<EVSignUp> {
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
   final _emailTextController = TextEditingController();
   final _pwTextController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-
-  bool _success;
-  String _userEmail;
 
   String debugMessage = "[DEBUG] You have entered:\n";
 

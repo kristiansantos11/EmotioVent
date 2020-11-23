@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 
-import 'EV_ChooseEmotionScreen.dart';
-import 'EV_Login.dart';
-
 class EVStartScreen extends StatefulWidget {
   @override
   _EVStartScreenState createState() => _EVStartScreenState();
