@@ -27,8 +27,8 @@ class _EVLoginState extends State<EVLogin> {
 
   // Define an async function to initialize FlutterFire
 
-  void backButtonPressed(ctx){
-    Navigator.pop(ctx);
+  void backButtonPressed(BuildContext ctx){
+    Navigator.popUntil(ctx, ModalRoute.withName('/main'));
   }
 
   @override

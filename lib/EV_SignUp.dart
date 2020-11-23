@@ -27,12 +27,12 @@ class _EVSignUpState extends State<EVSignUp> {
   String debugMessage = "[DEBUG] You have entered:\n";
 
   void backButtonPressed(ctx){
-    Navigator.pop(ctx);
+    Navigator.popUntil(ctx, ModalRoute.withName('/main'));
   }
 
-  /*void continueButtonPressed(ctx){
-    Navigator.popUntil(ctx, 
-  }*/
+  void continueButtonPressed(ctx){
+    Navigator.popUntil(ctx, ModalRoute.withName('/main'));
+  }
 
   @override
   void dispose() {
@@ -44,6 +44,7 @@ class _EVSignUpState extends State<EVSignUp> {
 
   void _register(ctx) async {
     var outMsg;
+    var _success = true;
     if ((_emailTextController.text.isEmpty) || (_pwTextController.text.isEmpty)){
       outMsg = "Please fill up the necessary fields.";
       return showDialog(
@@ -60,6 +61,7 @@ class _EVSignUpState extends State<EVSignUp> {
       email: _emailTextController.text.trim(),
       password: _pwTextController.text.trim()
     ).catchError((e) => {
+      _success = false,
       showDialog(
         context: ctx,
         builder: (ctx) {
@@ -69,6 +71,10 @@ class _EVSignUpState extends State<EVSignUp> {
         }
       )
     });
+
+    if (_success){
+      continueButtonPressed(ctx);
+    }
   }
 
   @override

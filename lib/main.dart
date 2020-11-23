@@ -58,6 +58,7 @@ class MyApp extends StatelessWidget {
           '/login' : (context) => EVLogin(),
           '/loading' : (context) => EVLoading(),
           '/chooseemotion' : (context) => EVChooseEmotionScreen(),
+          '/error' : (context) => EVError(),
         },
       )
     );
