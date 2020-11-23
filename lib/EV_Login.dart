@@ -1,12 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
-import 'package:flutter/services.dart' show PlatformException;
 
 import 'EV_AuthService.dart';
 import 'package:provider/provider.dart';
 
 class EVLogin extends StatefulWidget {
+  static const routeName = '/login';
+
   @override
   _EVLoginState createState() => _EVLoginState();
 }

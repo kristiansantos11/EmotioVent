@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 
 class EVError extends StatefulWidget {
+  static const routeName = '/error';
+
   @override
   _EVErrorState createState() => _EVErrorState();
 }

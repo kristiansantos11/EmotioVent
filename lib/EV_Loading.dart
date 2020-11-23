@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 
 class EVLoading extends StatefulWidget {
+  static const routeName = '/loading';
+
   @override
   _EVLoadingState createState() => _EVLoadingState();
 }

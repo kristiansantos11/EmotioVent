@@ -53,12 +53,12 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/main',
         routes: {
-          '/main' : (context) => EVAuthWrapper(),
-          '/signup' : (context) => EVSignUp(),
-          '/login' : (context) => EVLogin(),
-          '/loading' : (context) => EVLoading(),
-          '/chooseemotion' : (context) => EVChooseEmotionScreen(),
-          '/error' : (context) => EVError(),
+          EVAuthWrapper.routeName : (context) => EVAuthWrapper(),
+          EVSignUp.routeName : (context) => EVSignUp(),
+          EVLogin.routeName : (context) => EVLogin(),
+          EVLoading.routeName : (context) => EVLoading(),
+          EVChooseEmotionScreen.routeName : (context) => EVChooseEmotionScreen(),
+          EVError.routeName : (context) => EVError(),
         },
       )
     );
@@ -66,6 +66,8 @@ class MyApp extends StatelessWidget {
 }
 
 class EVAuthWrapper extends StatelessWidget {
+  static const routeName = '/main';
+
   const EVAuthWrapper({
     Key key,
   }) : super(key: key);

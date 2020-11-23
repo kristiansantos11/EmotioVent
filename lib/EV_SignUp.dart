@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'EV_AuthService.dart';
 
 class EVSignUp extends StatefulWidget {
+  static const routeName = '/signup';
+
   @override
   _EVSignUpState createState() => _EVSignUpState();
 }

@@ -4,6 +4,8 @@ import 'package:responsive_flutter/responsive_flutter.dart';
 import 'EV_SignUp.dart';
 
 class EVChooseEmotionScreen extends StatefulWidget {
+  static const routeName = '/chooseemotion';
+
   @override
   _EVChooseEmotionScreenState createState() => _EVChooseEmotionScreenState();
 }
