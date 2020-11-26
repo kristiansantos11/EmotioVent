@@ -18,14 +18,7 @@ class _EVLoginState extends State<EVLogin> {
 
   final _formKey = GlobalKey<FormState>();
 
-
-
   String debugMessage = "[DEBUG] You have entered:\n";
-
-  // Set default `_initialized` and `_error` state to false
-
-
-  // Define an async function to initialize FlutterFire
 
   void backButtonPressed(BuildContext ctx){
     Navigator.popUntil(ctx, ModalRoute.withName('/main'));
@@ -195,27 +188,33 @@ class _EVLoginState extends State<EVLogin> {
                               child: ButtonBar(
                                 alignment: MainAxisAlignment.center,
                                 children: <Widget>[
-
-                                  FlatButton(
-                                    minWidth: ResponsiveFlutter.of(context).scale(20.0),
+                                  
+                                  ButtonTheme(
+                                    minWidth: ResponsiveFlutter.of(context).wp(20.0),
                                     height: ResponsiveFlutter.of(context).hp(4.8),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
-                                      side: BorderSide(color: Color(0xff53B6AF))
-                                    ),
-                                    onPressed: () {backButtonPressed(context);},
-                                    child: Text(
-                                      "BACK",
-                                      style: TextStyle(
-                                        letterSpacing: 0,
-                                        fontFamily: 'Roboto',
-                                        fontSize: ResponsiveFlutter.of(context).scale(14),
-                                        fontWeight: FontWeight.w700,
-                                        fontStyle: FontStyle.normal,
-                                        color: Color(0xff53B6AF),
+                                    child: 
+                                      FlatButton(
+                                        minWidth: ResponsiveFlutter.of(context).scale(20.0),
+                                        height: ResponsiveFlutter.of(context).hp(4.8),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
+                                          side: BorderSide(color: Color(0xff53B6AF))
+                                        ),
+                                        onPressed: () {backButtonPressed(context);},
+                                        child: Text(
+                                          "BACK",
+                                          style: TextStyle(
+                                            letterSpacing: 0,
+                                            fontFamily: 'Roboto',
+                                            fontSize: ResponsiveFlutter.of(context).scale(14),
+                                            fontWeight: FontWeight.w700,
+                                            fontStyle: FontStyle.normal,
+                                            color: Color(0xff53B6AF),
+                                          ),
+                                        ),
                                       ),
-                                    ),
                                   ),
+
 
                                   ButtonTheme(
                                     minWidth: ResponsiveFlutter.of(context).wp(20.0),

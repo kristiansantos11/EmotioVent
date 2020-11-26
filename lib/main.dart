@@ -2,9 +2,10 @@ import 'package:emotiovent/EV_ChooseEmotionScreen.dart';
 import 'package:emotiovent/EV_Login.dart';
 import 'package:emotiovent/EV_MainMenu.dart';
 import 'package:emotiovent/EV_SignUp.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,7 @@ import 'EV_AuthService.dart';
 import 'EV_Loading.dart';
 import 'EV_AppError.dart';
 import 'EV_StartScreen.dart';
+import 'activities/ShakePhoneScreen.dart';
 
 
 void main() async {
@@ -24,6 +26,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   
   // This widget is the root of your application.
+  // REMINDER: Please do not remove the debug flag yet (at the top-right of the screen.)
   @override
   Widget build(BuildContext context) {
 
@@ -38,20 +41,11 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         
-        title: 'Flutter Demo',
+        title: 'emotiovent',
         theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        initialRoute: '/main',
+        initialRoute: EVAuthWrapper.routeName,
         routes: {
           EVAuthWrapper.routeName : (context) => EVAuthWrapper(),
           EVSignUp.routeName : (context) => EVSignUp(),
@@ -59,6 +53,7 @@ class MyApp extends StatelessWidget {
           EVLoading.routeName : (context) => EVLoading(),
           EVChooseEmotionScreen.routeName : (context) => EVChooseEmotionScreen(),
           EVError.routeName : (context) => EVError(),
+          ShakePhoneActivity.routeName : (context) => ShakePhoneActivity(),
         },
       )
     );

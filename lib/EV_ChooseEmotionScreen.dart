@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+
 import 'package:responsive_flutter/responsive_flutter.dart';
 
-import 'EV_SignUp.dart';
+import 'package:emotiovent/EV_SignUp.dart';
+import 'package:emotiovent/activities/ShakePhoneScreen.dart';
 
 class EVChooseEmotionScreen extends StatefulWidget {
   static const routeName = '/chooseemotion';
@@ -11,6 +15,20 @@ class EVChooseEmotionScreen extends StatefulWidget {
 }
 
 class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> {
+
+  void startActivity(ctx){
+    Navigator.pushNamed(ctx, '/shake');
+  }
+
+  void backToStartScreen(ctx){
+    Navigator.pop(ctx);
+  }
+
+  void moveToRegister(ctx){
+    Navigator.push(ctx,
+      MaterialPageRoute(builder: (ctx) => EVSignUp())
+    );
+  }
 
   Widget emotionButton(BuildContext ctx, int color, String text){
     return Expanded(
@@ -30,7 +48,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> {
                     borderRadius: BorderRadius.circular(18.0),
                   ),
                   color: Color(color),
-                  onPressed: () {moveToRegister(ctx);},
+                  onPressed: () {startActivity(ctx);},
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
                     child:
@@ -48,16 +66,6 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> {
               )
             ),
           );
-  }
-
-  void backToStartScreen(ctx){
-    Navigator.pop(ctx);
-  }
-
-  void moveToRegister(ctx){
-    Navigator.push(ctx,
-      MaterialPageRoute(builder: (ctx) => EVSignUp())
-    );
   }
 
   @override
@@ -189,57 +197,57 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> {
                           height: ResponsiveFlutter.of(context).hp(1),
                         ),
                         Expanded(
-                        child:
-                        Column(
-                          children: <Widget>[
+                          child:
+                          Column(
+                            children: <Widget>[
 
-                              Row(
-                                children: <Widget>[
-                                  
-                                  emotionButton(context, 0xc5D9D900, "Happy"),
-                                  emotionButton(context, 0xc5FF8B8B, "Anger"),
+                                Row(
+                                  children: <Widget>[
+                                    
+                                    emotionButton(context, 0xc5D9D900, "Happy"),
+                                    emotionButton(context, 0xc5FF8B8B, "Anger"),
 
-                                ],
-                              ),
+                                  ],
+                                ),
 
-                          ]
-                        ),
-                        ),
-
-                        Expanded(
-                        child:
-                        Column(
-                          children: <Widget>[
-
-                              Row(
-                                children: <Widget>[
-
-                                  emotionButton(context, 0xc5E593FB, "Fear"),
-                                  emotionButton(context, 0xc587A7FF, "Sad"),
-
-                                ],
-                              ),
-
-                          ]
-                        ),
+                            ]
+                          ),
                         ),
 
                         Expanded(
                         child:
-                        Column(
-                          children: <Widget>[
+                          Column(
+                            children: <Widget>[
 
-                              Row(
-                                children: <Widget>[
+                                Row(
+                                  children: <Widget>[
 
-                                  emotionButton(context, 0xc570DB77, "Disgust"),
-                                  emotionButton(context, 0xc5EFA254, "Alone"),
-                                  
-                                ],
-                              ),
+                                    emotionButton(context, 0xc5E593FB, "Fear"),
+                                    emotionButton(context, 0xc587A7FF, "Sad"),
 
-                          ]
+                                  ],
+                                ),
+
+                            ]
+                          ),
                         ),
+
+                        Expanded(
+                        child:
+                          Column(
+                            children: <Widget>[
+
+                                Row(
+                                  children: <Widget>[
+
+                                    emotionButton(context, 0xc570DB77, "Disgust"),
+                                    emotionButton(context, 0xc5EFA254, "Alone"),
+                                    
+                                  ],
+                                ),
+
+                            ]
+                          ),
                         ),
                       ]
                     ),

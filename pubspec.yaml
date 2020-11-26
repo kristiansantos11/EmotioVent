@@ -26,6 +26,11 @@ dependencies:
     sdk: flutter
   
   provider: ^4.3.2+2
+
+  shake: ^0.1.0
+  sensors: ^0.4.2+6
+
+  dart_random_choice: ^0.0.2
   
   # Check that you have this dependency (added in the previous step)
   firebase_core: ^0.5.2
