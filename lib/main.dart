@@ -1,7 +1,12 @@
-import 'package:emotiovent/EV_ChooseEmotionScreen.dart';
-import 'package:emotiovent/EV_Login.dart';
-import 'package:emotiovent/EV_MainMenu.dart';
-import 'package:emotiovent/EV_SignUp.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
+import 'package:emotiovent/screens/EV_Login.dart';
+import 'package:emotiovent/screens/EV_MainMenu.dart';
+import 'package:emotiovent/screens/EV_SatisfactoryRate.dart';
+import 'package:emotiovent/screens/EV_SignUp.dart';
+import 'screens/EV_Loading.dart';
+import 'screens/EV_AppError.dart';
+import 'screens/EV_StartScreen.dart';
 
 import 'package:flutter/material.dart';
 
@@ -9,10 +14,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
-import 'EV_AuthService.dart';
-import 'EV_Loading.dart';
-import 'EV_AppError.dart';
-import 'EV_StartScreen.dart';
+import 'services/EV_AuthService.dart';
+import 'services/EV_DatabaseService.dart';
+
 import 'activities/ShakePhoneScreen.dart';
 
 
@@ -52,6 +56,7 @@ class MyApp extends StatelessWidget {
           EVLogin.routeName : (context) => EVLogin(),
           EVLoading.routeName : (context) => EVLoading(),
           EVChooseEmotionScreen.routeName : (context) => EVChooseEmotionScreen(),
+          EVSatisfactoryRate.routeName : (context) => EVSatisfactoryRate(),
           EVError.routeName : (context) => EVError(),
           ShakePhoneActivity.routeName : (context) => ShakePhoneActivity(),
         },
@@ -71,11 +76,13 @@ class EVAuthWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
 
+    // Using ternary operators here makes the code less readable
+    // Use it if every one of your members are familiarized with its usage.
     if (firebaseUser != null){
       return EVMainMenu();
+    } else {
+      return EVStartScreen();
     }
-
-    return EVStartScreen();
   }
 }
 

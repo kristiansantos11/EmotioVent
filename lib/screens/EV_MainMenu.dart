@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 import 'package:provider/provider.dart';
 
-import 'EV_AuthService.dart';
+import '../services/EV_AuthService.dart';
 
 class EVMainMenu extends StatefulWidget {
 

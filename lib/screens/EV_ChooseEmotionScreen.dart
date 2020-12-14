@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:responsive_flutter/responsive_flutter.dart';
 
-import 'package:emotiovent/EV_SignUp.dart';
+import 'package:emotiovent/screens/EV_SignUp.dart';
 import 'package:emotiovent/activities/ShakePhoneScreen.dart';
 
 class EVChooseEmotionScreen extends StatefulWidget {
@@ -17,17 +17,11 @@ class EVChooseEmotionScreen extends StatefulWidget {
 class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> {
 
   void startActivity(ctx){
-    Navigator.pushNamed(ctx, '/shake');
+    Navigator.pushNamed(ctx, ShakePhoneActivity.routeName);
   }
 
   void backToStartScreen(ctx){
     Navigator.pop(ctx);
-  }
-
-  void moveToRegister(ctx){
-    Navigator.push(ctx,
-      MaterialPageRoute(builder: (ctx) => EVSignUp())
-    );
   }
 
   Widget emotionButton(BuildContext ctx, int color, String text){

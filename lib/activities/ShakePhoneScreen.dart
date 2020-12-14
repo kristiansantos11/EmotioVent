@@ -1,7 +1,7 @@
+import 'package:emotiovent/screens/EV_SatisfactoryRate.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 import 'package:shake/shake.dart';
-import 'package:emotiovent/EV_SignUp.dart';
 
 class ShakePhoneActivity extends StatefulWidget {
 
@@ -28,7 +28,7 @@ class _ShakePhoneActivityState extends State<ShakePhoneActivity> {
         });
         // Do stuff on phone shake
         if (_shakeCounter <= 0){
-          Navigator.pushNamed(context, EVSignUp.routeName);
+          Navigator.pushNamed(context, EVSatisfactoryRate.routeName);
         }
       }
     );

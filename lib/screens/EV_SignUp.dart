@@ -1,17 +1,19 @@
+import 'package:emotiovent/services/EV_AuthService.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 
-import 'EV_AuthService.dart';
 import 'package:provider/provider.dart';
 
-class EVLogin extends StatefulWidget {
-  static const routeName = '/login';
+import '../services/EV_AuthService.dart';
+
+class EVSignUp extends StatefulWidget {
+  static const routeName = '/signup';
 
   @override
-  _EVLoginState createState() => _EVLoginState();
+  _EVSignUpState createState() => _EVSignUpState();
 }
 
-class _EVLoginState extends State<EVLogin> {
+class _EVSignUpState extends State<EVSignUp> {
 
   final _emailTextController = TextEditingController();
   final _pwTextController = TextEditingController();
@@ -20,7 +22,11 @@ class _EVLoginState extends State<EVLogin> {
 
   String debugMessage = "[DEBUG] You have entered:\n";
 
-  void backButtonPressed(BuildContext ctx){
+  void backButtonPressed(ctx){
+    Navigator.popUntil(ctx, ModalRoute.withName('/main'));
+  }
+
+  void continueButtonPressed(ctx){
     Navigator.popUntil(ctx, ModalRoute.withName('/main'));
   }
 
@@ -32,9 +38,9 @@ class _EVLoginState extends State<EVLogin> {
     super.dispose();
   }
 
-  void _signInWithEmailAndPassword(ctx) async {
-    var _success = true;
+  void _register(ctx) async {
     var outMsg;
+    var _success = true;
     if ((_emailTextController.text.isEmpty) || (_pwTextController.text.isEmpty)){
       outMsg = "Please fill up the necessary fields.";
       return showDialog(
@@ -47,10 +53,10 @@ class _EVLoginState extends State<EVLogin> {
       );
     }
 
-    await context.read<AuthenticationService>().signIn(
-      email: _emailTextController.text.trim(), 
+    context.read<AuthenticationService>().signUp(
+      email: _emailTextController.text.trim(),
       password: _pwTextController.text.trim()
-    ).then((_) => Navigator.pop(ctx)).catchError((e) => {
+    ).catchError((e) => {
       _success = false,
       showDialog(
         context: ctx,
@@ -63,14 +69,7 @@ class _EVLoginState extends State<EVLogin> {
     });
 
     if (_success){
-      dynamic scaffold = ScaffoldMessenger.of(ctx);
-      await scaffold.showSnackBar(
-        SnackBar(
-          content: const Text('Logged in'),
-          action: SnackBarAction(
-              label: 'OKAY', onPressed: scaffold.hideCurrentSnackBar),
-        ),
-      );
+      continueButtonPressed(ctx);
     }
   }
 
@@ -92,7 +91,7 @@ class _EVLoginState extends State<EVLogin> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children:<Widget>[
                           Text(
-                            "Login",
+                            "Sign Up",
                             style: TextStyle(
                               fontFamily: 'SegoeUIBlack',
                               fontSize: ResponsiveFlutter.of(context).scale(40.0),
@@ -102,7 +101,7 @@ class _EVLoginState extends State<EVLogin> {
                           ),
 
                           Text(
-                            "Welcome back to emotiovent!",
+                            "Please fill up the necessary fields:",
                             style: TextStyle(
                               fontFamily: 'Helvetica',
                               fontSize: ResponsiveFlutter.of(context).scale(12),
@@ -188,56 +187,35 @@ class _EVLoginState extends State<EVLogin> {
                               child: ButtonBar(
                                 alignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  
-                                  ButtonTheme(
-                                    minWidth: ResponsiveFlutter.of(context).wp(20.0),
-                                    height: ResponsiveFlutter.of(context).hp(4.8),
-                                    child: 
-                                      FlatButton(
-                                        minWidth: ResponsiveFlutter.of(context).scale(20.0),
-                                        height: ResponsiveFlutter.of(context).hp(4.8),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
-                                          side: BorderSide(color: Color(0xff53B6AF))
-                                        ),
-                                        onPressed: () {backButtonPressed(context);},
-                                        child: Text(
-                                          "BACK",
-                                          style: TextStyle(
-                                            letterSpacing: 0,
-                                            fontFamily: 'Roboto',
-                                            fontSize: ResponsiveFlutter.of(context).scale(14),
-                                            fontWeight: FontWeight.w700,
-                                            fontStyle: FontStyle.normal,
-                                            color: Color(0xff53B6AF),
-                                          ),
-                                        ),
-                                      ),
-                                  ),
 
-
-                                  ButtonTheme(
-                                    minWidth: ResponsiveFlutter.of(context).wp(20.0),
-                                    height: ResponsiveFlutter.of(context).hp(4.8),
-                                    child: RaisedButton(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
-                                      ),
-                                      color: Color(0xff53B6AF),
-                                      onPressed: () {_signInWithEmailAndPassword(context);},
-                                      child: Text(
-                                        "LOGIN",
-                                        style: TextStyle(
-                                          letterSpacing: 0,
-                                          fontFamily: 'Roboto',
-                                          fontSize: ResponsiveFlutter.of(context).scale(14),
-                                          fontWeight: FontWeight.w500,
-                                          fontStyle: FontStyle.normal,
-                                          color: Colors.white,
-                                        )
+                                  FlatButton(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
+                                      side: BorderSide(color: Color(0xfff308a2))
+                                    ),
+                                    onPressed: () {backButtonPressed(context);},
+                                    child: Text(
+                                      "BACK",
+                                      style: TextStyle(
+                                        letterSpacing: 0,
+                                        color: Color(0xfff308a2),
                                       ),
                                     ),
-                                  )
+                                  ),
+
+                                  RaisedButton(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
+                                    ),
+                                    color: Color(0xfff308a2),
+                                    onPressed: () {_register(context);},
+                                    child: Text(
+                                      "CONTINUE",
+                                      style: TextStyle(
+                                        letterSpacing: 0,
+                                      )
+                                    ),
+                                  ),
                                 ]
                               ),
                             )
