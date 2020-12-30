@@ -18,83 +18,90 @@ class _EVMainMenuState extends State<EVMainMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/img/MainMenu.jpg"), fit: BoxFit.cover
-                )
-              ),
-            ),
-
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                tileMode: TileMode.repeated,
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: <Color>[
-                  Colors.grey.withAlpha(25),
-                  Colors.black87,
-                ]
-              )
-            ),
-          ),
-
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-
-              Text(
-                "Emotiovent is currently in-development.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: ResponsiveFlutter.of(context).scale(20),
-                  fontFamily: 'Nexa',
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                )
-              ),
-
-              SizedBox(height: ResponsiveFlutter.of(context).scale(15),),
-
-              RaisedButton(
-                padding: EdgeInsets.fromLTRB(
-                  ResponsiveFlutter.of(context).scale(0),
-                  ResponsiveFlutter.of(context).scale(10),
-                  ResponsiveFlutter.of(context).scale(0),
-                  ResponsiveFlutter.of(context).scale(10)
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: Stack(
+          children: <Widget>[
+            Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/img/MainMenu.jpg"), fit: BoxFit.cover
+                  )
                 ),
-                onPressed: () {_signOut();},
-                child: Text(
-                  "LOGOUT",
+              ),
+
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  tileMode: TileMode.repeated,
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: <Color>[
+                    Colors.grey.withAlpha(25),
+                    Colors.black87,
+                  ]
+                )
+              ),
+            ),
+
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+
+                Text(
+                  "Emotiovent is currently in-development.",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontStyle: FontStyle.normal,
+                    fontSize: ResponsiveFlutter.of(context).scale(20),
+                    fontFamily: 'Nexa',
                     fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  )
+                ),
+
+                SizedBox(height: ResponsiveFlutter.of(context).scale(15),),
+
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
+                  color: Colors.white,
+                  padding: EdgeInsets.fromLTRB(
+                    ResponsiveFlutter.of(context).scale(0),
+                    ResponsiveFlutter.of(context).scale(10),
+                    ResponsiveFlutter.of(context).scale(0),
+                    ResponsiveFlutter.of(context).scale(10)
+                  ),
+                  onPressed: () {_signOut();},
+                  child: Text(
+                    "LOGOUT",
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
-              ),
 
-              SizedBox(height: ResponsiveFlutter.of(context).scale(15),),
+                SizedBox(height: ResponsiveFlutter.of(context).scale(15),),
 
-              Text(
-                "Please check back later!",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: ResponsiveFlutter.of(context).scale(12),
-                  fontFamily: 'Nexa',
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                )
-              ),
+                Text(
+                  "Please check back later!",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: ResponsiveFlutter.of(context).scale(12),
+                    fontFamily: 'Nexa',
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  )
+                ),
 
-            ]
-          ),
+              ]
+            ),
 
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -35,15 +35,23 @@ dependencies:
   dart_random_choice: ^0.0.2
   
   # Check that you have this dependency (added in the previous step)
-  firebase_core: ^0.5.2
+  firebase_core: ^0.5.3
 
   # Add the dependency for the FlutterFire plugin for Google Analytics
-  firebase_analytics: ^6.2.0
+  firebase_analytics: ^6.3.0
 
   # Add the dependencies for any other Firebase products you want to use in your app
   # For example, to use Firebase Authentication and Cloud Firestore
-  firebase_auth: ^0.18.3
-  cloud_firestore: ^0.14.3
+  firebase_auth: ^0.18.4+1
+  cloud_firestore: ^0.14.4
+
+  flutter_launcher_icons: ^0.8.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path_android: "assets/icon/icon.png"
+  image_path_ios: "assets/icon/icon.png"
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -53,7 +61,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
