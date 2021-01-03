@@ -4,6 +4,7 @@ import 'package:emotiovent/screens/EV_Login.dart';
 import 'package:emotiovent/screens/EV_MainMenu.dart';
 import 'package:emotiovent/screens/EV_SatisfactoryRate.dart';
 import 'package:emotiovent/screens/EV_SignUp.dart';
+
 import 'screens/EV_Loading.dart';
 import 'screens/EV_AppError.dart';
 import 'screens/EV_StartScreen.dart';
@@ -15,9 +16,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
 import 'services/EV_AuthService.dart';
+import 'services/EV_ActivityRandomizer.dart';
 
 import 'activities/ShakePhoneScreen.dart';
-
+import 'activities/NoiseMeterSample.dart';
+import 'activities/ShakeShowAnimals.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,9 +57,10 @@ class MyApp extends StatelessWidget {
         routes: {
           EVSignUp.routeName : (context) => EVSignUp(),
           EVLoading.routeName : (context) => EVLoading(),
-          EVSatisfactoryRate.routeName : (context) => EVSatisfactoryRate(),
           EVError.routeName : (context) => EVError(),
           ShakePhoneActivity.routeName : (context) => ShakePhoneActivity(),
+          NoiseMeterSample.routeName : (context) => NoiseMeterSample(),
+          ShakeShowAnimals.routeName : (context) => ShakeShowAnimals(),
         },
         onGenerateRoute: getGenerateRoute,
       )
@@ -123,6 +127,7 @@ Route<Null> getGenerateRoute(RouteSettings settings){
     );
   }
 
+  // For Choose Emotion Screen route
   else if(settings.name == EVChooseEmotionScreen.routeName){
     return PageRouteBuilder(
       settings: RouteSettings(name: EVChooseEmotionScreen.routeName),
@@ -143,7 +148,57 @@ Route<Null> getGenerateRoute(RouteSettings settings){
         );
       }
     );
+  } 
+  
+  // For Activity Randomizer route
+  else if(settings.name == ActivityRandomizer.routeName){
+    String text = settings.arguments;
+    return PageRouteBuilder(
+      settings: RouteSettings(name: ActivityRandomizer.routeName, arguments: text),
+      pageBuilder: (context, animation, secondaryAnimation){
+        return ListenableProvider(
+          create: (context) => animation,
+          child: ActivityRandomizer(emotion: text),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 1000),
+      transitionsBuilder: (context, animation, secondAnimation, child){
+        animation = CurvedAnimation(
+          curve: Curves.easeInOut, parent: animation
+        );
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      }
+    );
   }
-  return null;
+
+  // For Satisfactory Rate route
+  else if(settings.name == EVSatisfactoryRate.routeName){
+    String text = settings.arguments;
+    return PageRouteBuilder(
+      settings: RouteSettings(name: EVSatisfactoryRate.routeName, arguments: text),
+      pageBuilder: (context, animation, secondaryAnimation){
+        return ListenableProvider(
+          create: (context) => animation,
+          child: EVSatisfactoryRate(emotion: text),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 1000),
+      transitionsBuilder: (context, animation, secondAnimation, child){
+        animation = CurvedAnimation(
+          curve: Curves.easeInOut, parent: animation
+        );
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      }
+    );
+  }
+
+
+  else { return null; }
 }
 

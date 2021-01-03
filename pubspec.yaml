@@ -26,8 +26,12 @@ dependencies:
     sdk: flutter
   
   provider: ^4.3.2+2
+  permission_handler: ^5.0.1+1
 
-  flutter_sound: ^6.4.7+1
+  http: ^0.12.2
+
+  # Used for sound experimentation. Will remove later.
+  noise_meter: ^2.0.0
 
   shake: ^0.1.0
   sensors: ^0.4.2+6

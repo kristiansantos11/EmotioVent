@@ -26,14 +26,6 @@ class _EVStartScreenState extends State<EVStartScreen> {
     );
   }
 
-  void moveToChooseEmotion(ctx){
-    Navigator.pushNamed(ctx, '/chooseemotion');
-  }
-
-  void moveToLogin(ctx){
-    Navigator.pushNamed(ctx, '/login');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,7 +142,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                             borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(25.0)),
                                           ),
                                           color: Color(0xff53B6AF),
-                                          onPressed: () {moveToChooseEmotion(context);},
+                                          onPressed: () {Navigator.pushNamed(context, '/chooseemotion');},
                                           child: Padding(
                                             padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
                                             child:
@@ -191,7 +183,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                               width: 3,
                                             )
                                           ),
-                                          onPressed: () {moveToLogin(context);},
+                                          onPressed: () {Navigator.pushNamed(context, '/login');},
                                           child: 
                                             Padding(
                                               padding: EdgeInsets.fromLTRB(50, 10, 50, 10),

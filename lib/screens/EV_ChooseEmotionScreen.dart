@@ -7,8 +7,9 @@ import 'package:provider/provider.dart';
 
 import 'package:responsive_flutter/responsive_flutter.dart';
 
-import 'package:emotiovent/screens/EV_SignUp.dart';
-import 'package:emotiovent/activities/ShakePhoneScreen.dart';
+import 'package:emotiovent/services/EV_ActivityRandomizer.dart';
+
+import 'EV_SatisfactoryRate.dart';
 
 class EVChooseEmotionScreen extends StatefulWidget {
   
@@ -28,10 +29,6 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
   Duration animatedOpacityDuration = const Duration(milliseconds: 500);
 
   Animation<Color> colorTween;
-
-  void startActivity(ctx){
-    Navigator.pushNamed(ctx, ShakePhoneActivity.routeName);
-  }
 
   void backToStartScreen(ctx){
     setState(() {showContent = false;});
@@ -395,34 +392,37 @@ class EmotionButton extends StatelessWidget{
             ),
           ),
 
-          child: Padding(
-            padding: EdgeInsets.all(ResponsiveFlutter.of(context).scale(8)),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(18.0),
-              ),
-              child: FlatButton(
-                minWidth: MediaQuery.of(context).size.width / 2.5,
-                height: ResponsiveFlutter.of(context).hp(20),
-                shape: RoundedRectangleBorder(
+          child: Hero(
+            tag: text,
+            child: Padding(
+              padding: EdgeInsets.all(ResponsiveFlutter.of(context).scale(8)),
+              child: Container(
+                decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(18.0),
                 ),
-                color: Color(color),
-                onPressed: () {Navigator.of(ctx).pushNamed(ShakePhoneActivity.routeName);},
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
-                  child: Text(
-                    text,
-                    style: TextStyle(
-                      fontSize: ResponsiveFlutter.of(context).scale(20.0),
-                      color: Colors.white,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 0,
+                child: FlatButton(
+                  minWidth: MediaQuery.of(context).size.width / 2.5,
+                  height: ResponsiveFlutter.of(context).hp(20),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
+                  color: Color(color),
+                  onPressed: () {Navigator.of(ctx).pushNamed(ActivityRandomizer.routeName, arguments: text);},
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                    child: Text(
+                      text,
+                      style: TextStyle(
+                        fontSize: ResponsiveFlutter.of(context).scale(20.0),
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 0,
+                      )
                     )
                   )
                 )
               )
-            )
+            ),
           ),
 
         );
