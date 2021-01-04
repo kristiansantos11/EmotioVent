@@ -9,11 +9,17 @@ import '../services/EV_AuthService.dart';
 class EVSignUp extends StatefulWidget {
   static const routeName = '/signup';
 
+  final String emotion;
+
+  const EVSignUp({Key key, this.emotion}) : super(key: key);
+
   @override
-  _EVSignUpState createState() => _EVSignUpState();
+  _EVSignUpState createState() => _EVSignUpState(emotion);
 }
 
 class _EVSignUpState extends State<EVSignUp> {
+
+  final String emotion;
 
   final _emailTextController = TextEditingController();
   final _pwTextController = TextEditingController();
@@ -21,6 +27,8 @@ class _EVSignUpState extends State<EVSignUp> {
   final _formKey = GlobalKey<FormState>();
 
   String debugMessage = "[DEBUG] You have entered:\n";
+
+  _EVSignUpState(this.emotion);
 
   void backButtonPressed(ctx){
     Navigator.popUntil(ctx, ModalRoute.withName('/main'));

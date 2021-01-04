@@ -35,7 +35,7 @@ class _ShakeShowAnimalsState extends State<ShakeShowAnimals> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-
+                
               ]
             )
           ),

@@ -2,7 +2,6 @@ import 'package:flutter/services.dart';
 import 'package:noise_meter/noise_meter.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'dart:math';
 
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 
