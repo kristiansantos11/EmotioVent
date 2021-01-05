@@ -49,10 +49,10 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
           ),
           Container(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Text(
-                  "How satisfied are you with the activity? ${emotion}",
+                  "How satisfied are you with the activity?",
                   style: TextStyle(
                     fontFamily: 'Aileron',
                     fontSize: ResponsiveFlutter.of(context).scale(14.0),

@@ -18,11 +18,11 @@ void main() async {
   runApp(MyApp());
 }
 
-
 class MyApp extends StatelessWidget {
   
   // This widget is the root of your application.
   // REMINDER: Please do not remove the debug flag yet (at the top-right of the screen.)
+  // Don't mind the noticeable lag, this is normal in debug mode of flutter apps
   @override
   Widget build(BuildContext context) {
 
@@ -36,7 +36,6 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        
         title: 'emotiovent',
         theme: ThemeData(
           primarySwatch: Colors.blue,
