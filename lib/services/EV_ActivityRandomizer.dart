@@ -19,6 +19,6 @@ class ActivityRandomizer extends StatelessWidget {
     List<Widget> activities = [NoiseMeterSample(emotion: emotion), ShakePhoneActivity(emotion: emotion), ShakeShowAnimals(emotion: emotion)];
     Random rand = new Random();
     int index = rand.nextInt(activities.length);
-    return activities[index];
+    return activities[2];
   }
 }

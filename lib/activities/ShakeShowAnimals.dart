@@ -37,7 +37,7 @@ class _ShakeShowAnimalsState extends State<ShakeShowAnimals> with TickerProvider
   Future<List<AnimalPicture>> animalPictures;
   // END
 
-  bool _showFAB = false;
+  bool _shaken = false;
 
   AnimationController controller;
   Animation<double> animation;
@@ -46,9 +46,6 @@ class _ShakeShowAnimalsState extends State<ShakeShowAnimals> with TickerProvider
   void initState(){
     super.initState();
     animalPictures = fetchAnimalPictures();
-
-    controller = AnimationController(vsync: this, duration: Duration(seconds: 1));
-    animation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(curve: Curves.easeInOut, parent: controller));
 
     Timer(
       const Duration(milliseconds: 1000),
@@ -60,7 +57,12 @@ class _ShakeShowAnimalsState extends State<ShakeShowAnimals> with TickerProvider
     );
 
     _shakeDetector = ShakeDetector.autoStart(
-
+      shakeCountResetTime: 1000,
+      onPhoneShake: () {
+        setState((){
+          _shaken = true;
+        });
+      },
     );
   }
 
@@ -89,14 +91,14 @@ class _ShakeShowAnimalsState extends State<ShakeShowAnimals> with TickerProvider
             opacity: _showContent ? 1.0 : 0.0,
             duration: const Duration(milliseconds: 1000),
             child: SafeArea(
-              child: 
-                FutureBuilder(
+              child: AnimatedSwitcher(
+                duration: Duration(seconds: 1),
+                child: _shaken ? FutureBuilder( // If shaken is false, the Center widget with text: "Shake the phone..." will show up.
                   future: animalPictures,
                   builder: (context, snapshot){
-                    if (snapshot.hasError){
+                    if (snapshot.hasError) {
                       return Center(child: Text("${snapshot.error}"));
                     } else if (snapshot.hasData) {
-                      _showFAB = true;
                       return GridView.builder(
                         itemCount: snapshot.data.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -104,9 +106,7 @@ class _ShakeShowAnimalsState extends State<ShakeShowAnimals> with TickerProvider
                           crossAxisSpacing: 5.0,
                           mainAxisSpacing: 5.0,
                         ),
-                        itemBuilder: (context, index){
-                          controller.forward();
-
+                        itemBuilder: (context, index) {
                           return Center(
                             child: AspectRatio(
                               aspectRatio: 1/1, // 1:1 -> Square
@@ -127,31 +127,64 @@ class _ShakeShowAnimalsState extends State<ShakeShowAnimals> with TickerProvider
                             ),
                           );
 
-
                         },
                       );
                     } else {
                       return Center(child: CircularProgressIndicator());
                     }
                   }
-                )
+                ) : Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+
+                        Text(
+                          "Shake the phone to see animal pictures!",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.aspectRatio * 50,
+                            fontFamily: 'Roboto',
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w900,
+                          )
+                        ),
+
+                        Center(
+                          child: Container(
+                            width: getWidth(context) / 2,
+                            height: getWidth(context) / 2,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('assets/img/shake-phone.png'),
+                                fit: BoxFit.cover
+                              )
+                            )
+                          )
+                        ),
+
+                      ]
+                    ),
+
               )
-            ),
+            )
+          ),
 
         ],
       ),
       floatingActionButton: AnimatedOpacity(
-        opacity: _showFAB ? 1.0 : 0.0,
+        opacity: _shaken ? 1.0 : 0.0,
         duration: Duration(seconds: 1),
-        child: FloatingActionButton(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Icon(Icons.play_arrow),
-            ],
-          ),
-          backgroundColor: Colors.green[600],
-          onPressed: () {Navigator.of(context).pushNamed(EVSatisfactoryRate.routeName, arguments: emotion);}
+        child: FloatingActionButton.extended(
+          label: Text("Continue", style: TextStyle(fontFamily: 'Roboto', fontStyle: FontStyle.normal)),
+          icon: Icon(Icons.play_arrow),
+          backgroundColor: Colors.orange[600],
+
+          // warning: bad code. my brain cells cannot literally comprehend at the moment how the hell
+          // can i make the screen not transition jarringly to another.
+          onPressed: () {
+
+            Navigator.of(context).pushNamed(EVSatisfactoryRate.routeName, arguments: emotion);
+
+          }
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

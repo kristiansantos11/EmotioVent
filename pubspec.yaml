@@ -30,6 +30,8 @@ dependencies:
 
   http: ^0.12.2
 
+  flutter_spinkit: ^4.1.2+1
+
   # Used for sound experimentation. Will remove later.
   noise_meter: ^2.0.0
 

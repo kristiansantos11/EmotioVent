@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:emotiovent/screens/EV_SignUp.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +28,20 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
   final double _maxSliderValue = 100;
   double _currentSliderValue;
 
+  bool _showContent = false;
+
   @override
   void initState(){
     super.initState();
+
+    Timer(
+      Duration(seconds: 1),
+      (){
+        setState((){
+          _showContent = true;
+        });
+      }
+    );
 
     _currentSliderValue = _maxSliderValue / 2;
   }
@@ -39,60 +52,73 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Hero(
-            tag: emotion,
+
+          AnimatedOpacity(
+            opacity: _showContent ? 1.0 : 0.0,
+            duration: Duration(seconds: 1),
             child: Container(
-              width: getWidth(context),
-              height: getHeight(context),
-              color: Colors.grey[100],
-            )
-          ),
-          Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Text(
-                  "How satisfied are you with the activity?",
-                  style: TextStyle(
-                    fontFamily: 'Aileron',
-                    fontSize: ResponsiveFlutter.of(context).scale(14.0),
-                  ),
-                ),
-
-                 Slider(
-                  inactiveColor: Colors.green[100],
-                  activeColor: Colors.green[400],
-                  value: _currentSliderValue,
-                  min: _minSliderValue,
-                  max: _maxSliderValue,
-                  divisions: 10,
-                  label: _currentSliderValue.round().toString(),
-                  onChanged: (double value) {
-                    setState(() {
-                      _currentSliderValue = value;
-                    });
-                  },
-                ),
-
-                ButtonTheme(
-                  buttonColor: Colors.green[500],
-                  child: RaisedButton(
-                    child: Text(
-                      "NEXT",
-                      style: TextStyle(
-                        color: Colors.white
-                      ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "How satisfied are you with the activity?",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.green[600],
+                      fontFamily: 'Aileron',
+                      fontStyle: FontStyle.normal,
+                      fontSize: getWidth(context) / 15,
                     ),
-                    onPressed: () {
-                      if(_currentSliderValue.round() < 50){
-                        Navigator.of(context).popAndPushNamed(ActivityRandomizer.routeName, arguments: emotion);
-                      } else {
-                        Navigator.pushNamed(context, EVSignUp.routeName);
-                      }
-                    }
                   ),
-                )
-              ]
+
+                  SizedBox(
+                    height: getHeight(context) / 8,
+                  ),
+
+                   Slider(
+                    inactiveColor: Colors.green[100],
+                    activeColor: Colors.green[400],
+                    value: _currentSliderValue,
+                    min: _minSliderValue,
+                    max: _maxSliderValue,
+                    divisions: 10,
+                    label: _currentSliderValue.round().toString(),
+                    onChanged: (double value) {
+                      setState(() {
+                        _currentSliderValue = value;
+                      });
+                    },
+                  ),
+
+                  SizedBox(
+                    height: getHeight(context) / 8,
+                  ),
+
+                  ButtonTheme(
+                    buttonColor: Colors.green[500],
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+                      child: Text(
+                        "NEXT",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Roboto',
+                          fontStyle: FontStyle.normal,
+                          fontSize: getWidth(context) / 27,
+                        ),
+                      ),
+                      onPressed: () {
+                        if(_currentSliderValue.round() < 50){
+                          Navigator.of(context).popAndPushNamed(ActivityRandomizer.routeName, arguments: emotion);
+                        } else {
+                          Navigator.of(context).pushNamed(EVSignUp.routeName, arguments: emotion);
+                        }
+                      }
+                    ),
+                  )
+                ]
+              ),
             ),
           ),
         ]
