@@ -142,7 +142,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                             borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(25.0)),
                                           ),
                                           color: Color(0xff53B6AF),
-                                          onPressed: () {Navigator.pushNamed(context, '/chooseemotion');},
+                                          onPressed: () {Navigator.pushNamed(context, '/signup');},
                                           child: Padding(
                                             padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
                                             child:

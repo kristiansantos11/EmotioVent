@@ -10,18 +10,19 @@ class DatabaseService{
 
   final CollectionReference basicInfo = FirebaseFirestore.instance.collection('Basic Info');
 
-  Future createData(String username, String name, DateTime birthdate, int contactNumber, String gender) async {
+  // temporary ko muna iniba ung mga data types para makapasok ung data
+  Future createData(dynamic username, dynamic name, dynamic birthdate, dynamic contactNumber, dynamic gender) async {
     {
+      print("ATTEMPTING TO CREATE DATA!!!");
       try
       {
-        DocumentReference ref = await basicInfo.add({
+        return await basicInfo.doc("test123").set({
           "username" : username,
           "name" : name,
           "birthdate" : birthdate,
           "contactNumber" : contactNumber,
           "gender" : gender,
         });
-        print(ref.id);
       }
       catch(e)
       {
