@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:emotiovent/services/EV_FetchAnimalPictures.dart';
-import 'package:emotiovent/models/cute_animal_img.dart';
+import 'package:emotiovent/models/animalPicture.dart';
 import 'package:emotiovent/screens/EV_SatisfactoryRate.dart';
 
 import 'package:shake/shake.dart';

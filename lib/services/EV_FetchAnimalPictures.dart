@@ -4,7 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:emotiovent/models/cute_animal_img.dart';
+import 'package:emotiovent/models/animalPicture.dart';
 
 Future<List<AnimalPicture>> fetchAnimalPictures() async {
   List<String> links = ['https://some-random-api.ml/img/dog',
