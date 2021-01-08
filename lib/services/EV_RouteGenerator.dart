@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
@@ -9,6 +10,13 @@ import 'package:emotiovent/screens/EV_InitialScreen.dart';
 import 'package:emotiovent/services/EV_ActivityRandomizer.dart';
 
 import 'package:provider/provider.dart';
+
+class ActivityRandomizerArguments{
+  final String emotion;
+  final List<CameraDescription> cameras;
+
+  ActivityRandomizerArguments(this.emotion, this.cameras);
+}
 
 
 Route<Null> authWrapperRoute(RouteSettings settings){
@@ -92,7 +100,7 @@ Route<Null> chooseEmotionRoute(RouteSettings settings){
 }
 
 Route<Null> activityRandomizerRoute(RouteSettings settings){
-  String emotion = settings.arguments;
+  final String emotion = settings.arguments;
     return PageRouteBuilder(
       settings: RouteSettings(name: ActivityRandomizer.routeName, arguments: emotion),
       pageBuilder: (context, animation, secondaryAnimation){
