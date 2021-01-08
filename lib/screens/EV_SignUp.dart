@@ -7,6 +7,7 @@ import 'package:responsive_flutter/responsive_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../services/EV_AuthService.dart';
+import 'package:emotiovent/Temp/transferUserData.dart';
 
 class EVSignUp extends StatefulWidget {
   static const routeName = '/signup';
@@ -76,7 +77,6 @@ class _EVSignUpState extends State<EVSignUp> {
         }
       );
     }
-
     context.read<AuthenticationService>().signUp(
       email: _emailTextController.text.trim(),
       password: _pwTextController.text.trim()
@@ -91,6 +91,10 @@ class _EVSignUpState extends State<EVSignUp> {
         }
       )
     });
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!Attempting to put sample data...");
+    TransferUserData tug = TransferUserData(username: "SampleU",name: "SampleN", birthdate: "SampleB",
+    contactNumber: "SampleC",gender: "SampleG");
+    tug.transferData();
 
     if (_success){
       continueButtonPressed(ctx);
