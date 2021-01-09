@@ -1,15 +1,11 @@
-import 'dart:math';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:provider/provider.dart';
 
 import 'package:responsive_flutter/responsive_flutter.dart';
 
 import 'package:emotiovent/services/EV_ActivityRandomizer.dart';
-
-import 'EV_SatisfactoryRate.dart';
 
 class EVChooseEmotionScreen extends StatefulWidget {
   

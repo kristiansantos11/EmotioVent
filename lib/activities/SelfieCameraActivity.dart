@@ -1,748 +1,562 @@
-// Copyright 2019 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-// ignore_for_file: public_member_api_docs
-
-import 'dart:async';
-import 'dart:io';
-
-import 'package:camera/camera.dart';
+import 'package:emotiovent/screens/EV_SatisfactoryRate.dart';
+import 'package:emotiovent/services/EV_CameraFaceDetectionUtil.dart';
+import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
+import 'package:camera/camera.dart';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:flutter/foundation.dart';
+import 'package:emotiovent/services/EV_FaceBorderPainter.dart';
 
-// I had to call the main dart file here because I needed to retrieve the camera list available
-// for the current device. If you have better ideas dont be afraid to post it here.
-import 'package:emotiovent/main.dart';
+import 'package:gallery_saver/gallery_saver.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:image/image.dart' as imglib;
+import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
+import 'package:quiver/collection.dart';
+import 'package:flutter/services.dart';
 
-/// Returns a suitable camera icon for [direction].
-IconData getCameraLensIcon(CameraLensDirection direction) {
-  switch (direction) {
-    case CameraLensDirection.back:
-      return Icons.camera_rear;
-    case CameraLensDirection.front:
-      return Icons.camera_front;
-    case CameraLensDirection.external:
-      return Icons.camera;
-  }
-  throw ArgumentError('Unknown lens direction');
-}
-
-void logError(String code, String message) =>
-    print('Error: $code\nError Message: $message');
-
-
-class CameraApp extends StatefulWidget {
+class FaceDetectionFromLiveCamera extends StatefulWidget {
   final String emotion;
 
-  const CameraApp({Key key, this.emotion}) : super(key: key);
+  const FaceDetectionFromLiveCamera({Key key, this.emotion}) : super(key: key);
+
   @override
-  _CameraAppState createState() {
-    return _CameraAppState(emotion);
-  }
+  _FaceDetectionFromLiveCameraState createState() => _FaceDetectionFromLiveCameraState(emotion);
 }
 
-class _CameraAppState extends State<CameraApp>
-    with WidgetsBindingObserver, TickerProviderStateMixin {
-  
+class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamera> with WidgetsBindingObserver, TickerProviderStateMixin{
+  // Final constructors
   final String emotion;
-  _CameraAppState(this.emotion);
+  _FaceDetectionFromLiveCameraState(this.emotion);
 
-  CameraController controller;
   XFile imageFile;
-  XFile videoFile;
-  VideoPlayerController videoController;
-  VoidCallback videoPlayerListener;
-  bool enableAudio = true;
-  double _minAvailableExposureOffset = 0.0;
-  double _maxAvailableExposureOffset = 0.0;
-  double _currentExposureOffset = 0.0;
-  AnimationController _flashModeControlRowAnimationController;
-  Animation<double> _flashModeControlRowAnimation;
-  AnimationController _exposureModeControlRowAnimationController;
-  Animation<double> _exposureModeControlRowAnimation;
-  double _minAvailableZoom;
-  double _maxAvailableZoom;
-  double _currentScale = 1.0;
-  double _baseScale = 1.0;
+  File jsonFile;
+  dynamic _scanResults;
+  CameraController _camera;
+  var interpreter;
+  bool _isDetecting = false;
+  CameraLensDirection _direction = CameraLensDirection.front;
+  dynamic data = {};
+  double threshold = 1.0;
+  Directory tempDir;
+  List e1;
+  bool _faceFound = false;
+  bool _isSmiling = false;
+  //final TextEditingController _name = new TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // Counting pointers (number of user fingers on screen)
-  int _pointers = 0;
+  AnimationController switcherController;
+
+  Animation<double> switcherAnimation;
 
   
-
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addObserver(this);
-    _flashModeControlRowAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 300),
-      vsync: this,
-    );
-
-    _flashModeControlRowAnimation = CurvedAnimation(
-      parent: _flashModeControlRowAnimationController,
-      curve: Curves.easeInCubic,
-    );
-
-    _exposureModeControlRowAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 300),
-      vsync: this,
-    );
-
-    _exposureModeControlRowAnimation = CurvedAnimation(
-      parent: _exposureModeControlRowAnimationController,
-      curve: Curves.easeInCubic,
-    );
-
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    _initializeCamera();
   }
 
   @override
-  void dispose() {
+  void dispose(){
     WidgetsBinding.instance.removeObserver(this);
-    _disposeCamera();
-    _flashModeControlRowAnimationController.dispose();
-    _exposureModeControlRowAnimationController.dispose();
+    _camera.dispose();
+    setState((){_camera = null;});
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     // App state changed before we got the chance to initialize.
-    if (controller == null || !controller.value.isInitialized) {
+    if (_camera == null || !_camera.value.isInitialized) {
       return;
     }
     if (state == AppLifecycleState.inactive) {
-      controller?.dispose();
+      _camera?.dispose();
     } else if (state == AppLifecycleState.resumed) {
-      if (controller != null) {
-        onNewCameraSelected(controller.description);
+      if (_camera != null) {
+        _initializeCamera();
       }
     }
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  Future loadModel() async {
+    try {
+      final gpuDelegateV2 = tfl.GpuDelegateV2(
+          options: tfl.GpuDelegateOptionsV2(
+        false,
+        tfl.TfLiteGpuInferenceUsage.fastSingleAnswer,
+        tfl.TfLiteGpuInferencePriority.minLatency,
+        tfl.TfLiteGpuInferencePriority.auto,
+        tfl.TfLiteGpuInferencePriority.auto,
+      ));
+
+      var interpreterOptions = tfl.InterpreterOptions()
+        ..addDelegate(gpuDelegateV2);
+      interpreter = await tfl.Interpreter.fromAsset('mobilefacenet.tflite',
+          options: interpreterOptions);
+    } on Exception {
+      print('Failed to load model.');
+    }
+  }
+
+  void _initializeCamera() async {
+    await loadModel();
+    CameraDescription description = await getCamera(_direction);
+
+    ImageRotation rotation = rotationIntToImageRotation(
+      description.sensorOrientation,
+    );
+
+    _camera =
+        CameraController(description, ResolutionPreset.low, enableAudio: false);
+    await _camera.initialize();
+    await Future.delayed(Duration(milliseconds: 500));
+    tempDir = await getApplicationDocumentsDirectory();
+    String _embPath = tempDir.path + '/emb.json';
+    jsonFile = new File(_embPath);
+    if (jsonFile.existsSync()) data = json.decode(jsonFile.readAsStringSync());
+
+    _camera.startImageStream((CameraImage image) {
+      if (_camera != null) {
+        if (_isDetecting) return;
+        _isDetecting = true;
+        // Uncomment this if you want facial recognition
+        // String res;
+        dynamic finalResult = Multimap<String, Face>();
+        detect(image, _getDetectionMethod(), rotation).then(
+          (dynamic result) async {
+            if (result.length == 0)
+              _faceFound = false;
+            else
+              _faceFound = true;
+            Face _face;
+            imglib.Image convertedImage =
+                _convertCameraImage(image, _direction);
+            for (_face in result) {
+              if (_face.smilingProbability > 0.5){
+                _isSmiling = true;
+              } else{
+                _isSmiling = false;
+              }
+              double x, y, w, h;
+              x = (_face.boundingBox.left - 10);
+              y = (_face.boundingBox.top - 10);
+              w = (_face.boundingBox.width + 10);
+              h = (_face.boundingBox.height + 10);
+              imglib.Image croppedImage = imglib.copyCrop(
+                  convertedImage, x.round(), y.round(), w.round(), h.round());
+              croppedImage = imglib.copyResizeCropSquare(croppedImage, 112);
+              // int startTime = new DateTime.now().millisecondsSinceEpoch;
+              /* Uncomment these if you want to use face recognition, what I want to
+               * Achieve here is FACE DETECTION not FACE RECOGNITION.
+               *  res = _recog(croppedImage);
+               */
+              // int endTime = new DateTime.now().millisecondsSinceEpoch;
+              // print("Inference took ${endTime - startTime}ms");
+
+              // Replace "FACE" with res to make FACE RECOGNITION WORK.
+              finalResult.add("FACE", _face);
+            }
+            setState(() {
+              _scanResults = finalResult;
+            });
+
+            _isDetecting = false;
+          },
+        ).catchError(
+          (_) {
+            _isDetecting = false;
+          },
+        );
+      }
+    });
+  }
+
+  HandleDetection _getDetectionMethod() {
+    final faceDetector = FirebaseVision.instance.faceDetector(
+      FaceDetectorOptions(
+        mode: FaceDetectorMode.accurate,
+        enableClassification: true,
+      ),
+    );
+    return faceDetector.processImage;
+  }
+  // Uncomment if you will use bounding boxes to identify faces in the camera surface.
+  Widget _buildResults() {
+    const Text noResultsText = const Text('');
+    if (_scanResults == null ||
+        _camera == null ||
+        !_camera.value.isInitialized) {
+      return noResultsText;
+    }
+    CustomPainter painter;
+
+    final Size imageSize = Size(
+      _camera.value.previewSize.height,
+      _camera.value.previewSize.width,
+    );
+    painter = FaceDetectorPainter(imageSize, _scanResults);
+    return CustomPaint(
+      painter: painter,
+    );
+  }
+
+  Widget _buildImage() {
+    if (_camera == null || !_camera.value.isInitialized) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    return _camera == null
+          ? const Center(child: null)
+          : Column(
+            children: [
+              Flexible(
+                flex: 4,
+                child: Container(
+                  child: Stack(
+                    fit: StackFit.expand,
+                      children: <Widget>[
+                            CameraPreview(_camera),
+                            // Uncomment if you will use bounding boxes to identify faces in the camera surface.
+                            _buildResults(),
+                          ],
+                    ),
+                ),
+              ),
+
+              Flexible(
+                flex: 1,
+                child: Container(
+                  color: Colors.white,
+                ),
+              ),
+
+            ],
+          );
+  }
+
+  void _toggleCameraDirection() async {
+    if (_direction == CameraLensDirection.back) {
+      _direction = CameraLensDirection.front;
+    } else {
+      _direction = CameraLensDirection.back;
+    }
+    await _camera.stopImageStream();
+    await _camera.dispose();
+
+    setState(() {
+      _camera = null;
+    });
+
+    _initializeCamera();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: const Text('Camera example'),
-      ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(1.0),
-                child: Center(
-                  child: _cameraPreviewWidget(),
-                ),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.black,
-                border: Border.all(
-                  color: controller != null && controller.value.isRecordingVideo
-                      ? Colors.redAccent
-                      : Colors.grey,
-                  width: 3.0,
-                ),
-              ),
-            ),
+      /*appBar: AppBar(
+        title: const Text('Face recognition'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.navigate_before),
+            onPressed: (){Navigator.of(context).pop();},
           ),
-          _captureControlRowWidget(),
-          _modeControlRowWidget(),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                _cameraTogglesRowWidget(),
-                _thumbnailWidget(),
-                RaisedButton(
-                  color: Colors.blue[400],
-                  onPressed: (){Navigator.of(context).popUntil(ModalRoute.withName('/main'));},
-                  child: Text("BACK", style: TextStyle(color: Colors.white)),
-                ),
-              ],
-            ),
+          IconButton(
+            icon: Icon(Icons.navigate_next),
+            onPressed: (){Navigator.of(context).popAndPushNamed(EVSatisfactoryRate.routeName, arguments: emotion);}
           ),
-        ],
-      ),
-    );
-  }
-
-  
-
-  /// Display the preview from the camera (or a message if the preview is not available).
-  Widget _cameraPreviewWidget() {
-    if (controller == null || !controller.value.isInitialized) {
-      return const Text(
-        'Tap a camera',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 24.0,
-          fontWeight: FontWeight.w900,
-        ),
-      );
-    } else {
-      return AspectRatio(
-        aspectRatio: controller.value.aspectRatio,
-        child: Listener(
-          onPointerDown: (_) => _pointers++,
-          onPointerUp: (_) => _pointers--,
-          child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-            return GestureDetector(
-              onScaleStart: _handleScaleStart,
-              onScaleUpdate: _handleScaleUpdate,
-              onTapDown: (details) => onViewFinderTap(details, constraints),
-              child: CameraPreview(controller),
-            );
-          }),
-        ),
-      );
-    }
-  }
-
-  void _handleScaleStart(ScaleStartDetails details) {
-    _baseScale = _currentScale;
-  }
-
-  Future<void> _handleScaleUpdate(ScaleUpdateDetails details) async {
-    // When there are not exactly two fingers on screen don't scale
-    if (_pointers != 2) {
-      return;
-    }
-
-    _currentScale = (_baseScale * details.scale)
-        .clamp(_minAvailableZoom, _maxAvailableZoom);
-
-    await controller.setZoomLevel(_currentScale);
-  }
-
-  /// Display the thumbnail of the captured image or video.
-  Widget _thumbnailWidget() {
-    return Expanded(
-      child: Align(
-        alignment: Alignment.centerRight,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            videoController == null && imageFile == null
-                ? Container()
-                : SizedBox(
-                    child: (videoController == null)
-                        ? Image.file(File(imageFile.path))
-                        : Container(
-                            child: Center(
-                              child: AspectRatio(
-                                  aspectRatio:
-                                      videoController.value.size != null
-                                          ? videoController.value.aspectRatio
-                                          : 1.0,
-                                  child: VideoPlayer(videoController)),
-                            ),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.pink)),
-                          ),
-                    width: 64.0,
-                    height: 64.0,
-                  ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  /// Display a bar with buttons to change the flash and exposure modes
-  Widget _modeControlRowWidget() {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.flash_on),
-              color: Colors.blue,
-              onPressed: controller != null ? onFlashModeButtonPressed : null,
-            ),
-            IconButton(
-              icon: Icon(Icons.exposure),
-              color: Colors.blue,
-              onPressed:
-                  controller != null ? onExposureModeButtonPressed : null,
-            ),
-            IconButton(
-              icon: Icon(enableAudio ? Icons.volume_up : Icons.volume_mute),
-              color: Colors.blue,
-              onPressed: controller != null ? onAudioModeButtonPressed : null,
-            ),
-          ],
-        ),
-        _flashModeControlRowWidget(),
-        _exposureModeControlRowWidget(),
-      ],
-    );
-  }
-
-  Widget _flashModeControlRowWidget() {
-    return SizeTransition(
-      sizeFactor: _flashModeControlRowAnimation,
-      child: ClipRect(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            IconButton(
-              icon: Icon(Icons.flash_off),
-              color: controller?.value?.flashMode == FlashMode.off
-                  ? Colors.orange
-                  : Colors.blue,
-              onPressed: controller != null
-                  ? () => onSetFlashModeButtonPressed(FlashMode.off)
-                  : null,
-            ),
-            IconButton(
-              icon: Icon(Icons.flash_auto),
-              color: controller?.value?.flashMode == FlashMode.auto
-                  ? Colors.orange
-                  : Colors.blue,
-              onPressed: controller != null
-                  ? () => onSetFlashModeButtonPressed(FlashMode.auto)
-                  : null,
-            ),
-            IconButton(
-              icon: Icon(Icons.flash_on),
-              color: controller?.value?.flashMode == FlashMode.always
-                  ? Colors.orange
-                  : Colors.blue,
-              onPressed: controller != null
-                  ? () => onSetFlashModeButtonPressed(FlashMode.always)
-                  : null,
-            ),
-            IconButton(
-              icon: Icon(Icons.highlight),
-              color: controller?.value?.flashMode == FlashMode.torch
-                  ? Colors.orange
-                  : Colors.blue,
-              onPressed: controller != null
-                  ? () => onSetFlashModeButtonPressed(FlashMode.torch)
-                  : null,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _exposureModeControlRowWidget() {
-    return SizeTransition(
-      sizeFactor: _exposureModeControlRowAnimation,
-      child: ClipRect(
-        child: Container(
-          color: Colors.grey.shade50,
-          child: Column(
-            children: [
-              Center(
-                child: Text("Exposure Mode"),
+          // Remove this if you want Face Recognition.
+          /*PopupMenuButton<Choice>(
+            onSelected: (Choice result) {
+              if (result == Choice.delete)
+                _resetFile();
+              else
+                _viewLabels();
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<Choice>>[
+              const PopupMenuItem<Choice>(
+                child: Text('View Saved Faces'),
+                value: Choice.view,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  FlatButton(
-                    child: Text('AUTO'),
-                    textColor:
-                        controller?.value?.exposureMode == ExposureMode.auto
-                            ? Colors.orange
-                            : Colors.blue,
-                    onPressed: controller != null
-                        ? () =>
-                            onSetExposureModeButtonPressed(ExposureMode.auto)
-                        : null,
-                    onLongPress: () {
-                      if (controller != null) controller.setExposurePoint(null);
-                      showInSnackBar('Resetting exposure point');
-                    },
-                  ),
-                  FlatButton(
-                    child: Text('LOCKED'),
-                    textColor:
-                        controller?.value?.exposureMode == ExposureMode.locked
-                            ? Colors.orange
-                            : Colors.blue,
-                    onPressed: controller != null
-                        ? () =>
-                            onSetExposureModeButtonPressed(ExposureMode.locked)
-                        : null,
-                  ),
-                ],
-              ),
-
-              Center(
-                child: Text("Exposure Offset"),
-              ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text(_minAvailableExposureOffset.toString()),
-                  Slider(
-                    value: _currentExposureOffset,
-                    min: _minAvailableExposureOffset,
-                    max: _maxAvailableExposureOffset,
-                    label: _currentExposureOffset.toString(),
-                    onChanged: _minAvailableExposureOffset ==
-                            _maxAvailableExposureOffset
-                        ? null
-                        : setExposureOffset,
-                  ),
-                  Text(_maxAvailableExposureOffset.toString()),
-                ],
-              ),
+              const PopupMenuItem<Choice>(
+                child: Text('Remove all faces'),
+                value: Choice.delete,
+              )
             ],
           ),
-        ),
+          */
+        ],
+      ),*/
+      body: _buildImage(),
+        floatingActionButton: Column(
+          children: [
+            Flexible(
+              flex: 5,
+              child: Container()
+            ),
+
+            Flexible(
+              flex: 1,
+              child: Container(
+                color: Colors.white,
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround, 
+                  children: [
+                    // Uncomment if you want face recognition
+                    /*FloatingActionButton(
+                      backgroundColor: (_faceFound) ? Colors.blue : Colors.blueGrey,
+                      child: Icon(Icons.add),
+                      onPressed: () {
+                        if (_faceFound) _addLabel();
+                      },
+                      heroTag: null,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),*/
+                    FloatingActionButton(
+                      backgroundColor: (_isSmiling && _faceFound) ? Colors.blue : Colors.grey,
+                      child: Icon(Icons.camera),
+                      onPressed: (){
+                        if (_isSmiling && _faceFound){onTakePictureButtonPressed();}
+                      }
+                    ),
+
+                    ConstrainedBox(
+                      constraints: BoxConstraints(minWidth: MediaQuery.of(context).size.width / 2.5, maxWidth: MediaQuery.of(context).size.width / 1.1),
+                      child: AnimatedSwitcher(
+                        duration: Duration(milliseconds: 500),
+                        child: (_isSmiling && _faceFound) ? Text(
+                          "Tap capture!",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'Nexa',
+                            fontWeight: FontWeight.w700,
+                            fontSize: getWidth(context) / 15,
+                            color: Colors.grey[600],
+                          ),
+                        ) :
+                        Text(
+                          "Smile!",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'Nexa',
+                            fontWeight: FontWeight.w700,
+                            fontSize: getWidth(context) / 15,
+                            color: Colors.grey[600],
+                          ),
+                        )
+                      ),
+                    ),
+
+                    FloatingActionButton(
+                      onPressed: _toggleCameraDirection,
+                      heroTag: null,
+                      child: _direction == CameraLensDirection.back
+                          ? const Icon(Icons.camera_front)
+                          : const Icon(Icons.camera_rear),
+                    ),
+                  ]
+                ),
+              ),
+            ),
+
+          ]
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
-  /// Display the control bar with buttons to take pictures and record videos.
-  Widget _captureControlRowWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.camera_alt),
-          color: Colors.blue,
-          onPressed: controller != null &&
-                  controller.value.isInitialized &&
-                  !controller.value.isRecordingVideo
-              ? onTakePictureButtonPressed
-              : null,
-        ),
-        IconButton(
-          icon: const Icon(Icons.videocam),
-          color: Colors.blue,
-          onPressed: controller != null &&
-                  controller.value.isInitialized &&
-                  !controller.value.isRecordingVideo
-              ? onVideoRecordButtonPressed
-              : null,
-        ),
-        IconButton(
-          icon: controller != null && controller.value.isRecordingPaused
-              ? Icon(Icons.play_arrow)
-              : Icon(Icons.pause),
-          color: Colors.blue,
-          onPressed: controller != null &&
-                  controller.value.isInitialized &&
-                  controller.value.isRecordingVideo
-              ? (controller != null && controller.value.isRecordingPaused
-                  ? onResumeButtonPressed
-                  : onPauseButtonPressed)
-              : null,
-        ),
-        IconButton(
-          icon: const Icon(Icons.stop),
-          color: Colors.red,
-          onPressed: controller != null &&
-                  controller.value.isInitialized &&
-                  controller.value.isRecordingVideo
-              ? onStopButtonPressed
-              : null,
+  imglib.Image _convertCameraImage(CameraImage image, CameraLensDirection _dir) {
+    int width = image.width;
+    int height = image.height;
+    // imglib -> Image package from https://pub.dartlang.org/packages/image
+    var img = imglib.Image(width, height); // Create Image buffer
+    const int hexFF = 0xFF000000;
+    final int uvyButtonStride = image.planes[1].bytesPerRow;
+    final int uvPixelStride = image.planes[1].bytesPerPixel;
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        final int uvIndex =
+            uvPixelStride * (x / 2).floor() + uvyButtonStride * (y / 2).floor();
+        final int index = y * width + x;
+        final yp = image.planes[0].bytes[index];
+        final up = image.planes[1].bytes[uvIndex];
+        final vp = image.planes[2].bytes[uvIndex];
+        // Calculate pixel color
+        int r = (yp + vp * 1436 / 1024 - 179).round().clamp(0, 255);
+        int g = (yp - up * 46549 / 131072 + 44 - vp * 93604 / 131072 + 91)
+            .round()
+            .clamp(0, 255);
+        int b = (yp + up * 1814 / 1024 - 227).round().clamp(0, 255);
+        // color: 0x FF  FF  FF  FF
+        //           A   B   G   R
+        img.data[index] = hexFF | (b << 16) | (g << 8) | r;
+      }
+    }
+    var img1 = (_dir == CameraLensDirection.front)
+        ? imglib.copyRotate(img, -90)
+        : imglib.copyRotate(img, 90);
+    return img1;
+  }
+
+/*
+  String _recog(imglib.Image img) {
+    List input = imageToByteListFloat32(img, 112, 128, 128);
+    input = input.reshape([1, 112, 112, 3]);
+    // Deprecated code, will search for a workaround.
+    List output = List(1 * 192).reshape([1, 192]);
+    interpreter.run(input, output);
+    output = output.reshape([192]);
+    e1 = List.from(output);
+    return compare(e1).toUpperCase();
+  }
+
+  String compare(List currEmb) {
+    if (data.length == 0) return "No Face saved";
+    double minDist = 999;
+    double currDist = 0.0;
+    String predRes = "NOT RECOGNIZED";
+    for (String label in data.keys) {
+      currDist = euclideanDistance(data[label], currEmb);
+      if (currDist <= threshold && currDist < minDist) {
+        minDist = currDist;
+        predRes = label;
+      }
+    }
+    print(minDist.toString() + " " + predRes);
+    return predRes;
+  }
+
+  void _resetFile() {
+    data = {};
+    jsonFile.deleteSync();
+  }
+
+  void _viewLabels() {
+    setState(() {
+      _camera = null;
+    });
+    String name;
+    var alert = new AlertDialog(
+      title: new Text("Saved Faces"),
+      content: new ListView.builder(
+          padding: new EdgeInsets.all(2),
+          itemCount: data.length,
+          itemBuilder: (BuildContext context, int index) {
+            name = data.keys.elementAt(index);
+            return new Column(
+              children: <Widget>[
+                new ListTile(
+                  title: new Text(
+                    name,
+                    style: new TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[400],
+                    ),
+                  ),
+                ),
+                new Padding(
+                  padding: EdgeInsets.all(2),
+                ),
+                new Divider(),
+              ],
+            );
+          }),
+      actions: <Widget>[
+        new FlatButton(
+          child: Text("OK"),
+          onPressed: () {
+            _initializeCamera();
+            Navigator.pop(context);
+          },
         )
       ],
     );
+    showDialog(
+        context: context,
+        builder: (context) {
+          return alert;
+        });
   }
 
-  /// Display a row of toggle to select the camera (or a message if no camera is available).
-  Widget _cameraTogglesRowWidget() {
-    final List<Widget> toggles = <Widget>[];
-
-    if (cameras.isEmpty) {
-      return const Text('No camera found');
-    } else {
-      for (CameraDescription cameraDescription in cameras) {
-        toggles.add(
-          SizedBox(
-            width: 90.0,
-            child: RadioListTile<CameraDescription>(
-              title: Icon(getCameraLensIcon(cameraDescription.lensDirection)),
-              groupValue: controller?.description,
-              value: cameraDescription,
-              onChanged: controller != null && controller.value.isRecordingVideo
-                  ? null
-                  : onNewCameraSelected,
+  void _addLabel() {
+    setState(() {
+      _camera = null;
+    });
+    print("Adding new face");
+    var alert = new AlertDialog(
+      title: new Text("Add Face"),
+      content: new Row(
+        children: <Widget>[
+          new Expanded(
+            child: new TextField(
+              controller: _name,
+              autofocus: true,
+              decoration: new InputDecoration(
+                  labelText: "Name", icon: new Icon(Icons.face)),
             ),
-          ),
-        );
-      }
-    }
-
-    return Row(children: toggles);
+          )
+        ],
+      ),
+      actions: <Widget>[
+        new FlatButton(
+            child: Text("Save"),
+            onPressed: () {
+              _handle(_name.text.toUpperCase());
+              _name.clear();
+              Navigator.pop(context);
+            }),
+        new FlatButton(
+          child: Text("Cancel"),
+          onPressed: () {
+            _initializeCamera();
+            Navigator.pop(context);
+          },
+        )
+      ],
+    );
+    showDialog(
+        context: context,
+        builder: (context) {
+          return alert;
+        }
+    );
   }
 
-  String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
+  void _handle(String text) {
+    data[text] = e1;
+    jsonFile.writeAsStringSync(json.encode(data));
+    _initializeCamera();
+  }*/
 
   void showInSnackBar(String message) {
     // ignore: deprecated_member_use
     _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message)));
   }
 
-  void onViewFinderTap(TapDownDetails details, BoxConstraints constraints) {
-    controller.setExposurePoint(Offset(
-      details.localPosition.dx / constraints.maxWidth,
-      details.localPosition.dy / constraints.maxHeight,
-    ));
-  }
-
-  void onNewCameraSelected(CameraDescription cameraDescription) async {
-    if (controller != null) {
-      await controller.dispose();
-    }
-    controller = CameraController(
-      cameraDescription,
-      ResolutionPreset.medium,
-      enableAudio: enableAudio,
-    );
-
-    // If the controller is updated then update the UI.
-    controller.addListener(() {
-      if (mounted) setState(() {});
-      if (controller.value.hasError) {
-        showInSnackBar('Camera error ${controller.value.errorDescription}');
-      }
-    });
-
-    try {
-      await controller.initialize();
-      _minAvailableExposureOffset = await controller.getMinExposureOffset();
-      _maxAvailableExposureOffset = await controller.getMaxExposureOffset();
-      _maxAvailableZoom = await controller.getMaxZoomLevel();
-      _minAvailableZoom = await controller.getMinZoomLevel();
-    } on CameraException catch (e) {
-      _showCameraException(e);
-    }
-
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
-  void onTakePictureButtonPressed() {
-    takePicture().then((XFile file) {
-      if (mounted) {
-        setState(() {
-          imageFile = file;
-          videoController?.dispose();
-          videoController = null;
-        });
-        if (file != null) showInSnackBar('Picture saved to ${file.path}');
-      }
-    });
-  }
-
-  void onFlashModeButtonPressed() {
-    if (_flashModeControlRowAnimationController.value == 1) {
-      _flashModeControlRowAnimationController.reverse();
-    } else {
-      _flashModeControlRowAnimationController.forward();
-      _exposureModeControlRowAnimationController.reverse();
-    }
-  }
-
-  void onExposureModeButtonPressed() {
-    if (_exposureModeControlRowAnimationController.value == 1) {
-      _exposureModeControlRowAnimationController.reverse();
-    } else {
-      _exposureModeControlRowAnimationController.forward();
-      _flashModeControlRowAnimationController.reverse();
-    }
-  }
-
-  void onAudioModeButtonPressed() {
-    enableAudio = !enableAudio;
-    if (controller != null) {
-      onNewCameraSelected(controller.description);
-    }
-  }
-
-  void onSetFlashModeButtonPressed(FlashMode mode) {
-    setFlashMode(mode).then((_) {
-      if (mounted) setState(() {});
-      showInSnackBar('Flash mode set to ${mode.toString().split('.').last}');
-    });
-  }
-
-  void onSetExposureModeButtonPressed(ExposureMode mode) {
-    setExposureMode(mode).then((_) {
-      if (mounted) setState(() {});
-      showInSnackBar('Exposure mode set to ${mode.toString().split('.').last}');
-    });
-  }
-
-  void onVideoRecordButtonPressed() {
-    startVideoRecording().then((_) {
-      if (mounted) setState(() {});
-    });
-  }
-
-  void onStopButtonPressed() {
-    stopVideoRecording().then((file) {
-      if (mounted) setState(() {});
-      if (file != null) {
-        showInSnackBar('Video recorded to ${file.path}');
-        videoFile = file;
-        _startVideoPlayer();
-      }
-    });
-  }
-
-  void onPauseButtonPressed() {
-    pauseVideoRecording().then((_) {
-      if (mounted) setState(() {});
-      showInSnackBar('Video recording paused');
-    });
-  }
-
-  void onResumeButtonPressed() {
-    resumeVideoRecording().then((_) {
-      if (mounted) setState(() {});
-      showInSnackBar('Video recording resumed');
-    });
-  }
-
-  Future<void> startVideoRecording() async {
-    if (!controller.value.isInitialized) {
-      showInSnackBar('Error: select a camera first.');
-      return;
-    }
-
-    if (controller.value.isRecordingVideo) {
-      // A recording is already started, do nothing.
-      return;
-    }
-
-    try {
-      await controller.startVideoRecording();
-    } on CameraException catch (e) {
-      _showCameraException(e);
-      return;
-    }
-  }
-
-  Future<XFile> stopVideoRecording() async {
-    if (!controller.value.isRecordingVideo) {
-      return null;
-    }
-
-    try {
-      return controller.stopVideoRecording();
-    } on CameraException catch (e) {
-      _showCameraException(e);
-      return null;
-    }
-  }
-
-  Future<void> pauseVideoRecording() async {
-    if (!controller.value.isRecordingVideo) {
-      return null;
-    }
-
-    try {
-      await controller.pauseVideoRecording();
-    } on CameraException catch (e) {
-      _showCameraException(e);
-      rethrow;
-    }
-  }
-
-  Future<void> resumeVideoRecording() async {
-    if (!controller.value.isRecordingVideo) {
-      return null;
-    }
-
-    try {
-      await controller.resumeVideoRecording();
-    } on CameraException catch (e) {
-      _showCameraException(e);
-      rethrow;
-    }
-  }
-
-  Future<void> setFlashMode(FlashMode mode) async {
-    try {
-      await controller.setFlashMode(mode);
-    } on CameraException catch (e) {
-      _showCameraException(e);
-      rethrow;
-    }
-  }
-
-  Future<void> setExposureMode(ExposureMode mode) async {
-    try {
-      await controller.setExposureMode(mode);
-    } on CameraException catch (e) {
-      _showCameraException(e);
-      rethrow;
-    }
-  }
-
-  Future<void> setExposureOffset(double offset) async {
-    setState(() {
-      _currentExposureOffset = offset;
-    });
-    try {
-      offset = await controller.setExposureOffset(offset);
-    } on CameraException catch (e) {
-      _showCameraException(e);
-      rethrow;
-    }
-  }
-
-  Future<void> _startVideoPlayer() async {
-    final VideoPlayerController vController =
-        VideoPlayerController.file(File(videoFile.path));
-    videoPlayerListener = () {
-      if (videoController != null && videoController.value.size != null) {
-        // Refreshing the state to update video player with the correct ratio.
-        if (mounted) setState(() {});
-        videoController.removeListener(videoPlayerListener);
-      }
-    };
-    vController.addListener(videoPlayerListener);
-    await vController.setLooping(true);
-    await vController.initialize();
-    await videoController?.dispose();
-    if (mounted) {
-      setState(() {
-        imageFile = null;
-        videoController = vController;
-      });
-    }
-    await vController.play();
-  }
-
   Future<XFile> takePicture() async {
-    if (!controller.value.isInitialized) {
+    if (!_camera.value.isInitialized) {
       showInSnackBar('Error: select a camera first.');
       return null;
     }
 
-    if (controller.value.isTakingPicture) {
+    if (_camera.value.isTakingPicture) {
       // A capture is already pending, do nothing.
       return null;
     }
 
     try {
-      XFile file = await controller.takePicture();
+      _camera.stopImageStream();
+      XFile file = await _camera.takePicture();
       return file;
     } on CameraException catch (e) {
       _showCameraException(e);
@@ -751,11 +565,24 @@ class _CameraAppState extends State<CameraApp>
   }
 
   void _showCameraException(CameraException e) {
-    logError(e.code, e.description);
+    print('Error: ${e.code}\nError Message: ${e.description}');
     showInSnackBar('Error: ${e.code}\n${e.description}');
   }
 
-  void _disposeCamera() async {
-    await controller.dispose();
+  void onTakePictureButtonPressed() {
+    takePicture().then((XFile file) {
+      if (mounted) {
+        setState(() {
+          imageFile = file;
+        });
+        if (file != null){
+          GallerySaver.saveImage(file.path, albumName: 'Camera').then((bool success){
+            showInSnackBar('Picture saved to ${file.path}');
+          }).then((bool success){
+            Navigator.of(context).popAndPushNamed(EVSatisfactoryRate.routeName, arguments: emotion);
+          });
+        }
+      }
+    });
   }
 }

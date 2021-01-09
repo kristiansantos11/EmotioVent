@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 
@@ -142,7 +143,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                             borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(25.0)),
                                           ),
                                           color: Color(0xff53B6AF),
-                                          onPressed: () {Navigator.pushNamed(context, '/signup');},
+                                          onPressed: () {Navigator.of(context).pushNamed(EVChooseEmotionScreen.routeName);},
                                           child: Padding(
                                             padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
                                             child:

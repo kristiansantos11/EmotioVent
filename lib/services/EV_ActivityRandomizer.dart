@@ -1,8 +1,8 @@
 import 'package:camera/camera.dart';
-import 'package:emotiovent/activities/SelfieCameraActivity.dart';
 import 'package:emotiovent/activities/NoiseMeterSample.dart';
 import 'package:emotiovent/activities/ShakePhoneScreen.dart';
 import 'package:emotiovent/activities/ShakeShowAnimals.dart';
+import 'package:emotiovent/activities/SelfieCameraActivity.dart';
 
 import 'package:flutter/material.dart';
 
@@ -22,11 +22,11 @@ class ActivityRandomizer extends StatelessWidget {
                               NoiseMeterSample(emotion: emotion), 
                               ShakePhoneActivity(emotion: emotion), 
                               ShakeShowAnimals(emotion: emotion),
-                              CameraApp(emotion: emotion),
+                              FaceDetectionFromLiveCamera(emotion: emotion),
                               ];
                               
     Random rand = new Random();
     int index = rand.nextInt(activities.length);
-    return activities[3];
+    return activities[index];
   }
 }

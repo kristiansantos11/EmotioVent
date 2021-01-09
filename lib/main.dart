@@ -1,7 +1,3 @@
-import 'package:camera/camera.dart';
-
-import 'activities/SelfieCameraActivity.dart';
-
 import 'screens/EV_Loading.dart';
 import 'screens/EV_AppError.dart';
 
@@ -16,15 +12,8 @@ import 'package:provider/provider.dart';
 import 'services/EV_AuthService.dart';
 import 'services/EV_RouteGenerator.dart';
 
-List<CameraDescription> cameras;
-
 Future<void> main() async {
-  try{
-    WidgetsFlutterBinding.ensureInitialized();
-    cameras = await availableCameras();
-  } on CameraException catch(e){
-    logError(e.code, e.description);
-  }
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
 }
