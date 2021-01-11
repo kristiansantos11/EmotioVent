@@ -135,8 +135,10 @@ class _ShakePhoneActivityState extends State<ShakePhoneActivity> {
 
                     Flexible(
                       flex: 7,
-                      child: RaisedButton(
-                        color: Colors.red[300],
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.red[300]),
+                        ),
                         child: Text("Back", style: TextStyle(color: Colors.white)),
                         onPressed: (){
                           Navigator.pop(context);

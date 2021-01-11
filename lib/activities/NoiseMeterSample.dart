@@ -124,14 +124,25 @@ class _NoiseMeterSampleState extends State<NoiseMeterSample> {
             ),
 
             Center(
+              child: Container(
+                width: ((75-30)/100) * getWidth(context),
+                height: ((75-30)/100) * getWidth(context),
+                decoration: BoxDecoration(
+                  color: Colors.blue[300].withAlpha(10),
+                  shape: BoxShape.circle
+                ),
+              ),
+            ),
+
+            Center(
               child: AnimatedOpacity(
                 opacity: this._isRecording ? 1.0 : 0.0,
                 duration: Duration(milliseconds: 300),
                 child: AnimatedContainer(
                   curve: Curves.easeOutQuad,
                   duration: Duration(milliseconds: 300),
-                  width: ((db-30)/100) * MediaQuery.of(context).size.width,
-                  height: ((db-30)/100) * MediaQuery.of(context).size.width,
+                  width: ((db-30)/100) * getWidth(context),
+                  height: ((db-30)/100) * getWidth(context),
                   decoration: BoxDecoration(
                     color: Colors.blue[300],
                     shape: BoxShape.circle,

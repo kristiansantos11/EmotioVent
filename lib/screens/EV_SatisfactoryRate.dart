@@ -72,7 +72,7 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
                   ),
 
                   SizedBox(
-                    height: getHeight(context) / 8,
+                    height: getHeight(context) / 12,
                   ),
 
                    Slider(
@@ -90,14 +90,31 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
                     },
                   ),
 
+                  Text(
+                    "Drag the slider from left (0) to right (100)",
+                    style: TextStyle(
+                      color: Colors.grey[700],
+                      fontFamily: 'Roboto',
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w100,
+                      fontSize: 12,
+                    ),
+                  ),
+
                   SizedBox(
-                    height: getHeight(context) / 8,
+                    height: getHeight(context) / 12,
                   ),
 
                   ButtonTheme(
                     buttonColor: Colors.green[500],
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0)
+                          )
+                        ),
+                      ),
                       child: Text(
                         "NEXT",
                         textAlign: TextAlign.center,

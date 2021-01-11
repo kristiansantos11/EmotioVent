@@ -1,3 +1,9 @@
+/* Selfie Camera Activity.dart
+ *
+ * --> Notes: There are functions that are commented out in case we want to implement a similar
+ *          function in the future that involves face RECOGNITION and DETECTION
+*/
+
 import 'package:emotiovent/screens/EV_SatisfactoryRate.dart';
 import 'package:emotiovent/services/EV_CameraFaceDetectionUtil.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
@@ -7,6 +13,7 @@ import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/foundation.dart';
 import 'package:emotiovent/services/EV_FaceBorderPainter.dart';
 
+import 'dart:async';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -26,7 +33,7 @@ class FaceDetectionFromLiveCamera extends StatefulWidget {
 }
 
 class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamera> with WidgetsBindingObserver, TickerProviderStateMixin{
-  // Final constructors
+  // Final for constructor
   final String emotion;
   _FaceDetectionFromLiveCameraState(this.emotion);
 
@@ -43,6 +50,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
   List e1;
   bool _faceFound = false;
   bool _isSmiling = false;
+  bool _showContent = false;
   //final TextEditingController _name = new TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -58,6 +66,14 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     _initializeCamera();
+    Timer(
+      Duration(seconds: 1),
+      (){
+        setState(() {
+          _showContent = true;
+        });
+      }
+    );
   }
 
   @override
@@ -151,10 +167,12 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
                   convertedImage, x.round(), y.round(), w.round(), h.round());
               croppedImage = imglib.copyResizeCropSquare(croppedImage, 112);
               // int startTime = new DateTime.now().millisecondsSinceEpoch;
+
               /* Uncomment these if you want to use face recognition, what I want to
                * Achieve here is FACE DETECTION not FACE RECOGNITION.
                *  res = _recog(croppedImage);
                */
+
               // int endTime = new DateTime.now().millisecondsSinceEpoch;
               // print("Inference took ${endTime - startTime}ms");
 
@@ -207,36 +225,50 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
 
   Widget _buildImage() {
     if (_camera == null || !_camera.value.isInitialized) {
-      return Center(
-        child: CircularProgressIndicator(),
+      return AnimatedOpacity(
+        opacity: _showContent ? 1.0 : 0.0,
+        duration: Duration(seconds: 1),
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
       );
     }
 
     return _camera == null
           ? const Center(child: null)
-          : Column(
-            children: [
-              Flexible(
-                flex: 4,
-                child: Container(
-                  child: Stack(
-                    fit: StackFit.expand,
-                      children: <Widget>[
-                            CameraPreview(_camera),
-                            // Uncomment if you will use bounding boxes to identify faces in the camera surface.
-                            _buildResults(),
-                          ],
+          : Stack(
+            children: <Widget>[
+
+              Container(
+                width: getWidth(context),
+                height: getHeight(context),
+              ),
+
+              Column(
+                children: [
+                  Flexible(
+                    flex: 4,
+                    child: Container(
+                      child: Stack(
+                        fit: StackFit.expand,
+                          children: <Widget>[
+                                CameraPreview(_camera),
+                                // Uncomment if you will use bounding boxes to identify faces in the camera surface.
+                                _buildResults(),
+                              ],
+                        ),
                     ),
-                ),
-              ),
+                  ),
 
-              Flexible(
-                flex: 1,
-                child: Container(
-                  color: Colors.white,
-                ),
-              ),
+                  Flexible(
+                    flex: 1,
+                    child: Container(
+                      color: Colors.white,
+                    ),
+                  ),
 
+                ],
+              )
             ],
           );
   }
@@ -295,82 +327,86 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
         ],
       ),*/
       body: _buildImage(),
-        floatingActionButton: Column(
-          children: [
-            Flexible(
-              flex: 5,
-              child: Container()
-            ),
+        floatingActionButton: AnimatedOpacity(
+          opacity: _showContent ? 1.0 : 0.0,
+          duration: Duration(seconds: 1),
+          child: Column(
+            children: [
+              Flexible(
+                flex: 5,
+                child: Container()
+              ),
 
-            Flexible(
-              flex: 1,
-              child: Container(
-                color: Colors.white,
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround, 
-                  children: [
-                    // Uncomment if you want face recognition
-                    /*FloatingActionButton(
-                      backgroundColor: (_faceFound) ? Colors.blue : Colors.blueGrey,
-                      child: Icon(Icons.add),
-                      onPressed: () {
-                        if (_faceFound) _addLabel();
-                      },
-                      heroTag: null,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),*/
-                    FloatingActionButton(
-                      backgroundColor: (_isSmiling && _faceFound) ? Colors.blue : Colors.grey,
-                      child: Icon(Icons.camera),
-                      onPressed: (){
-                        if (_isSmiling && _faceFound){onTakePictureButtonPressed();}
-                      }
-                    ),
-
-                    ConstrainedBox(
-                      constraints: BoxConstraints(minWidth: MediaQuery.of(context).size.width / 2.5, maxWidth: MediaQuery.of(context).size.width / 1.1),
-                      child: AnimatedSwitcher(
-                        duration: Duration(milliseconds: 500),
-                        child: (_isSmiling && _faceFound) ? Text(
-                          "Tap capture!",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'Nexa',
-                            fontWeight: FontWeight.w700,
-                            fontSize: getWidth(context) / 15,
-                            color: Colors.grey[600],
-                          ),
-                        ) :
-                        Text(
-                          "Smile!",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'Nexa',
-                            fontWeight: FontWeight.w700,
-                            fontSize: getWidth(context) / 15,
-                            color: Colors.grey[600],
-                          ),
-                        )
+              Flexible(
+                flex: 1,
+                child: Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround, 
+                    children: [
+                      // Uncomment if you want face recognition
+                      /*FloatingActionButton(
+                        backgroundColor: (_faceFound) ? Colors.blue : Colors.blueGrey,
+                        child: Icon(Icons.add),
+                        onPressed: () {
+                          if (_faceFound) _addLabel();
+                        },
+                        heroTag: null,
                       ),
-                    ),
+                      SizedBox(
+                        width: 10,
+                      ),*/
+                      FloatingActionButton(
+                        backgroundColor: (_isSmiling && _faceFound) ? Colors.blue : Colors.grey,
+                        child: Icon(Icons.camera),
+                        onPressed: (){
+                          if (_isSmiling && _faceFound){onTakePictureButtonPressed();}
+                        }
+                      ),
 
-                    FloatingActionButton(
-                      onPressed: _toggleCameraDirection,
-                      heroTag: null,
-                      child: _direction == CameraLensDirection.back
-                          ? const Icon(Icons.camera_front)
-                          : const Icon(Icons.camera_rear),
-                    ),
-                  ]
+                      ConstrainedBox(
+                        constraints: BoxConstraints(minWidth: MediaQuery.of(context).size.width / 2.5, maxWidth: MediaQuery.of(context).size.width / 1.1),
+                        child: AnimatedSwitcher(
+                          duration: Duration(milliseconds: 500),
+                          child: (_isSmiling && _faceFound) ? Text(
+                            "Tap capture!",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Nexa',
+                              fontWeight: FontWeight.w700,
+                              fontSize: getWidth(context) / 15,
+                              color: Colors.grey[600],
+                            ),
+                          ) :
+                          Text(
+                            "Smile!",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Nexa',
+                              fontWeight: FontWeight.w700,
+                              fontSize: getWidth(context) / 15,
+                              color: Colors.grey[600],
+                            ),
+                          )
+                        ),
+                      ),
+
+                      FloatingActionButton(
+                        onPressed: _toggleCameraDirection,
+                        heroTag: null,
+                        child: _direction == CameraLensDirection.back
+                            ? const Icon(Icons.camera_front)
+                            : const Icon(Icons.camera_rear),
+                      ),
+                    ]
+                  ),
                 ),
               ),
-            ),
 
-          ]
+            ]
       ),
+        ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }

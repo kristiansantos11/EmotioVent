@@ -1,3 +1,4 @@
+import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 import 'package:provider/provider.dart';
@@ -62,24 +63,22 @@ class _EVMainMenuState extends State<EVMainMenu> {
 
                 SizedBox(height: ResponsiveFlutter.of(context).scale(15),),
 
-                RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                  ),
-                  color: Colors.white,
-                  padding: EdgeInsets.fromLTRB(
-                    ResponsiveFlutter.of(context).scale(0),
-                    ResponsiveFlutter.of(context).scale(10),
-                    ResponsiveFlutter.of(context).scale(0),
-                    ResponsiveFlutter.of(context).scale(10)
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    shape: MaterialStateProperty.all<OutlinedBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                    ),
                   ),
                   onPressed: () {_signOut();},
                   child: Text(
                     "LOGOUT",
                     style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontStyle: FontStyle.normal,
+                      fontFamily: 'Nexa',
                       fontWeight: FontWeight.w700,
+                      color: Colors.black
                     ),
                   ),
                 ),
