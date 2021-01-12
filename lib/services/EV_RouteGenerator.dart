@@ -16,154 +16,6 @@ import 'package:emotiovent/services/EV_ActivityRandomizer.dart';
 
 import 'package:provider/provider.dart';
 
-Route<Null> authWrapperRoute(RouteSettings settings){
-  return PageRouteBuilder(
-    settings: RouteSettings(name: EVInitialScreen.routeName),
-    pageBuilder: (context, animation, secondaryAnimation){
-      return ListenableProvider(
-        create: (context) => animation,
-        child: EVInitialScreen(),
-      );
-    },
-    transitionDuration: const Duration(milliseconds: 400),
-  );
-}
-
-Route<Null> registrationRoute(RouteSettings settings){
-    String emotion = settings.arguments;
-    return PageRouteBuilder(
-      settings: RouteSettings(name: EVSignUp.routeName, arguments: emotion),
-      pageBuilder: (context, animation, secondaryAnimation){
-        return ListenableProvider(
-          create: (context) => animation,
-          child: EVSignUp(emotion: emotion),
-        );
-      },
-      transitionDuration: const Duration(milliseconds: 1000),
-      transitionsBuilder: (context, animation, secondAniamtion, child){
-        animation = CurvedAnimation(
-          curve: Curves.easeInOut, parent: animation
-        );
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      }
-    );
-}
-
-Route<Null> loginRoute(RouteSettings settings){
-  return PageRouteBuilder(
-      settings: RouteSettings(name: EVLogin.routeName), // To make popUntil work.
-      pageBuilder: (context, animation, secondaryAnimation){
-        return ListenableProvider(
-          create: (context) => animation,
-          child: EVLogin(),
-        );
-      },
-      transitionDuration: const Duration(milliseconds: 1000),
-      transitionsBuilder:(context, animation, secondAnimation, child){ // FadeAnimation executes the same time as Hero animation
-        animation = CurvedAnimation(
-            curve: Curves.easeInOut, parent: animation
-          );
-        return FadeTransition(
-          opacity:animation,
-          child: child,
-        );
-      }
-    );
-}
-
-Route<Null> chooseEmotionRoute(RouteSettings settings){
-  return PageRouteBuilder(
-      settings: RouteSettings(name: EVChooseEmotionScreen.routeName),
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return ListenableProvider(
-          create: (context) => animation,
-          child: EVChooseEmotionScreen(),
-        );
-      },
-      transitionDuration: const Duration(milliseconds: 1000),
-      transitionsBuilder: (context ,animation, secondAnimation, child){
-        animation = CurvedAnimation(
-          curve: Curves.easeInOut, parent: animation
-        );
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      }
-    );
-}
-
-Route<Null> activityRandomizerRoute(RouteSettings settings){
-  final String emotion = settings.arguments;
-    return PageRouteBuilder(
-      settings: RouteSettings(name: ActivityRandomizer.routeName),
-      pageBuilder: (context, animation, secondaryAnimation){
-        return ListenableProvider(
-          create: (context) => animation,
-          child: ActivityRandomizer(emotion: emotion),
-        );
-      },
-      transitionDuration: const Duration(milliseconds: 1000),
-      transitionsBuilder: (context, animation, secondAnimation, child){
-        animation = CurvedAnimation(
-          curve: Curves.easeInOut, parent: animation
-        );
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      }
-    );
-}
-
-Route<Null> satisfactoryRateRoute(RouteSettings settings){
-  String emotion = settings.arguments;
-    return PageRouteBuilder(
-      settings: RouteSettings(name: EVSatisfactoryRate.routeName),
-      pageBuilder: (context, animation, secondAnimation){
-        return ListenableProvider(
-          create: (context) => animation,
-          child: EVSatisfactoryRate(emotion: emotion),
-        );
-      },
-      transitionDuration: const Duration(milliseconds: 1000),
-      transitionsBuilder: (context, animation, secondAnimation, child){
-        animation = CurvedAnimation(
-          curve: Curves.easeInOut, parent: animation
-        );
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      }
-    );
-}
-
-Route<Null> cameraPreviewRoute(RouteSettings settings){
-  ScreenArguments args = settings.arguments;
-  return PageRouteBuilder(
-    settings: RouteSettings(name: EVSatisfactoryRate.routeName),
-    pageBuilder: (context, animation, secondAnimation){
-      return ListenableProvider(
-        create: (context) => animation,
-        child: CameraCapturePreview(emotion: args.emotion, imgPath: args.imgPath),
-      );
-    },
-    transitionDuration: const Duration(milliseconds: 1000),
-    transitionsBuilder: (context, animation, secondAnimation, child){
-      Animation<Offset> animationSlide;
-      animationSlide = Tween<Offset>(begin:Offset(1.0, 0),end: Offset.zero).animate(CurvedAnimation(curve: Curves.easeInOut, parent: animation));
-      return SlideTransition(
-        position: animationSlide,
-        child: child,
-      );
-    }
-  );
-}
-
 Route<Null> getGenerateRoute(RouteSettings settings){
   /*Map routes = {EVInitialScreen.routeName : authWrapperRoute(settings),
                 EVSignUp.routeName : registrationRoute(settings),
@@ -322,6 +174,155 @@ Route<Null> getGenerateRoute(RouteSettings settings){
   }
 }
 
+/*
+Route<Null> authWrapperRoute(RouteSettings settings){
+  return PageRouteBuilder(
+    settings: RouteSettings(name: EVInitialScreen.routeName),
+    pageBuilder: (context, animation, secondaryAnimation){
+      return ListenableProvider(
+        create: (context) => animation,
+        child: EVInitialScreen(),
+      );
+    },
+    transitionDuration: const Duration(milliseconds: 400),
+  );
+}
+
+Route<Null> registrationRoute(RouteSettings settings){
+    String emotion = settings.arguments;
+    return PageRouteBuilder(
+      settings: RouteSettings(name: EVSignUp.routeName, arguments: emotion),
+      pageBuilder: (context, animation, secondaryAnimation){
+        return ListenableProvider(
+          create: (context) => animation,
+          child: EVSignUp(emotion: emotion),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 1000),
+      transitionsBuilder: (context, animation, secondAniamtion, child){
+        animation = CurvedAnimation(
+          curve: Curves.easeInOut, parent: animation
+        );
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      }
+    );
+}
+
+Route<Null> loginRoute(RouteSettings settings){
+  return PageRouteBuilder(
+      settings: RouteSettings(name: EVLogin.routeName), // To make popUntil work.
+      pageBuilder: (context, animation, secondaryAnimation){
+        return ListenableProvider(
+          create: (context) => animation,
+          child: EVLogin(),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 1000),
+      transitionsBuilder:(context, animation, secondAnimation, child){ // FadeAnimation executes the same time as Hero animation
+        animation = CurvedAnimation(
+            curve: Curves.easeInOut, parent: animation
+          );
+        return FadeTransition(
+          opacity:animation,
+          child: child,
+        );
+      }
+    );
+}
+
+Route<Null> chooseEmotionRoute(RouteSettings settings){
+  return PageRouteBuilder(
+      settings: RouteSettings(name: EVChooseEmotionScreen.routeName),
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return ListenableProvider(
+          create: (context) => animation,
+          child: EVChooseEmotionScreen(),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 1000),
+      transitionsBuilder: (context ,animation, secondAnimation, child){
+        animation = CurvedAnimation(
+          curve: Curves.easeInOut, parent: animation
+        );
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      }
+    );
+}
+
+Route<Null> activityRandomizerRoute(RouteSettings settings){
+  final String emotion = settings.arguments;
+    return PageRouteBuilder(
+      settings: RouteSettings(name: ActivityRandomizer.routeName),
+      pageBuilder: (context, animation, secondaryAnimation){
+        return ListenableProvider(
+          create: (context) => animation,
+          child: ActivityRandomizer(emotion: emotion),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 1000),
+      transitionsBuilder: (context, animation, secondAnimation, child){
+        animation = CurvedAnimation(
+          curve: Curves.easeInOut, parent: animation
+        );
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      }
+    );
+}
+
+Route<Null> satisfactoryRateRoute(RouteSettings settings){
+  String emotion = settings.arguments;
+    return PageRouteBuilder(
+      settings: RouteSettings(name: EVSatisfactoryRate.routeName),
+      pageBuilder: (context, animation, secondAnimation){
+        return ListenableProvider(
+          create: (context) => animation,
+          child: EVSatisfactoryRate(emotion: emotion),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 1000),
+      transitionsBuilder: (context, animation, secondAnimation, child){
+        animation = CurvedAnimation(
+          curve: Curves.easeInOut, parent: animation
+        );
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      }
+    );
+}
+
+Route<Null> cameraPreviewRoute(RouteSettings settings){
+  ScreenArguments args = settings.arguments;
+  return PageRouteBuilder(
+    settings: RouteSettings(name: EVSatisfactoryRate.routeName),
+    pageBuilder: (context, animation, secondAnimation){
+      return ListenableProvider(
+        create: (context) => animation,
+        child: CameraCapturePreview(emotion: args.emotion, imgPath: args.imgPath),
+      );
+    },
+    transitionDuration: const Duration(milliseconds: 1000),
+    transitionsBuilder: (context, animation, secondAnimation, child){
+      Animation<Offset> animationSlide;
+      animationSlide = Tween<Offset>(begin:Offset(1.0, 0),end: Offset.zero).animate(CurvedAnimation(curve: Curves.easeInOut, parent: animation));
+      return SlideTransition(
+        position: animationSlide,
+        child: child,
+      );
+    }
+  );
+}
+*/
 
   // For AuthWrapper Route
   /*
