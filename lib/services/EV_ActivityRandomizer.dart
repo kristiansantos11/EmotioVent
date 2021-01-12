@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:emotiovent/activities/NoiseMeterSample.dart';
 import 'package:emotiovent/activities/ShakePhoneScreen.dart';
 import 'package:emotiovent/activities/ShakeShowAnimals.dart';
@@ -12,9 +11,8 @@ class ActivityRandomizer extends StatelessWidget {
   static const routeName = "/do_activity";
 
   final String emotion;
-  final List<CameraDescription> cameras;
 
-  const ActivityRandomizer({Key key, this.emotion, this.cameras}) : super(key: key);
+  const ActivityRandomizer({Key key, this.emotion}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +25,9 @@ class ActivityRandomizer extends StatelessWidget {
                               
     Random rand = new Random();
     int index = rand.nextInt(activities.length);
-    return activities[index];
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: activities[index]
+    );
   }
 }

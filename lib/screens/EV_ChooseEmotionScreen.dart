@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:emotiovent/models/ScreenArguments.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -392,7 +393,7 @@ class EmotionButton extends StatelessWidget{
                   ),
                   //minWidth: MediaQuery.of(context).size.width / 2.5,
                   //height: ResponsiveFlutter.of(context).hp(20),
-                  onPressed: () {Navigator.of(ctx).pushNamed(ActivityRandomizer.routeName, arguments: text);},
+                  onPressed: () {Navigator.of(ctx).pushNamed(ActivityRandomizer.routeName, arguments: ScreenArguments(emotion: text));},
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
                     child: Text(

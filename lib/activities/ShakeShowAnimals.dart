@@ -1,13 +1,13 @@
+import 'package:emotiovent/models/ScreenArguments.dart';
 import 'package:flutter/material.dart';
 
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:emotiovent/services/EV_FetchAnimalPictures.dart';
-import 'package:emotiovent/models/animalPicture.dart';
+import 'package:emotiovent/models/AnimalPicture.dart';
 import 'package:emotiovent/screens/EV_SatisfactoryRate.dart';
 
 import 'package:shake/shake.dart';
 
-import 'dart:math';
 import 'dart:async';
 
 class ShakeShowAnimals extends StatefulWidget {
@@ -173,7 +173,7 @@ class _ShakeShowAnimalsState extends State<ShakeShowAnimals> with TickerProvider
           icon: Icon(Icons.play_arrow),
           backgroundColor: Colors.orange[600],
           onPressed: () {
-            Navigator.of(context).pushNamed(EVSatisfactoryRate.routeName, arguments: emotion);
+            Navigator.of(context).pushNamed(EVSatisfactoryRate.routeName, arguments: ScreenArguments(emotion: emotion));
           }
         ),
       ),

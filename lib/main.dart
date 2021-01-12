@@ -1,5 +1,5 @@
-import 'screens/EV_Loading.dart';
-import 'screens/EV_AppError.dart';
+import 'screens/unused/EV_Loading.dart';
+import 'screens/unused/EV_AppError.dart';
 
 import 'package:flutter/material.dart';
 
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        initialRoute: EVAuthWrapper.routeName,
+        initialRoute: EVInitialScreen.routeName,
         
         // TODO: Move all routes into their respective generators inside the getGenerateRoute function.
         routes: {

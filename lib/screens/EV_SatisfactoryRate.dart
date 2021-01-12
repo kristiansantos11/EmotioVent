@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:emotiovent/models/ScreenArguments.dart';
 import 'package:emotiovent/screens/EV_SignUp.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "How satisfied are you with the activity?",
+                    "How satisfied are you with the activity? $emotion",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.green[600],
@@ -127,9 +128,9 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
                       ),
                       onPressed: () {
                         if(_currentSliderValue.round() < 50){
-                          Navigator.of(context).popAndPushNamed(ActivityRandomizer.routeName, arguments: emotion);
+                          Navigator.of(context).popAndPushNamed(ActivityRandomizer.routeName, arguments: ScreenArguments(emotion: emotion));
                         } else {
-                          Navigator.of(context).pushNamed(EVSignUp.routeName, arguments: emotion);
+                          Navigator.of(context).pushNamed(EVSignUp.routeName, arguments: ScreenArguments(emotion: emotion));
                         }
                       }
                     ),

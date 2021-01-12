@@ -71,6 +71,9 @@ dependencies:
 
   tflite_flutter: ^0.5.0
 
+  # Experimental. Will be removed soon if possible.
+  percent_indicator: ^2.1.9
+
   # For custom application icons (Gets rid of the default flutter icon.)
   flutter_launcher_icons: ^0.8.1
 

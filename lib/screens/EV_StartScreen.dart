@@ -233,8 +233,12 @@ class _EVStartScreenState extends State<EVStartScreen> {
               
 
             ]
-
-          )
+          ),
+          /*floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.navigate_next),
+            backgroundColor: Colors.green,
+            onPressed: () {Navigator.pushNamed(context, '/cameraPreview');}
+          ),*/
       ),
     );  
   }

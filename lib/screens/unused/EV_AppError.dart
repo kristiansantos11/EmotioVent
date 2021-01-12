@@ -1,3 +1,5 @@
+// UNUSED: App literally does this for you.
+
 import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 

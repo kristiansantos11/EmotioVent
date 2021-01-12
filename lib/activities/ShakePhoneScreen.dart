@@ -1,3 +1,4 @@
+import 'package:emotiovent/models/ScreenArguments.dart';
 import 'package:emotiovent/screens/EV_SatisfactoryRate.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,6 @@ import 'dart:async';
 class ShakePhoneActivity extends StatefulWidget {
 
   static const routeName = "/shake";
-
   final String emotion;
 
   const ShakePhoneActivity({Key key, this.emotion}) : super(key: key);
@@ -18,17 +18,12 @@ class ShakePhoneActivity extends StatefulWidget {
 }
 
 class _ShakePhoneActivityState extends State<ShakePhoneActivity> {
-
   final String emotion;
-
   _ShakePhoneActivityState(this.emotion);
 
   ShakeDetector detector;
   bool _showContent = false;
-
   int _shakeCounter = 30;
-
-  
 
   @override
   void initState(){
@@ -44,6 +39,7 @@ class _ShakePhoneActivityState extends State<ShakePhoneActivity> {
     );
 
     detector = ShakeDetector.autoStart(
+      shakeCountResetTime: 1000,
       onPhoneShake: () {
         setState(() {
           if(_shakeCounter > 0){
@@ -52,7 +48,7 @@ class _ShakePhoneActivityState extends State<ShakePhoneActivity> {
         });
         // Do stuff on phone shake
         if (_shakeCounter == 0){
-          Navigator.of(context).popAndPushNamed(EVSatisfactoryRate.routeName, arguments: emotion);
+          Navigator.of(context).pushNamed(EVSatisfactoryRate.routeName, arguments: ScreenArguments(emotion: emotion));
         }
       }
     );

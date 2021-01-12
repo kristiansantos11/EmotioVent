@@ -4,22 +4,24 @@
  *          function in the future that involves face RECOGNITION and DETECTION
 */
 
+import 'package:emotiovent/models/ScreenArguments.dart';
+import 'package:emotiovent/screens/CameraCapturePreview.dart';
 import 'package:emotiovent/screens/EV_SatisfactoryRate.dart';
-import 'package:emotiovent/services/EV_CameraFaceDetectionUtil.dart';
+import 'package:emotiovent/services/EV_CameraProcessUtil.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/foundation.dart';
-import 'package:emotiovent/services/EV_FaceBorderPainter.dart';
+//import 'package:emotiovent/services/EV_FaceBorderPainter.dart';
 
 import 'dart:async';
 import 'package:gallery_saver/gallery_saver.dart';
-import 'dart:convert';
+//import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-import 'package:image/image.dart' as imglib;
-import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
+//import 'package:image/image.dart' as imglib;
+//import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 import 'package:quiver/collection.dart';
 import 'package:flutter/services.dart';
 
@@ -39,7 +41,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
 
   XFile imageFile;
   File jsonFile;
-  dynamic _scanResults;
+  //dynamic _scanResults;
   CameraController _camera;
   var interpreter;
   bool _isDetecting = false;
@@ -99,7 +101,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
     }
   }
 
-  Future loadModel() async {
+  /*Future loadModel() async {
     try {
       final gpuDelegateV2 = tfl.GpuDelegateV2(
           options: tfl.GpuDelegateOptionsV2(
@@ -117,10 +119,10 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
     } on Exception {
       print('Failed to load model.');
     }
-  }
+  }*/
 
   void _initializeCamera() async {
-    await loadModel();
+    //await loadModel();
     CameraDescription description = await getCamera(_direction);
 
     ImageRotation rotation = rotationIntToImageRotation(
@@ -132,9 +134,9 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
     await _camera.initialize();
     await Future.delayed(Duration(milliseconds: 500));
     tempDir = await getApplicationDocumentsDirectory();
-    String _embPath = tempDir.path + '/emb.json';
+    /*String _embPath = tempDir.path + '/emb.json';
     jsonFile = new File(_embPath);
-    if (jsonFile.existsSync()) data = json.decode(jsonFile.readAsStringSync());
+    if (jsonFile.existsSync()) data = json.decode(jsonFile.readAsStringSync());*/
 
     _camera.startImageStream((CameraImage image) {
       if (_camera != null) {
@@ -150,15 +152,15 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
             else
               _faceFound = true;
             Face _face;
-            imglib.Image convertedImage =
-                _convertCameraImage(image, _direction);
+            /*imglib.Image convertedImage =
+                _convertCameraImage(image, _direction);*/
             for (_face in result) {
               if (_face.smilingProbability > 0.5){
                 _isSmiling = true;
               } else{
                 _isSmiling = false;
               }
-              double x, y, w, h;
+              /*double x, y, w, h;
               x = (_face.boundingBox.left - 10);
               y = (_face.boundingBox.top - 10);
               w = (_face.boundingBox.width + 10);
@@ -166,6 +168,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
               imglib.Image croppedImage = imglib.copyCrop(
                   convertedImage, x.round(), y.round(), w.round(), h.round());
               croppedImage = imglib.copyResizeCropSquare(croppedImage, 112);
+              */
               // int startTime = new DateTime.now().millisecondsSinceEpoch;
 
               /* Uncomment these if you want to use face recognition, what I want to
@@ -179,9 +182,9 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
               // Replace "FACE" with res to make FACE RECOGNITION WORK.
               finalResult.add("FACE", _face);
             }
-            setState(() {
+            /*setState(() {
               _scanResults = finalResult;
-            });
+            });*/
 
             _isDetecting = false;
           },
@@ -204,7 +207,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
     return faceDetector.processImage;
   }
   // Uncomment if you will use bounding boxes to identify faces in the camera surface.
-  Widget _buildResults() {
+  /*Widget _buildResults() {
     const Text noResultsText = const Text('');
     if (_scanResults == null ||
         _camera == null ||
@@ -221,7 +224,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
     return CustomPaint(
       painter: painter,
     );
-  }
+  }*/
 
   Widget _buildImage() {
     if (_camera == null || !_camera.value.isInitialized) {
@@ -254,7 +257,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
                           children: <Widget>[
                                 CameraPreview(_camera),
                                 // Uncomment if you will use bounding boxes to identify faces in the camera surface.
-                                _buildResults(),
+                                //_buildResults(),
                               ],
                         ),
                     ),
@@ -340,6 +343,10 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
               Flexible(
                 flex: 1,
                 child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    
+                  ),
                   color: Colors.white,
                   padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                   child: Row(
@@ -411,7 +418,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
     );
   }
 
-  imglib.Image _convertCameraImage(CameraImage image, CameraLensDirection _dir) {
+  /*imglib.Image _convertCameraImage(CameraImage image, CameraLensDirection _dir) {
     int width = image.width;
     int height = image.height;
     // imglib -> Image package from https://pub.dartlang.org/packages/image
@@ -442,7 +449,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
         ? imglib.copyRotate(img, -90)
         : imglib.copyRotate(img, 90);
     return img1;
-  }
+  }*/
 
 /*
   String _recog(imglib.Image img) {
@@ -615,7 +622,10 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
           GallerySaver.saveImage(file.path, albumName: 'Camera').then((bool success){
             showInSnackBar('Picture saved to ${file.path}');
           }).then((bool success){
-            Navigator.of(context).popAndPushNamed(EVSatisfactoryRate.routeName, arguments: emotion);
+            Navigator.of(context).pushNamed(
+              CameraCapturePreview.routeName, 
+              arguments: ScreenArguments(emotion: emotion, imgPath: file.path)
+            );
           });
         }
       }
