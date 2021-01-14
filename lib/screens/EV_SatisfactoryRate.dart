@@ -62,7 +62,7 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "How satisfied are you with the activity? $emotion",
+                    "How satisfied are you with the activity?",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.green[600],

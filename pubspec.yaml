@@ -180,6 +180,29 @@ flutter:
           weight: 700
         - asset: assets/font/nexa/Nexa-Light.otf
           weight: 100
+    - family: Proxima Nova
+      fonts:
+        - asset: assets/font/proxima_nova/Proxima Nova Regular.otf
+          style: normal
+        - asset: assets/font/proxima_nova/Proxima Nova Bold.otf
+          weight: 700
+          style: normal
+        - asset: assets/font/proxima_nova/Proxima Nova Thin.otf
+          weight: 100
+          style: normal
+        - asset: assets/font/proxima_nova/Proxima Nova Alt Light.otf
+          weight: 200
+          style: normal
+        - asset: assets/font/proxima_nova/Proxima Nova Italic.otf
+          style: italic
+        - asset: assets/font/proxima_nova/Proxima Nova Extrabold.otf
+          weight: 800
+          style: normal
+        - asset: assets/font/proxima_nova/Proxima Nova Black.otf
+          weight: 900
+          style: normal
+        
+
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

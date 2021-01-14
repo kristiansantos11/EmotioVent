@@ -8,6 +8,7 @@ import 'package:emotiovent/models/ScreenArguments.dart';
 import 'package:emotiovent/screens/CameraCapturePreview.dart';
 import 'package:emotiovent/screens/EV_SatisfactoryRate.dart';
 import 'package:emotiovent/services/EV_CameraProcessUtil.dart';
+import 'package:emotiovent/services/EV_FaceBorderPainter.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
@@ -41,7 +42,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
 
   XFile imageFile;
   File jsonFile;
-  //dynamic _scanResults;
+  dynamic _scanResults;
   CameraController _camera;
   var interpreter;
   bool _isDetecting = false;
@@ -182,9 +183,9 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
               // Replace "FACE" with res to make FACE RECOGNITION WORK.
               finalResult.add("FACE", _face);
             }
-            /*setState(() {
+            setState(() {
               _scanResults = finalResult;
-            });*/
+            });
 
             _isDetecting = false;
           },
@@ -207,7 +208,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
     return faceDetector.processImage;
   }
   // Uncomment if you will use bounding boxes to identify faces in the camera surface.
-  /*Widget _buildResults() {
+  Widget _buildResults() {
     const Text noResultsText = const Text('');
     if (_scanResults == null ||
         _camera == null ||
@@ -224,7 +225,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
     return CustomPaint(
       painter: painter,
     );
-  }*/
+  }
 
   Widget _buildImage() {
     if (_camera == null || !_camera.value.isInitialized) {
@@ -257,7 +258,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
                           children: <Widget>[
                                 CameraPreview(_camera),
                                 // Uncomment if you will use bounding boxes to identify faces in the camera surface.
-                                //_buildResults(),
+                                _buildResults(),
                               ],
                         ),
                     ),
@@ -343,10 +344,6 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
               Flexible(
                 flex: 1,
                 child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    
-                  ),
                   color: Colors.white,
                   padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                   child: Row(

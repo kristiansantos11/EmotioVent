@@ -27,7 +27,7 @@ class ActivityRandomizer extends StatelessWidget {
     int index = rand.nextInt(activities.length);
     return WillPopScope(
       onWillPop: () async => false,
-      child: activities[index]
+      child: activities[3]
     );
   }
 }
