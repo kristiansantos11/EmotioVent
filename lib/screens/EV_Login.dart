@@ -136,6 +136,7 @@ class _EVLoginState extends State<EVLogin> {
                                 "Welcome back to emotiovent!",
                                 style: TextStyle(
                                   fontFamily: 'Proxima Nova',
+                                  fontStyle: FontStyle.normal,
                                   fontSize: ResponsiveFlutter.of(context).scale(12),
                                   color: Colors.grey[600]
                                 ),

@@ -54,11 +54,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-/* 
- * Okay before you get triggered by the length of the elseif statements you are about to witness:
- * My plans for this part is to put all of the PageRouteBuilder along with their respecitve name settings inside a dictionary
- * However, it will require a separate file.
- */
-
-
-

@@ -1,6 +1,8 @@
+import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
+import 'package:emotiovent/screens/clipper/CustomShapeClipper.dart';
+import 'package:emotiovent/screens/widgets/ProfileCard.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_flutter/responsive_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../services/EV_AuthService.dart';
@@ -13,6 +15,8 @@ class EVMainMenu extends StatefulWidget {
 
 class _EVMainMenuState extends State<EVMainMenu> {
 
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   void _signOut(){
     context.read<AuthenticationService>().signOut();
   }
@@ -22,81 +26,149 @@ class _EVMainMenuState extends State<EVMainMenu> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        body: Stack(
-          children: <Widget>[
-            Container(
+        key: _scaffoldKey,
+        drawer: Drawer(
+          child: ListView(
+            children: <Widget>[
+              DrawerHeader(
+                child: Align(
+                  alignment: Alignment.bottomLeft, 
+                  child: Text(
+                    "emotiovent", 
+                    style: TextStyle(
+                      color: Colors.white, 
+                      fontFamily: 'Nexa', 
+                      fontWeight: FontWeight.w700,
+                      fontSize: 40,
+                    )
+                  )
+                ),
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/img/MainMenu.jpg"), fit: BoxFit.cover
+                    fit: BoxFit.fill,
+                    image: AssetImage('assets/img/StartScreenBG.jpg')
                   )
                 ),
               ),
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text("Settings"),
+                onTap: (){
 
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  tileMode: TileMode.repeated,
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: <Color>[
-                    Colors.grey.withAlpha(25),
-                    Colors.black87,
-                  ]
-                )
+                }
+              ),
+              ListTile(
+                leading: Icon(Icons.contacts),
+                title: Text("Trusted Contacts"),
+                onTap: (){
+
+                }
+              ),
+              ListTile(
+                leading: Icon(Icons.message_rounded),
+                title: Text("Messages"),
+                onTap: (){
+
+                }
+              ),
+              ListTile(
+                leading: Icon(Icons.logout),
+                title: Text("Logout"),
+                onTap: (){
+                  _signOut();
+                }
+              ),
+            ]
+          )
+        ),
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.white,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+
+              Padding(
+                padding: EdgeInsets.fromLTRB(getWidth(context) / 35, 0, 0, 0),
+                child: IconButton(
+                  iconSize: 50,
+                  icon: Icon(Icons.menu),
+                  onPressed: (){
+                    _scaffoldKey.currentState.openDrawer();
+                  }
+                ),
+              ),
+
+              Padding(
+                padding: EdgeInsets.fromLTRB(getWidth(context) / 35, 0, getWidth(context) / 35, 0),
+                child: Container(
+                  width: 30,
+                  height: 30,
+                  child: Image(
+                    image: AssetImage('assets/img/emotiovent_icon_final.png')
+                  ),
+                ),
+              ),
+
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, getWidth(context) / 35, 0),
+                child: Hero(
+                  tag: 'register',
+                  child: TextButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.green[300]),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))
+                      ),
+                    ),
+                    child: Text("VENT", style: TextStyle(color: Colors.white, fontFamily: 'Nexa', fontWeight: FontWeight.w700)),
+                    onPressed: (){Navigator.of(context).pushNamed(EVChooseEmotionScreen.routeName);}
+                  ),
+                ),
+              ),
+          
+            ],
+          )
+        ),
+
+        body: Stack(
+          children: <Widget>[
+
+            ClipPath(
+              clipper: CustomShapeClipper(),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [Color(0xfff6afaf), Color(0xfff6afaf)]),
+                ),
+                height: getHeight(context) / 2,
+                width: getWidth(context),
               ),
             ),
 
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
+            SafeArea(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
 
-                Text(
-                  "Emotiovent is currently in-development.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: ResponsiveFlutter.of(context).scale(20),
-                    fontFamily: 'Nexa',
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  )
-                ),
-
-                SizedBox(height: ResponsiveFlutter.of(context).scale(15),),
-
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                    shape: MaterialStateProperty.all<OutlinedBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
+                  Flexible(
+                    flex: 4,
+                    child: Container(
+                      constraints: BoxConstraints.expand(),
+                      alignment: Alignment.center,
+                      child: profileCard(
+                        context: context,
                       ),
-                    ),
+                    )
                   ),
-                  onPressed: () {_signOut();},
-                  child: Text(
-                    "LOGOUT",
-                    style: TextStyle(
-                      fontFamily: 'Nexa',
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black
-                    ),
-                  ),
-                ),
 
-                SizedBox(height: ResponsiveFlutter.of(context).scale(15),),
+                  Flexible(
+                    flex: 5,
+                    child: Container(
 
-                Text(
-                  "Please check back later!",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: ResponsiveFlutter.of(context).scale(12),
-                    fontFamily: 'Nexa',
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
+                    )
                   )
-                ),
 
-              ]
+                ]
+              ),
             ),
 
           ],
