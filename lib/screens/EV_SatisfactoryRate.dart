@@ -57,77 +57,77 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
       body: Stack(
         children: <Widget>[
 
-          AnimatedOpacity(
-            opacity: _showContent ? 1.0 : 0.0,
-            duration: Duration(seconds: 1),
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "How satisfied are you with the activity?",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.green[600],
-                      fontFamily: 'Aileron',
-                      fontStyle: FontStyle.normal,
-                      fontSize: getWidth(context) / 15,
-                    ),
-                  ),
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage('assets/img/satisfaction-rate-bg.jpg'),
+              ),
+            ),
+          ),
 
-                  SizedBox(
-                    height: getHeight(context) / 12,
-                  ),
-
-                   Slider(
-                    inactiveColor: Colors.green[100],
-                    activeColor: Colors.green[400],
-                    value: _currentSliderValue,
-                    min: _minSliderValue,
-                    max: _maxSliderValue,
-                    divisions: 10,
-                    label: _currentSliderValue.round().toString(),
-                    onChanged: (double value) {
-                      setState(() {
-                        _currentSliderValue = value;
-                      });
-                    },
-                  ),
-
-                  Text(
-                    "Drag the slider from left (0) to right (100)",
-                    style: TextStyle(
-                      color: Colors.grey[700],
-                      fontFamily: 'Roboto',
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w100,
-                      fontSize: 12,
-                    ),
-                  ),
-
-                  SizedBox(
-                    height: getHeight(context) / 12,
-                  ),
-
-                  ButtonTheme(
-                    buttonColor: Colors.green[500],
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0)
-                          )
-                        ),
-                      ),
+          SafeArea(
+            child: AnimatedOpacity(
+              opacity: _showContent ? 1.0 : 0.0,
+              duration: Duration(seconds: 1),
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.fromLTRB(getWidth(context) / 10,0,getWidth(context) / 10,0),
                       child: Text(
-                        "NEXT",
+                        "How satisfied are you with the activity?",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Roboto',
+                          color: Colors.green[600],
+                          fontFamily: 'Aileron',
                           fontStyle: FontStyle.normal,
-                          fontSize: getWidth(context) / 27,
+                          fontSize: getWidth(context) / 15,
                         ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: getHeight(context) / 25,
+                    ),
+
+                     Slider(
+                      inactiveColor: Colors.green[100],
+                      activeColor: Colors.green[400],
+                      value: _currentSliderValue,
+                      min: _minSliderValue,
+                      max: _maxSliderValue,
+                      divisions: 10,
+                      label: _currentSliderValue.round().toString(),
+                      onChanged: (double value) {
+                        setState(() {
+                          _currentSliderValue = value;
+                        });
+                      },
+                    ),
+
+                    Text(
+                      "Drag the slider from left (0) to right (100)",
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                        fontFamily: 'Roboto',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w100,
+                        fontSize: 12,
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: getHeight(context) / 12,
+                    ),
+
+                    ElevatedButton(
+                      child: Icon(Icons.navigate_next),
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all(Size(45, 45)),
+                        backgroundColor: MaterialStateProperty.all(Colors.green[500]),
+                        shape: MaterialStateProperty.all(CircleBorder())
                       ),
                       onPressed: () {
                         if(_currentSliderValue.round() < 50){
@@ -141,8 +141,8 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
                         }
                       }
                     ),
-                  )
-                ]
+                  ]
+                ),
               ),
             ),
           ),

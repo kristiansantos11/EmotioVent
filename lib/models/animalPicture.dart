@@ -1,3 +1,6 @@
+// For retrieving Animal Picture JSON
+// just retrieves the hash map from some-random-api.ml website
+
 class AnimalPicture{
   final String link;
 

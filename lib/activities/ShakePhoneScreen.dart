@@ -39,7 +39,7 @@ class _ShakePhoneActivityState extends State<ShakePhoneActivity> {
     );
 
     detector = ShakeDetector.autoStart(
-      shakeCountResetTime: 1000,
+      shakeCountResetTime: 500,
       onPhoneShake: () {
         setState(() {
           if(_shakeCounter > 0){
@@ -79,6 +79,20 @@ class _ShakePhoneActivityState extends State<ShakePhoneActivity> {
           AnimatedOpacity(
             opacity: _showContent ? 1.0 : 0.0,
             duration: const Duration(milliseconds: 500),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  alignment: Alignment(-0.4, 1),
+                  image: AssetImage('assets/img/shake-phone-bg.jpg')
+                ),
+              ),
+            ),
+          ),
+
+          AnimatedOpacity(
+            opacity: _showContent ? 1.0 : 0.0,
+            duration: const Duration(milliseconds: 500),
             child: SafeArea(
               child: Container(
               alignment: Alignment.center,
@@ -88,15 +102,35 @@ class _ShakePhoneActivityState extends State<ShakePhoneActivity> {
                   children: <Widget>[
 
                       Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "You need to shake this phone:",
-                          style: TextStyle(
-                            fontFamily: 'Aileron'
+                        width: getWidth(context) / 6,
+                        height: getWidth(context) / 6,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: AssetImage('assets/img/shake-phone.png'),
                           ),
                         ),
                       ),
 
+                      SizedBox(
+                        height: getWidth(context) / 15,
+                      ),
+
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "You need to shake\nthis phone:",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'Aileron',
+                            fontSize: getWidth(context) / 20,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        height: getWidth(context) / 15,
+                      ),
 
                       Stack(
                         children: [
@@ -112,7 +146,8 @@ class _ShakePhoneActivityState extends State<ShakePhoneActivity> {
                                     color: Colors.grey[700],
                                     fontFamily: 'Roboto',
                                     fontWeight: FontWeight.w900, 
-                                    fontSize: ResponsiveFlutter.of(context).scale(75)
+                                    fontSize: ResponsiveFlutter.of(context).scale(125),
+                                    height: 1,
                                   ),
                                   children: <TextSpan>[
                                     TextSpan(
@@ -121,6 +156,7 @@ class _ShakePhoneActivityState extends State<ShakePhoneActivity> {
                                         fontFamily: 'Roboto',
                                         fontSize: ResponsiveFlutter.of(context).scale(24),
                                         fontWeight: FontWeight.normal,
+                                        height: 0.5,
                                       ),
                                     ),
                                   ]
@@ -128,7 +164,11 @@ class _ShakePhoneActivityState extends State<ShakePhoneActivity> {
                               )
                           ),
                         ],
-                      )
+                      ),
+
+                      SizedBox(
+                        height: getHeight(context) / 5,
+                      ),
 
                   ],
                 )
