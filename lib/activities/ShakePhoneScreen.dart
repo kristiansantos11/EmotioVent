@@ -86,61 +86,50 @@ class _ShakePhoneActivityState extends State<ShakePhoneActivity> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Flexible(
-                      flex: 3,
-                      child: Container(
-                        alignment: Alignment.topCenter,
+
+                      Container(
+                        alignment: Alignment.center,
                         child: Text(
                           "You need to shake this phone:",
                           style: TextStyle(
                             fontFamily: 'Aileron'
                           ),
                         ),
-                      )
-                    ),
-
-                    Flexible(
-                      flex: 6,
-                      child: Container(
-                        alignment: Alignment.topCenter,
-                        child: 
-                          RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(
-                              text: "$_shakeCounter\n",
-                              style: TextStyle(
-                                color: Colors.grey[700],
-                                fontFamily: 'Roboto',
-                                fontWeight: FontWeight.w900, 
-                                fontSize: ResponsiveFlutter.of(context).scale(75)
-                              ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: "times",
-                                  style: TextStyle(
-                                    fontFamily: 'Roboto',
-                                    fontSize: ResponsiveFlutter.of(context).scale(24),
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                              ]
-                            ),
-                          )
-                      )
-                    ),
-
-                    Flexible(
-                      flex: 7,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Colors.red[300]),
-                        ),
-                        child: Text("Back", style: TextStyle(color: Colors.white)),
-                        onPressed: (){
-                          Navigator.pop(context);
-                        },
                       ),
-                    )
+
+
+                      Stack(
+                        children: [
+
+                          Container(
+                            alignment: Alignment.center,
+                            child: 
+                              RichText(
+                                textAlign: TextAlign.center,
+                                text: TextSpan(
+                                  text: "$_shakeCounter\n",
+                                  style: TextStyle(
+                                    color: Colors.grey[700],
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w900, 
+                                    fontSize: ResponsiveFlutter.of(context).scale(75)
+                                  ),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: "times",
+                                      style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: ResponsiveFlutter.of(context).scale(24),
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ]
+                                ),
+                              )
+                          ),
+                        ],
+                      )
+
                   ],
                 )
               ),

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "26177840411",
+    "firebase_url": "https://emotiovent.firebaseio.com",
+    "project_id": "emotiovent",
+    "storage_bucket": "emotiovent.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:26177840411:android:62e22b9556db366d35dfbe",
+        "android_client_info": {
+          "package_name": "com.seven.emotiovent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "26177840411-7bbg52gcj0ik15cfro39u9cf3nsm22nt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.seven.emotiovent",
+            "certificate_hash": "6e6d05e46764e76b8dbec40a27cbbd4507f63d50"
+          }
+        },
+        {
+          "client_id": "26177840411-7tr03ukv0d9tbit600ps03b4tgv1nf2k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv4bwNrIL99LRc5t8KUOYXUUPCYI2r-Rw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "26177840411-7tr03ukv0d9tbit600ps03b4tgv1nf2k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

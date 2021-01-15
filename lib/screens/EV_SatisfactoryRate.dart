@@ -5,7 +5,6 @@ import 'package:emotiovent/screens/EV_InitialScreen.dart';
 import 'package:emotiovent/screens/EV_SignUp.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_flutter/responsive_flutter.dart';
 import 'package:emotiovent/services/EV_ActivityRandomizer.dart';
 
 import 'package:provider/provider.dart';

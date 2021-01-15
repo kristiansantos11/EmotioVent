@@ -82,7 +82,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
   @override
   void dispose(){
     WidgetsBinding.instance.removeObserver(this);
-    _camera.dispose();
+    //_camera.dispose();
     setState((){_camera = null;});
     super.dispose();
   }
@@ -619,6 +619,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
           GallerySaver.saveImage(file.path, albumName: 'Camera').then((bool success){
             showInSnackBar('Picture saved to ${file.path}');
           }).then((bool success){
+            _camera.dispose();
             Navigator.of(context).pushNamed(
               CameraCapturePreview.routeName, 
               arguments: ScreenArguments(emotion: emotion, imgPath: file.path)

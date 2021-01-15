@@ -12,21 +12,10 @@ class EVStartScreen extends StatefulWidget {
 }
 
 class _EVStartScreenState extends State<EVStartScreen> {
-  bool showContent = false;
-
-  @override
-  void initState(){
-    super.initState();
-
-    Timer(
-      Duration(seconds: 2), 
-      () => {
-        setState((){
-          showContent = true;
-        })
-      }
-    );
-  }
+  // This was supposed to be used along with animatedOpacity
+  // However, the setState inside the initState method was being called miraculously
+  // I had to scrape the animation.
+  bool showContent = true;
 
   @override
   Widget build(BuildContext context) {
