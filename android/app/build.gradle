@@ -60,6 +60,12 @@ flutter {
 }
 
 dependencies {
+    api 'com.google.firebase:firebase-ml-vision-face-model:20.0.2'
+    implementation 'com.google.android.gms:play-services-vision:20.1.1'
+    implementation 'com.google.android.gms:play-services-vision-common:19.1.1'
+    implementation 'com.google.android.gms:play-services-vision-image-label:18.0.5'
+    implementation 'com.google.android.gms:play-services-vision-face-contour-internal:16.0.2'
+
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth'
@@ -68,3 +74,19 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
+// WORKING DEPENCIES (however there was no face painted.):
+/*dependencies {
+    implementation 'com.google.android.gms:play-services-vision:20.1.2'
+    implementation 'com.google.android.gms:play-services-vision-common:19.1.2'
+    implementation 'com.google.android.gms:play-services-vision-image-label:18.1.0'
+    implementation 'com.google.android.gms:play-services-vision-face-contour-internal:16.0.3'
+    implementation 'com.google.firebase:firebase-ml-vision-face-model:20.0.2'
+
+    implementation platform('com.google.firebase:firebase-bom:26.1.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth'
+
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}*/

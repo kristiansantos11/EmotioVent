@@ -1,10 +1,15 @@
 import 'dart:async';
 
+import 'package:emotiovent/models/ScreenArguments.dart';
+import 'package:emotiovent/screens/EV_InitialScreen.dart';
 import 'package:emotiovent/screens/EV_SignUp.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 import 'package:emotiovent/services/EV_ActivityRandomizer.dart';
+
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class EVSatisfactoryRate extends StatefulWidget {
 
@@ -22,7 +27,6 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
   final String emotion;
 
   _EVSatisfactoryRateState(this.emotion);
-
 
   final double _minSliderValue = 0;
   final double _maxSliderValue = 100;
@@ -49,6 +53,7 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
 
   @override
   Widget build(BuildContext context) {
+    final firebaseUser = context.watch<User>();
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -72,7 +77,7 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
                   ),
 
                   SizedBox(
-                    height: getHeight(context) / 8,
+                    height: getHeight(context) / 12,
                   ),
 
                    Slider(
@@ -90,14 +95,31 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
                     },
                   ),
 
+                  Text(
+                    "Drag the slider from left (0) to right (100)",
+                    style: TextStyle(
+                      color: Colors.grey[700],
+                      fontFamily: 'Roboto',
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w100,
+                      fontSize: 12,
+                    ),
+                  ),
+
                   SizedBox(
-                    height: getHeight(context) / 8,
+                    height: getHeight(context) / 12,
                   ),
 
                   ButtonTheme(
                     buttonColor: Colors.green[500],
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0)
+                          )
+                        ),
+                      ),
                       child: Text(
                         "NEXT",
                         textAlign: TextAlign.center,
@@ -110,9 +132,13 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
                       ),
                       onPressed: () {
                         if(_currentSliderValue.round() < 50){
-                          Navigator.of(context).popAndPushNamed(ActivityRandomizer.routeName, arguments: emotion);
+                          Navigator.of(context).popAndPushNamed(ActivityRandomizer.routeName, arguments: ScreenArguments(emotion: emotion));
                         } else {
-                          Navigator.of(context).pushNamed(EVSignUp.routeName, arguments: emotion);
+                          if(firebaseUser == null){
+                            Navigator.of(context).pushNamed(EVSignUp.routeName, arguments: ScreenArguments(emotion: emotion));
+                          } else {
+                            Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
+                          }
                         }
                       }
                     ),

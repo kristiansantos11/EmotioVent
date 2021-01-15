@@ -4,7 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:emotiovent/models/cute_animal_img.dart';
+import 'package:emotiovent/models/AnimalPicture.dart';
 
 Future<List<AnimalPicture>> fetchAnimalPictures() async {
   List<String> links = ['https://some-random-api.ml/img/dog',
@@ -16,7 +16,7 @@ Future<List<AnimalPicture>> fetchAnimalPictures() async {
   Random random = new Random();
   List<AnimalPicture> animalPictures = [];
 
-  for(int x=0; x< 30;x++){
+  for(int x=0; x< 12;x++){
     final response =
       await http.get(links[random.nextInt(links.length)]);
 

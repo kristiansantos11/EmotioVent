@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 
@@ -134,7 +135,8 @@ class _EVLoginState extends State<EVLogin> {
                               Text(
                                 "Welcome back to emotiovent!",
                                 style: TextStyle(
-                                  fontFamily: 'Helvetica',
+                                  fontFamily: 'Proxima Nova',
+                                  fontStyle: FontStyle.normal,
                                   fontSize: ResponsiveFlutter.of(context).scale(12),
                                   color: Colors.grey[600]
                                 ),
@@ -219,55 +221,67 @@ class _EVLoginState extends State<EVLogin> {
                                     alignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       
-                                      ButtonTheme(
-                                        minWidth: ResponsiveFlutter.of(context).wp(20.0),
-                                        height: ResponsiveFlutter.of(context).hp(4.8),
-                                        child: 
-                                          FlatButton(
-                                            minWidth: ResponsiveFlutter.of(context).scale(20.0),
-                                            height: ResponsiveFlutter.of(context).hp(4.8),
-                                            shape: RoundedRectangleBorder(
+                                       
+                                      TextButton(
+                                        style: ButtonStyle(
+                                          shape: MaterialStateProperty.all(
+                                            RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
                                               side: BorderSide(color: Color(0xff53B6AF))
                                             ),
-                                            onPressed: () {backButtonPressed(context);},
-                                            child: Text(
-                                              "BACK",
-                                              style: TextStyle(
-                                                letterSpacing: 0,
-                                                fontFamily: 'Roboto',
-                                                fontSize: ResponsiveFlutter.of(context).scale(14),
-                                                fontWeight: FontWeight.w700,
-                                                fontStyle: FontStyle.normal,
-                                                color: Color(0xff53B6AF),
-                                              ),
-                                            ),
                                           ),
-                                      ),
-
-
-                                      ButtonTheme(
-                                        minWidth: ResponsiveFlutter.of(context).wp(20.0),
-                                        height: ResponsiveFlutter.of(context).hp(4.8),
-                                        child: RaisedButton(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
+                                        ),
+                                        //minWidth: ResponsiveFlutter.of(context).scale(20.0),
+                                        //height: ResponsiveFlutter.of(context).hp(4.8),
+                                        onPressed: () {backButtonPressed(context);},
+                                        child: Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                            getWidth(context)/90,
+                                            getWidth(context)/500,
+                                            getWidth(context)/90,
+                                            getWidth(context)/500,
                                           ),
-                                          color: Color(0xff53B6AF),
-                                          onPressed: () {_signInWithEmailAndPassword(context);},
                                           child: Text(
-                                            "LOGIN",
+                                            "BACK",
                                             style: TextStyle(
                                               letterSpacing: 0,
                                               fontFamily: 'Roboto',
                                               fontSize: ResponsiveFlutter.of(context).scale(14),
-                                              fontWeight: FontWeight.w500,
+                                              fontWeight: FontWeight.w700,
                                               fontStyle: FontStyle.normal,
-                                              color: Colors.white,
-                                            )
+                                              color: Color(0xff53B6AF),
+                                            ),
                                           ),
                                         ),
-                                      )
+                                      ),
+
+
+
+                                      ElevatedButton(
+                                        style: ButtonStyle(
+                                          elevation: MaterialStateProperty.all(3.0),
+                                          shape: MaterialStateProperty.all<OutlinedBorder>(
+                                            RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
+                                            ),
+                                          ),
+                                          backgroundColor: MaterialStateProperty.all<Color>(Color(0xff53B6AF))
+                                        ),
+                                        
+                                        onPressed: () {_signInWithEmailAndPassword(context);},
+                                        child: Text(
+                                          "LOGIN",
+                                          style: TextStyle(
+                                            letterSpacing: 0,
+                                            fontFamily: 'Roboto',
+                                            fontSize: ResponsiveFlutter.of(context).scale(14),
+                                            fontWeight: FontWeight.w500,
+                                            fontStyle: FontStyle.normal,
+                                            color: Colors.white,
+                                          )
+                                        ),
+                                      ),
+
                                     ]
                                   ),
                                 )

@@ -1,15 +1,13 @@
-import 'dart:math';
 import 'dart:async';
 
+import 'package:emotiovent/models/ScreenArguments.dart';
+import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:provider/provider.dart';
 
 import 'package:responsive_flutter/responsive_flutter.dart';
 
 import 'package:emotiovent/services/EV_ActivityRandomizer.dart';
-
-import 'EV_SatisfactoryRate.dart';
 
 class EVChooseEmotionScreen extends StatefulWidget {
   
@@ -125,8 +123,6 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
 
         SafeArea(
           child: Container(
-            decoration: BoxDecoration(
-            ),
             child: Padding(
               padding: EdgeInsets.fromLTRB(
                 ResponsiveFlutter.of(context).scale(15), 
@@ -134,213 +130,196 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                 ResponsiveFlutter.of(context).scale(15), 
                 ResponsiveFlutter.of(context).hp(5)),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
 
                   AnimatedOpacity(
                     opacity: showContent ? 1.0 : 0.0,
                     duration: animatedOpacityDuration,
                     child: Align(
-                      alignment: Alignment.topLeft,
-                      child:
-                      Container(
-                        height: ResponsiveFlutter.of(context).scale(35),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(18.0),
-                          boxShadow: <BoxShadow>[
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: -5,
-                              blurRadius: 7,
-                              offset: Offset(0, 0), // change shadow position
-                            )
-                          ]
-                        ),
-                        child:
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, ResponsiveFlutter.of(context).hp(1)),
-                          child:
-                          FlatButton(
-                            height: ResponsiveFlutter.of(context).scale(35.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
+                      alignment: Alignment.center,
+                      child: TextButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(Color(0xff53B6AF)),
+                              shape: MaterialStateProperty.all<OutlinedBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ),
+                              ),
                             ),
-                            color: Color(0xff53B6AF),
+                            //height: ResponsiveFlutter.of(context).scale(35.0),
+
                             onPressed: () {backToStartScreen(context);},
-                            child: Padding(
-                              padding: EdgeInsets.fromLTRB(0,0,0,0),
-                              child:
-                                Text(
-                                "Back",
-                                style: TextStyle(
-                                  fontSize: ResponsiveFlutter.of(context).scale(14),
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w900,
-                                  letterSpacing: 0,
-                                  )
+
+                            child:
+                              Text(
+                              "Back",
+                              style: TextStyle(
+                                fontSize: ResponsiveFlutter.of(context).scale(14),
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: 0,
                                 )
-                            )
+                              )
+
                           )
-                        )
-                      )
                     ),
                   ),
 
-                  Expanded(
-                    child: 
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: AnimatedOpacity(
-                            opacity: showContent ? 1.0 : 0.0,
-                            duration: animatedOpacityDuration,
-                            child: Column(
-                              children: <Widget>[
-                                
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "What do you feel?",
-                                      style: TextStyle(
-                                        fontFamily: 'Aileron',
-                                        color: Color(0xff53B6AF),
-                                        fontStyle: FontStyle.normal,
-                                        letterSpacing: -0.5,
-                                        fontSize: ResponsiveFlutter.of(context).scale(35.0),
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                    ),
-                                ),
-                                
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child:
-                                  Text(
-                                    "Choose an emotion box...",
+
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, getHeight(context) / 90),
+                        child: AnimatedOpacity(
+                          opacity: showContent ? 1.0 : 0.0,
+                          duration: animatedOpacityDuration,
+                          child: Column(
+                            children: <Widget>[
+                              
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "What do you feel?",
                                     style: TextStyle(
-                                      fontFamily: 'Segoe UI',
-                                      fontWeight: FontWeight.w500,
-                                      fontStyle: FontStyle.normal,
+                                      fontFamily: 'Aileron',
                                       color: Color(0xff53B6AF),
-                                      letterSpacing: 1,
-                                      fontSize: ResponsiveFlutter.of(context).scale(15.0),
+                                      fontStyle: FontStyle.normal,
+                                      letterSpacing: -0.5,
+                                      fontSize: ResponsiveFlutter.of(context).scale(35.0),
+                                      fontWeight: FontWeight.w900,
                                     ),
-                                  )
+                                  ),
+                              ),
+                              
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child:
+                                Text(
+                                  "Choose an emotion box...",
+                                  style: TextStyle(
+                                    fontFamily: 'Segoe UI',
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FontStyle.normal,
+                                    color: Color(0xff53B6AF),
+                                    letterSpacing: 1,
+                                    fontSize: ResponsiveFlutter.of(context).scale(15.0),
+                                  ),
                                 )
-                              ],
-                            ),
+                              )
+                            ],
                           ),
                         ),
-                        SizedBox(
-                          height: ResponsiveFlutter.of(context).hp(1),
-                        ),
-                        Container(
-                          child:
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    
-                                    EmotionButton(
-                                      ctx: context, 
-                                      intervalStart: 0.4,
-                                      intervalEnd: 0.6,
-                                      color: 0xc5D9D900, 
-                                      text: "Happy",
-                                      controller: controller,
-                                    ),
-
-                                    EmotionButton(
-                                      ctx: context, 
-                                      intervalStart: 0.4,
-                                      intervalEnd: 0.6,
-                                      color: 0xc5FF8B8B, 
-                                      text: "Anger",
-                                      controller: controller,
-                                    ),
-
-                                  ],
-                                ),
-
-                            ]
-                          ),
-                        ),
-
-                        Container(
+                      ),
+                      SizedBox(
+                        height: ResponsiveFlutter.of(context).hp(1),
+                      ),
+                      Container(
                         child:
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
 
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  
+                                  EmotionButton(
+                                    ctx: context, 
+                                    intervalStart: 0.4,
+                                    intervalEnd: 0.6,
+                                    color: 0xc5D9D900, 
+                                    text: "Happy",
+                                    controller: controller,
+                                  ),
 
-                                    EmotionButton(
-                                      ctx: context, 
-                                      intervalStart: 0.6,
-                                      intervalEnd: 0.8,
-                                      color: 0xc5E593FB, 
-                                      text: "Fear",
-                                      controller: controller,
-                                    ),
+                                  EmotionButton(
+                                    ctx: context, 
+                                    intervalStart: 0.4,
+                                    intervalEnd: 0.6,
+                                    color: 0xc5FF8B8B, 
+                                    text: "Anger",
+                                    controller: controller,
+                                  ),
 
-                                    EmotionButton(
-                                      ctx: context, 
-                                      intervalStart: 0.6,
-                                      intervalEnd: 0.8,
-                                      color: 0xc587A7FF, 
-                                      text: "Sad",
-                                      controller: controller,
-                                    ),
+                                ],
+                              ),
 
-                                  ],
-                                ),
-
-                            ]
-                          ),
+                          ]
                         ),
+                      ),
 
-                        Container(
-                        child:
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
+                      Container(
+                      child:
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
 
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
 
-                                    EmotionButton(
-                                      ctx: context,
-                                      intervalStart: 0.8,
-                                      intervalEnd: 1.0,
-                                      color: 0xc570DB77, 
-                                      text: "Disgust",
-                                      controller: controller
-                                    ),
+                                  EmotionButton(
+                                    ctx: context, 
+                                    intervalStart: 0.6,
+                                    intervalEnd: 0.8,
+                                    color: 0xc5E593FB, 
+                                    text: "Fear",
+                                    controller: controller,
+                                  ),
 
-                                    EmotionButton(
-                                      ctx: context,
-                                      intervalStart: 0.8,
-                                      intervalEnd: 1.0,
-                                      color: 0xc5EFA254,
-                                      text: "Alone",
-                                      controller: controller,
-                                    ),
+                                  EmotionButton(
+                                    ctx: context, 
+                                    intervalStart: 0.6,
+                                    intervalEnd: 0.8,
+                                    color: 0xc587A7FF, 
+                                    text: "Sad",
+                                    controller: controller,
+                                  ),
 
-                                  ],
-                                ),
+                                ],
+                              ),
 
-                            ]
-                          ),
+                          ]
                         ),
-                      ]
-                    ),
+                      ),
+
+                      Container(
+                      child:
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+
+                                  EmotionButton(
+                                    ctx: context,
+                                    intervalStart: 0.8,
+                                    intervalEnd: 1.0,
+                                    color: 0xc570DB77, 
+                                    text: "Disgust",
+                                    controller: controller
+                                  ),
+
+                                  EmotionButton(
+                                    ctx: context,
+                                    intervalStart: 0.8,
+                                    intervalEnd: 1.0,
+                                    color: 0xc5EFA254,
+                                    text: "Alone",
+                                    controller: controller,
+                                  ),
+
+                                ],
+                              ),
+
+                          ]
+                        ),
+                      ),
+                    ]
                   ),
 
                 ]
@@ -400,14 +379,21 @@ class EmotionButton extends StatelessWidget{
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(18.0),
                 ),
-                child: FlatButton(
-                  minWidth: MediaQuery.of(context).size.width / 2.5,
-                  height: ResponsiveFlutter.of(context).hp(20),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
+                child: TextButton(
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all<Size>(
+                      Size(getWidth(context) / 2.5, getHeight(context) / 5),
+                    ),
+                    shape: MaterialStateProperty.all<OutlinedBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                    ),
+                    backgroundColor: MaterialStateProperty.all<Color>(Color(color)),
                   ),
-                  color: Color(color),
-                  onPressed: () {Navigator.of(ctx).pushNamed(ActivityRandomizer.routeName, arguments: text);},
+                  //minWidth: MediaQuery.of(context).size.width / 2.5,
+                  //height: ResponsiveFlutter.of(context).hp(20),
+                  onPressed: () {Navigator.of(ctx).pushNamed(ActivityRandomizer.routeName, arguments: ScreenArguments(emotion: text));},
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
                     child: Text(

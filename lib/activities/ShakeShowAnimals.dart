@@ -1,13 +1,13 @@
+import 'package:emotiovent/models/ScreenArguments.dart';
 import 'package:flutter/material.dart';
 
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:emotiovent/services/EV_FetchAnimalPictures.dart';
-import 'package:emotiovent/models/cute_animal_img.dart';
+import 'package:emotiovent/models/AnimalPicture.dart';
 import 'package:emotiovent/screens/EV_SatisfactoryRate.dart';
 
 import 'package:shake/shake.dart';
 
-import 'dart:math';
 import 'dart:async';
 
 class ShakeShowAnimals extends StatefulWidget {
@@ -29,13 +29,8 @@ class _ShakeShowAnimalsState extends State<ShakeShowAnimals> with TickerProvider
   ShakeDetector _shakeDetector;
   bool _showContent = false;
 
-  // START
-  // ::For experimentation purposes::
-  List<Color> colors = [Colors.red[300], Colors.blue[300], Colors.yellow[300], Colors.orange[300]];
-  Random rand = new Random();
   List<Image> pics;
   Future<List<AnimalPicture>> animalPictures;
-  // END
 
   bool _shaken = false;
 
@@ -177,13 +172,8 @@ class _ShakeShowAnimalsState extends State<ShakeShowAnimals> with TickerProvider
           label: Text("Continue", style: TextStyle(fontFamily: 'Roboto', fontStyle: FontStyle.normal)),
           icon: Icon(Icons.play_arrow),
           backgroundColor: Colors.orange[600],
-
-          // warning: bad code. my brain cells cannot literally comprehend at the moment how the hell
-          // can i make the screen not transition jarringly to another.
           onPressed: () {
-
-            Navigator.of(context).pushNamed(EVSatisfactoryRate.routeName, arguments: emotion);
-
+            Navigator.of(context).pushNamed(EVSatisfactoryRate.routeName, arguments: ScreenArguments(emotion: emotion));
           }
         ),
       ),

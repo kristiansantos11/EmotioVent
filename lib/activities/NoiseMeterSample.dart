@@ -1,3 +1,4 @@
+import 'package:emotiovent/models/ScreenArguments.dart';
 import 'package:flutter/services.dart';
 import 'package:noise_meter/noise_meter.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +82,7 @@ class _NoiseMeterSampleState extends State<NoiseMeterSample> {
             if((counter == 0) && timer.isActive){
               setState((){
                 timer.cancel();
-                Navigator.of(ctx).popAndPushNamed(EVSatisfactoryRate.routeName, arguments: emotion);
+                Navigator.of(ctx).pushNamed(EVSatisfactoryRate.routeName, arguments: ScreenArguments(emotion: emotion));
               });
             }
           }
@@ -124,16 +125,27 @@ class _NoiseMeterSampleState extends State<NoiseMeterSample> {
             ),
 
             Center(
+              child: Container(
+                width: ((75-30)/70) * getWidth(context),
+                height: ((75-30)/70) * getWidth(context),
+                decoration: BoxDecoration(
+                  color: Colors.green[300].withAlpha(100),
+                  shape: BoxShape.circle
+                ),
+              ),
+            ),
+
+            Center(
               child: AnimatedOpacity(
                 opacity: this._isRecording ? 1.0 : 0.0,
                 duration: Duration(milliseconds: 300),
                 child: AnimatedContainer(
                   curve: Curves.easeOutQuad,
                   duration: Duration(milliseconds: 300),
-                  width: ((db-30)/100) * MediaQuery.of(context).size.width,
-                  height: ((db-30)/100) * MediaQuery.of(context).size.width,
+                  width: ((db-30)/70) * getWidth(context),
+                  height: ((db-30)/70) * getWidth(context),
                   decoration: BoxDecoration(
-                    color: Colors.blue[300],
+                    color: Colors.green[600],
                     shape: BoxShape.circle,
                   ),
                 )
@@ -153,8 +165,15 @@ class _NoiseMeterSampleState extends State<NoiseMeterSample> {
                       child: Column(
                         children: <Widget>[
                           Container(
-                            child: Text(_isRecording ? "Mic: ON" : "Mic: OFF",
-                                style: TextStyle(fontSize: 25, color: Colors.blue)),
+                            child: Text(_isRecording ? "Scream at your microphone!" : "Press the microphone button!",
+                              style: TextStyle(
+                                fontSize: 25, 
+                                color: Colors.green,
+                                fontFamily: "Nexa",
+                                fontWeight: FontWeight.w700,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
                             margin: EdgeInsets.only(top: 20),
                           )
                         ]
@@ -163,13 +182,34 @@ class _NoiseMeterSampleState extends State<NoiseMeterSample> {
 
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width / 1.2,
                     ),
 
                     Container(
-                      child: Text(
-                        "${counter} seconds left."
-                      )
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+
+                          Text(
+                            counter.toString(),
+                            style: TextStyle(
+                              fontFamily: "SegoeUIBlack",
+                              fontSize: getWidth(context) / 8,
+                              color: Colors.grey[700],
+                            ),
+                          ),
+
+                          Text(
+                            "seconds left",
+                            style: TextStyle(
+                              fontFamily: "Aileron",
+                              fontSize: getWidth(context) / 20,
+                              color: Colors.grey[600],
+                            ),
+                          )
+
+                        ],
+                      ),
                     ),
 
                   ]

@@ -1,5 +1,5 @@
-import 'screens/EV_Loading.dart';
-import 'screens/EV_AppError.dart';
+import 'screens/unused/EV_Loading.dart';
+import 'screens/unused/EV_AppError.dart';
 
 import 'package:flutter/material.dart';
 
@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 import 'services/EV_AuthService.dart';
 import 'services/EV_RouteGenerator.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   // REMINDER: Please do not remove the debug flag yet (at the top-right of the screen.)
   // Don't mind the noticeable lag, this is normal in debug mode of flutter apps
+
   @override
   Widget build(BuildContext context) {
 
@@ -38,9 +39,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'emotiovent',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.green,
         ),
-        initialRoute: EVAuthWrapper.routeName,
+        initialRoute: EVInitialScreen.routeName,
         
         // TODO: Move all routes into their respective generators inside the getGenerateRoute function.
         routes: {
@@ -52,12 +53,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-/* 
- * Okay before you get triggered by the length of the elseif statements you are about to witness:
- * My plans for this part is to put all of the PageRouteBuilder along with their respecitve name settings inside a dictionary
- * However, it will require a separate file.
- */
-
-
 

@@ -1,5 +1,5 @@
 name: emotiovent
-description: A new Flutter project.
+description: A Flutter project that makes users vent their emotions towards their smartphone.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -25,32 +25,56 @@ dependencies:
   flutter:
     sdk: flutter
   
-  provider: ^4.3.2+2
-  permission_handler: ^5.0.1+1
-
-  http: ^0.12.2
-
-  flutter_spinkit: ^4.1.2+1
-
-  # Used for sound experimentation. Will remove later.
-  noise_meter: ^2.0.0
-
-  shake: ^0.1.0
-  sensors: ^0.4.2+6
+  # Experimentation purposes atm
+  # START
+  esys_flutter_share: ^1.0.2
+  video_player: ^1.0.1
+  # END
 
   dart_random_choice: ^0.0.2
   
-  # Check that you have this dependency (added in the previous step)
-  firebase_core: ^0.5.3
+  # Share widget states across the entire application (?)
+  provider: ^4.3.2+2
 
+  # To save images captured by the camera plugin
+  path_provider: ^1.6.24
+  path: ^1.7.0
+  gallery_saver: ^2.0.1
+
+  # HTTP Requests to acquire images from some-random-api.ml
+  http: ^0.12.2
+
+  # [NOT YET USED] - Custom loading animations
+  flutter_spinkit: ^4.1.2+1
+
+  # Noise meter
+  noise_meter: ^2.0.0
+
+  # Shake detector using accelerometer and built-in math processor in order to detect shaking
+  shake: ^0.1.0
+  
+  # Camera plugin
+  camera: ^0.6.4+5
+
+  # Sensors
+  sensors: ^0.4.2+6
+  
   # Add the dependency for the FlutterFire plugin for Google Analytics
   firebase_analytics: ^6.3.0
 
   # Add the dependencies for any other Firebase products you want to use in your app
   # For example, to use Firebase Authentication and Cloud Firestore
+  firebase_core: ^0.5.3
   firebase_auth: ^0.18.4+1
+  firebase_ml_vision: ^0.9.10
   cloud_firestore: ^0.14.4
 
+  tflite_flutter: ^0.5.0
+
+  # Experimental. Will be removed soon if possible.
+  percent_indicator: ^2.1.9
+
+  # For custom application icons (Gets rid of the default flutter icon.)
   flutter_launcher_icons: ^0.8.1
 
 flutter_icons:
@@ -82,6 +106,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/img/
+    - assets/mobilefacenet.tflite
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -155,6 +180,29 @@ flutter:
           weight: 700
         - asset: assets/font/nexa/Nexa-Light.otf
           weight: 100
+    - family: Proxima Nova
+      fonts:
+        - asset: assets/font/proxima_nova/Proxima Nova Regular.otf
+          style: normal
+        - asset: assets/font/proxima_nova/Proxima Nova Bold.otf
+          weight: 700
+          style: normal
+        - asset: assets/font/proxima_nova/Proxima Nova Thin.otf
+          weight: 100
+          style: normal
+        - asset: assets/font/proxima_nova/Proxima Nova Alt Light.otf
+          weight: 200
+          style: normal
+        - asset: assets/font/proxima_nova/Proxima Nova Italic.otf
+          style: italic
+        - asset: assets/font/proxima_nova/Proxima Nova Extrabold.otf
+          weight: 800
+          style: normal
+        - asset: assets/font/proxima_nova/Proxima Nova Black.otf
+          weight: 900
+          style: normal
+        
+
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

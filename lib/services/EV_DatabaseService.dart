@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:emotiovent/models/user.dart';
+import 'package:emotiovent/models/User.dart';
 
 class DatabaseService{
   final String uid;

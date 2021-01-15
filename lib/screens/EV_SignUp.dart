@@ -1,6 +1,10 @@
+// Sign Up Page.
+// In-case of any deprecated code, I will clean it as soon as the backend work is done.
+
 import 'dart:async';
 
 import 'package:emotiovent/services/EV_AuthService.dart';
+import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 
@@ -216,13 +220,19 @@ class _EVSignUpState extends State<EVSignUp> {
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                                 child: ButtonBar(
-                                  alignment: MainAxisAlignment.center,
+                                  alignment: MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
 
-                                    FlatButton(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
-                                        side: BorderSide(color: Color(0xfff308a2))
+                                    TextButton(
+                                      style: ButtonStyle(
+                                        shape: MaterialStateProperty.all<OutlinedBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(getWidth(context)/24),
+                                            side: BorderSide(
+                                              color: Color(0xfff308a2),
+                                              ),
+                                          )
+                                        ),
                                       ),
                                       onPressed: () {backButtonPressed(context);},
                                       child: Text(
@@ -234,14 +244,18 @@ class _EVSignUpState extends State<EVSignUp> {
                                       ),
                                     ),
 
-                                    RaisedButton(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
+                                    ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor: MaterialStateProperty.all(Color(0xfff308a2)),
+                                        shape: MaterialStateProperty.all<OutlinedBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
+                                          ),
+                                        ),
                                       ),
-                                      color: Color(0xfff308a2),
                                       onPressed: () {register(context);},
                                       child: Text(
-                                        "CONTINUE",
+                                        "SIGNUP",
                                         style: TextStyle(
                                           letterSpacing: 0,
                                         )
