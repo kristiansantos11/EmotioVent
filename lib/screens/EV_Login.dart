@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:emotiovent/screens/EV_InitialScreen.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
@@ -23,7 +24,7 @@ class _EVLoginState extends State<EVLogin> {
   final _formKey = GlobalKey<FormState>();
 
   void backButtonPressed(BuildContext ctx){
-    Navigator.of(ctx).popUntil(ModalRoute.withName('/main'));
+    Navigator.of(ctx).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
   }
 
   @override
@@ -100,8 +101,8 @@ class _EVLoginState extends State<EVLogin> {
             tag: 'login',
             child: Container(
               color: Colors.white,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
+              width: getWidth(context),
+              height: getHeight(context),
             ),
           ),
           
@@ -206,7 +207,7 @@ class _EVLoginState extends State<EVLogin> {
                                               filled: true,
                                               hintStyle: TextStyle(
                                                   color: Colors.white24),
-                                              hintText: "Username",
+                                              hintText: "Email",
                                               fillColor: Colors.grey[600],
                                             ),
                                         ),
@@ -256,44 +257,42 @@ class _EVLoginState extends State<EVLogin> {
                               Flexible(
                                 flex: 1,
                                 child: Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 20, 15, 0),
+                                  padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
                                   child: ButtonBar(
-                                    alignment: MainAxisAlignment.end,
+                                    alignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       
                                        
-                                      // TextButton(
-                                      //   style: ButtonStyle(
-                                      //     shape: MaterialStateProperty.all(
-                                      //       RoundedRectangleBorder(
-                                      //         borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
-                                      //         side: BorderSide(color: Color(0xff53B6AF))
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      //   //minWidth: ResponsiveFlutter.of(context).scale(20.0),
-                                      //   //height: ResponsiveFlutter.of(context).hp(4.8),
-                                      //   onPressed: () {backButtonPressed(context);},
-                                      //   child: Padding(
-                                      //     padding: EdgeInsets.fromLTRB(
-                                      //       getWidth(context)/90,
-                                      //       getWidth(context)/500,
-                                      //       getWidth(context)/90,
-                                      //       getWidth(context)/500,
-                                      //     ),
-                                      //     child: Text(
-                                      //       "BACK",
-                                      //       style: TextStyle(
-                                      //         letterSpacing: 0,
-                                      //         fontFamily: 'Proxima Nova',
-                                      //         fontSize: ResponsiveFlutter.of(context).scale(14),
-                                      //         fontWeight: FontWeight.w700,
-                                      //         fontStyle: FontStyle.normal,
-                                      //         color: Color(0xff53B6AF),
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
+                                      TextButton(
+                                        style: ButtonStyle(
+                                          shape: MaterialStateProperty.all(
+                                            RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
+                                              side: BorderSide(color: Color(0xfff77272))
+                                            ),
+                                          ),
+                                        ),
+                                        onPressed: () {backButtonPressed(context);},
+                                        child: Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                            getWidth(context)/90,
+                                            getWidth(context)/500,
+                                            getWidth(context)/90,
+                                            getWidth(context)/500,
+                                          ),
+                                          child: Text(
+                                            "       BACK       ",
+                                            style: TextStyle(
+                                              letterSpacing: 0,
+                                              fontFamily: 'Proxima Nova',
+                                              fontSize: ResponsiveFlutter.of(context).scale(14),
+                                              fontWeight: FontWeight.w700,
+                                              fontStyle: FontStyle.normal,
+                                              color: Color(0xfff77272),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
 
 
 
