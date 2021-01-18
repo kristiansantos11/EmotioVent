@@ -11,7 +11,7 @@ import 'package:responsive_flutter/responsive_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../services/EV_AuthService.dart';
-import 'package:emotiovent/Temp/transferUserData.dart';
+// import 'package:emotiovent/database_classes/transferUserData.dart';
 
 class EVSignUp extends StatefulWidget {
   static const routeName = '/signup';
@@ -67,43 +67,38 @@ class _EVSignUpState extends State<EVSignUp> {
     super.dispose();
   }
 
-  void register(ctx) async {
-    var outMsg;
-    var _success = true;
-    if ((_emailTextController.text.isEmpty) || (_pwTextController.text.isEmpty)){
-      outMsg = "Please fill up the necessary fields.";
-      return showDialog(
-        context: ctx,
-        builder: (ctx) {
-          return AlertDialog(
-            content: Text(outMsg)
-          );
-        }
-      );
-    }
-    context.read<AuthenticationService>().signUp(
-      email: _emailTextController.text.trim(),
-      password: _pwTextController.text.trim()
-    ).catchError((e) => {
-      _success = false,
-      showDialog(
-        context: ctx,
-        builder: (ctx) {
-          return AlertDialog(
-            content: Text(e.message)
-          );
-        }
-      )
-    });
-    print("!!!!!!!!!!!!!!!!!!!!!!!!!!Attempting to put sample data...");
-    TransferUserData tug = TransferUserData(username: "SampleU",name: "SampleN", birthdate: "SampleB",
-    contactNumber: "SampleC",gender: "SampleG");
-    tug.transferData();
-
-    if (_success){
-      continueButtonPressed(ctx);
-    }
-  }
+  // void register(ctx) async {
+  //   var outMsg;
+  //   var _success = true;
+  //   if ((_emailTextController.text.isEmpty) || (_pwTextController.text.isEmpty)){
+  //     outMsg = "Please fill up the necessary fields.";
+  //     return showDialog(
+  //       context: ctx,
+  //       builder: (ctx) {
+  //         return AlertDialog(
+  //           content: Text(outMsg)
+  //         );
+  //       }
+  //     );
+  //   }
+  //   context.read<AuthenticationService>().signUp(
+  //     email: _emailTextController.text.trim(),
+  //     password: _pwTextController.text.trim()
+  //   ).catchError((e) => {
+  //     _success = false,
+  //     showDialog(
+  //       context: ctx,
+  //       builder: (ctx) {
+  //         return AlertDialog(
+  //           content: Text(e.message)
+  //         );
+  //       }
+  //     )
+  //   });
+  //   if (_success){
+  //     continueButtonPressed(ctx);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -211,6 +206,8 @@ class _EVSignUpState extends State<EVSignUp> {
                                       ),
                                     )
 
+                                    
+
                                 ]
                               )
                             ),
@@ -244,23 +241,23 @@ class _EVSignUpState extends State<EVSignUp> {
                                       ),
                                     ),
 
-                                    ElevatedButton(
-                                      style: ButtonStyle(
-                                        backgroundColor: MaterialStateProperty.all(Color(0xfff308a2)),
-                                        shape: MaterialStateProperty.all<OutlinedBorder>(
-                                          RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
-                                          ),
-                                        ),
-                                      ),
-                                      onPressed: () {register(context);},
-                                      child: Text(
-                                        "SIGNUP",
-                                        style: TextStyle(
-                                          letterSpacing: 0,
-                                        )
-                                      ),
-                                    ),
+                                    // ElevatedButton(
+                                    //   style: ButtonStyle(
+                                    //     backgroundColor: MaterialStateProperty.all(Color(0xfff308a2)),
+                                    //     shape: MaterialStateProperty.all<OutlinedBorder>(
+                                    //       RoundedRectangleBorder(
+                                    //         borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    //   onPressed: () {register(context);},
+                                    //   child: Text(
+                                    //     "SIGNUP",
+                                    //     style: TextStyle(
+                                    //       letterSpacing: 0,
+                                    //     )
+                                    //   ),
+                                    // ),
                                   ]
                                 ),
                               )

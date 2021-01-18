@@ -18,14 +18,18 @@ class AuthenticationService {
     }
   }
 
-  Future<String> signUp({String email, String password}) async {
-    try {
-      await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-      return "Signed up";
-    } on FirebaseAuthException catch (e) {
-      throw e;
-    }
-  }
+  // Future signUp(String email, String password) async 
+  // {
+  //   try 
+  //   {
+  //     await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+  //     return "Signed up";
+  //   }
+  //   catch (e) 
+  //   {
+  //     print("$e");
+  //   }
+  // }
 
   Future<String> signOut() async {
     try {
