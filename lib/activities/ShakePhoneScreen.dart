@@ -48,16 +48,11 @@ class _ShakePhoneActivityState extends State<ShakePhoneActivity> {
         });
         // Do stuff on phone shake
         if (_shakeCounter == 0){
-          Navigator.of(context).pushNamed(EVSatisfactoryRate.routeName, arguments: ScreenArguments(emotion: emotion));
+          detector.stopListening();
+          Navigator.of(context).pushReplacementNamed(EVSatisfactoryRate.routeName, arguments: ScreenArguments(emotion: emotion));
         }
       }
     );
-  }
-
-  @override
-  void dispose(){
-    detector.stopListening();
-    super.dispose();
   }
 
   @override
@@ -133,7 +128,7 @@ class _ShakePhoneActivityState extends State<ShakePhoneActivity> {
                       ),
 
                       Stack(
-                        children: [
+                        children: <Widget>[
 
                           Container(
                             alignment: Alignment.center,

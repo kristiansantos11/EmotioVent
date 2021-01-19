@@ -5,7 +5,7 @@
 */
 
 import 'package:emotiovent/models/ScreenArguments.dart';
-import 'package:emotiovent/screens/CameraCapturePreview.dart';
+import 'package:emotiovent/screens/widgets/SelfieCameraCapturePreview.dart';
 import 'package:emotiovent/screens/EV_SatisfactoryRate.dart';
 import 'package:emotiovent/services/EV_CameraProcessUtil.dart';
 import 'package:emotiovent/services/EV_FaceBorderPainter.dart';
@@ -40,7 +40,6 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
   final String emotion;
   _FaceDetectionFromLiveCameraState(this.emotion);
 
-  XFile imageFile;
   File jsonFile;
   dynamic _scanResults;
   CameraController _camera;
@@ -612,16 +611,13 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
   void onTakePictureButtonPressed() {
     takePicture().then((XFile file) {
       if (mounted) {
-        setState(() {
-          imageFile = file;
-        });
         if (file != null){
           GallerySaver.saveImage(file.path, albumName: 'Camera').then((bool success){
             showInSnackBar('Picture saved to ${file.path}');
           }).then((bool success){
             _camera.dispose();
-            Navigator.of(context).pushNamed(
-              CameraCapturePreview.routeName, 
+            Navigator.of(context).pushReplacementNamed(
+              SelfieCameraCapturePreview.routeName, 
               arguments: ScreenArguments(emotion: emotion, imgPath: file.path)
             );
           });

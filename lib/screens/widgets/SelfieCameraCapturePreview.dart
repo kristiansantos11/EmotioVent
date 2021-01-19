@@ -7,22 +7,22 @@ import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:emotiovent/services/BackgroundStagger.dart';
 import 'package:flutter/material.dart';
 
-class CameraCapturePreview extends StatefulWidget {
-  static const routeName = '/cameraPreview';
+class SelfieCameraCapturePreview extends StatefulWidget {
+  static const routeName = '/selfieCameraPreview';
   final String emotion;
   final String imgPath;
 
-  const CameraCapturePreview({Key key, this.emotion, this.imgPath}) : super(key: key);
+  const SelfieCameraCapturePreview({Key key, this.emotion, this.imgPath}) : super(key: key);
   
   @override
-  _CameraCapturePreviewState createState() => _CameraCapturePreviewState(emotion, imgPath);
+  _SelfieCameraCapturePreviewState createState() => _SelfieCameraCapturePreviewState(emotion, imgPath);
 }
 
-class _CameraCapturePreviewState extends State<CameraCapturePreview> with TickerProviderStateMixin{
+class _SelfieCameraCapturePreviewState extends State<SelfieCameraCapturePreview> with TickerProviderStateMixin{
   final String emotion;
   final String imgPath;
 
-  _CameraCapturePreviewState(this.emotion, this.imgPath);
+  _SelfieCameraCapturePreviewState(this.emotion, this.imgPath);
 
   AnimationController backgroundController;
   Animation<Color> backgroundAnimation;
@@ -60,18 +60,18 @@ class _CameraCapturePreviewState extends State<CameraCapturePreview> with Ticker
 
               Flexible(
                 flex: 3,
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: Text(
-                        "OMG!",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: "SegoeUIBlack",
-                          fontSize: getWidth(context) / 5
-                        ),
-                      ),
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Text(
+                    "OMG!",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "SegoeUIBlack",
+                      fontSize: getWidth(context) / 5
                     ),
+                  ),
+                ),
               ),
 
 

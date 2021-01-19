@@ -69,7 +69,7 @@ dependencies:
   firebase_ml_vision: ^0.9.10
   cloud_firestore: ^0.14.4
 
-  tflite_flutter: ^0.5.0
+  image_picker: ^0.6.7+21
 
   # Experimental. Will be removed soon if possible.
   percent_indicator: ^2.1.9

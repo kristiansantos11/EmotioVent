@@ -173,7 +173,7 @@ class _ShakeShowAnimalsState extends State<ShakeShowAnimals> with TickerProvider
           icon: Icon(Icons.play_arrow),
           backgroundColor: Colors.orange[600],
           onPressed: () {
-            Navigator.of(context).pushNamed(EVSatisfactoryRate.routeName, arguments: ScreenArguments(emotion: emotion));
+            Navigator.of(context).pushReplacementNamed(EVSatisfactoryRate.routeName, arguments: ScreenArguments(emotion: emotion));
           }
         ),
       ),

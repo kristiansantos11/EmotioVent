@@ -82,7 +82,7 @@ class _NoiseMeterSampleState extends State<NoiseMeterSample> {
             if((counter == 0) && timer.isActive){
               setState((){
                 timer.cancel();
-                Navigator.of(ctx).pushNamed(EVSatisfactoryRate.routeName, arguments: ScreenArguments(emotion: emotion));
+                Navigator.of(ctx).pushReplacementNamed(EVSatisfactoryRate.routeName, arguments: ScreenArguments(emotion: emotion));
               });
             }
           }

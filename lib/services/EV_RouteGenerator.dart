@@ -3,6 +3,7 @@
 
 import 'package:camera/camera.dart';
 import 'package:emotiovent/models/ScreenArguments.dart';
+import 'package:emotiovent/screens/widgets/CaptureSurroundingsPreview.dart';
 import 'package:flutter/material.dart';
 
 import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
@@ -10,7 +11,7 @@ import 'package:emotiovent/screens/EV_Login.dart';
 import 'package:emotiovent/screens/EV_SatisfactoryRate.dart';
 import 'package:emotiovent/screens/EV_SignUp.dart';
 import 'package:emotiovent/screens/EV_InitialScreen.dart';
-import 'package:emotiovent/screens/CameraCapturePreview.dart';
+import 'package:emotiovent/screens/widgets/SelfieCameraCapturePreview.dart';
 
 import 'package:emotiovent/services/EV_ActivityRandomizer.dart';
 
@@ -140,20 +141,43 @@ Route<Null> getGenerateRoute(RouteSettings settings){
         }
       );
 
-    case CameraCapturePreview.routeName:
+    case SelfieCameraCapturePreview.routeName:
       ScreenArguments args = arguments;
       return PageRouteBuilder(
-        settings: RouteSettings(name: EVSatisfactoryRate.routeName),
+        settings: RouteSettings(name: SelfieCameraCapturePreview.routeName),
         pageBuilder: (context, animation, secondAnimation){
           return ListenableProvider(
             create: (context) => animation,
-            child: CameraCapturePreview(emotion: args.emotion, imgPath: args.imgPath),
+            child: SelfieCameraCapturePreview(emotion: args.emotion, imgPath: args.imgPath),
           );
         },
         transitionDuration: const Duration(milliseconds: 1000),
         transitionsBuilder: (context, animation, secondAnimation, child){
           Animation<Offset> animationSlide;
           animationSlide = Tween<Offset>(begin:Offset(1.0, 0),end: Offset.zero).animate(CurvedAnimation(curve: Curves.easeInOut, parent: animation));
+          return SlideTransition(
+            position: animationSlide,
+            child: child,
+          );
+        }
+      );
+    
+    case CaptureSurroundingsPreview.routeName:
+      ScreenArguments args = arguments;
+      return PageRouteBuilder(
+        settings: RouteSettings(name: CaptureSurroundingsPreview.routeName),
+        pageBuilder: (context, animation, secondAnimation){
+          return ListenableProvider(
+            create: (context) => animation,
+            child: CaptureSurroundingsPreview(emotion: args.emotion, imgPath: args.imgPath,),
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 1000),
+        transitionsBuilder: (context, animation, secondAnimation, child){
+          Animation<Offset> animationSlide;
+          animationSlide = Tween<Offset>(
+            begin: Offset(1.0, 0), end: Offset.zero
+          ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOut));
           return SlideTransition(
             position: animationSlide,
             child: child,

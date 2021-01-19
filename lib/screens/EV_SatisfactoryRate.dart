@@ -131,7 +131,7 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
                       ),
                       onPressed: () {
                         if(_currentSliderValue.round() < 50){
-                          Navigator.of(context).popAndPushNamed(ActivityRandomizer.routeName, arguments: ScreenArguments(emotion: emotion));
+                          Navigator.of(context).pushReplacementNamed(ActivityRandomizer.routeName, arguments: ScreenArguments(emotion: emotion));
                         } else {
                           if(firebaseUser == null){
                             Navigator.of(context).pushNamed(EVSignUp.routeName, arguments: ScreenArguments(emotion: emotion));
