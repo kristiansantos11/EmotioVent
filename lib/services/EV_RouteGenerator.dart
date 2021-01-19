@@ -180,7 +180,7 @@ Route<Null> getGenerateRoute(RouteSettings settings){
         pageBuilder: (context, animation, secondAnimation){
           return ListenableProvider(
             create: (context) => animation,
-            child: CaptureSurroundingsPreview(emotion: args.emotion, imgPath: args.imgPath, labels: args.labels),
+            child: CaptureSurroundingsPreview(emotion: args.emotion, imgPath: args.imgPath),
           );
         },
         transitionDuration: const Duration(milliseconds: 1000),
@@ -196,4 +196,5 @@ Route<Null> getGenerateRoute(RouteSettings settings){
         }
       );
   }
+  return null;
 }

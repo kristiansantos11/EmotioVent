@@ -142,7 +142,6 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                             )),
                                             minimumSize: MaterialStateProperty.all(Size(ResponsiveFlutter.of(context).scale(225), ResponsiveFlutter.of(context).scale(50))),
                                           ),
-                                          // #You know what to do lol -jd
                                           onPressed: () {Navigator.of(context).pushNamed(EVChooseEmotionScreen.routeName);},
                                           child: Padding(
                                             padding: EdgeInsets.fromLTRB(5, 10, 5, 10),

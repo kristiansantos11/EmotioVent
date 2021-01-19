@@ -5,8 +5,6 @@ import 'package:emotiovent/models/ScreenArguments.dart';
 import 'package:emotiovent/services/BackgroundStagger.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../EV_SatisfactoryRate.dart';
 
@@ -14,24 +12,21 @@ class CaptureSurroundingsPreview extends StatefulWidget {
   static const routeName = '/captureSurroundingsPreview';
   final String emotion;
   final String imgPath;
-  final List<ImageLabel> labels;
 
-  const CaptureSurroundingsPreview({Key key, this.emotion, this.imgPath, this.labels}) : super(key: key);
+  const CaptureSurroundingsPreview({Key key, this.emotion, this.imgPath}) : super(key: key);
 
   @override
   _CaptureSurroundingsPreviewState createState() => _CaptureSurroundingsPreviewState(
                                                       emotion: emotion,
                                                       imgPath: imgPath,
-                                                      labels: labels
                                                     );
 }
 
 class _CaptureSurroundingsPreviewState extends State<CaptureSurroundingsPreview> with TickerProviderStateMixin{
   final String emotion;
   final String imgPath;
-  final List<ImageLabel> labels;
 
-  _CaptureSurroundingsPreviewState({this.labels, this.emotion, this.imgPath});
+  _CaptureSurroundingsPreviewState({this.emotion, this.imgPath});
 
   AnimationController backgroundController;
   bool _showFAB = false;
@@ -40,7 +35,7 @@ class _CaptureSurroundingsPreviewState extends State<CaptureSurroundingsPreview>
   @override
   void initState(){
     super.initState();
-    backgroundController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
+    backgroundController = AnimationController(vsync: this, duration: Duration(milliseconds: 2000))..repeat(reverse: true);
     Timer(
       Duration(milliseconds: 1000),
       (){
@@ -49,14 +44,6 @@ class _CaptureSurroundingsPreviewState extends State<CaptureSurroundingsPreview>
         });
       }
     );
-    if(labels == null){
-      whatDoISee = "nothing...";
-    } else {
-      for(ImageLabel label in labels){
-        whatDoISee = whatDoISee + label.text + ", ";
-      }
-    }
-    
   }
 
   @override
@@ -67,8 +54,8 @@ class _CaptureSurroundingsPreviewState extends State<CaptureSurroundingsPreview>
 
           BackgroundStagger(
             controller: backgroundController.view,
-            begin: Colors.orange,
-            end: Colors.yellow,
+            begin: Colors.deepOrange,
+            end: Colors.cyan,
           ),
 
           SafeArea(
@@ -108,7 +95,8 @@ class _CaptureSurroundingsPreviewState extends State<CaptureSurroundingsPreview>
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      "I can see:\n " + whatDoISee,
+                      "I will remember that this makes you feel pleasant.",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
                         fontFamily: "Aileron",

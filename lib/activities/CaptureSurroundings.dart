@@ -47,8 +47,6 @@ class _CaptureSurroundingsState extends State<CaptureSurroundings> with WidgetsB
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  ImageLabeler imageLabeler;
-
   void _initializeCamera() async {
     CameraDescription description = await getCamera(_direction);
 
@@ -65,6 +63,7 @@ class _CaptureSurroundingsState extends State<CaptureSurroundings> with WidgetsB
     await _camera.initialize();
     await Future.delayed(Duration(milliseconds: 500));
     tempDir = await getApplicationDocumentsDirectory();
+    _camera.setFlashMode(flashModeList[flashModeCounter]);
   }
 
   void showInSnackBar(String message) {
@@ -101,14 +100,13 @@ class _CaptureSurroundingsState extends State<CaptureSurroundings> with WidgetsB
     takePicture().then((XFile file) async {
       if (mounted) {
         if (file != null){
-          labels = await imageLabeler.processImage(FirebaseVisionImage.fromFile(File(file.path)));
           GallerySaver.saveImage(file.path, albumName: 'Camera').then((bool success){
             showInSnackBar('Picture saved to ${file.path}');
           }).then((bool success){
             _camera.dispose();
             Navigator.of(context).pushReplacementNamed(
               CaptureSurroundingsPreview.routeName, 
-              arguments: ScreenArguments(emotion: emotion, imgPath: file.path, labels: labels)
+              arguments: ScreenArguments(emotion: emotion, imgPath: file.path)
             );
           });
         }
@@ -163,15 +161,12 @@ class _CaptureSurroundingsState extends State<CaptureSurroundings> with WidgetsB
         return Icon(Icons.flash_off);
         break;
       case FlashMode.auto:
-        // TODO: Handle this case.
         return Icon(Icons.flash_auto);
         break;
       case FlashMode.always:
-        // TODO: Handle this case.
         return Icon(Icons.flash_on_outlined);
         break;
       case FlashMode.torch:
-        // TODO: Handle this case.
         return Icon(Icons.flash_on_rounded);
         break;
     }
@@ -190,10 +185,8 @@ class _CaptureSurroundingsState extends State<CaptureSurroundings> with WidgetsB
         });
       }
     );
+    flashModeCounter = 0;
     _initializeCamera();
-    imageLabeler = FirebaseVision.instance.imageLabeler(
-      ImageLabelerOptions(confidenceThreshold: 0.75),
-    );
   }
 
   @override
@@ -258,7 +251,7 @@ class _CaptureSurroundingsState extends State<CaptureSurroundings> with WidgetsB
                     ConstrainedBox(
                       constraints: BoxConstraints(minWidth: MediaQuery.of(context).size.width / 2.5, maxWidth: MediaQuery.of(context).size.width / 1.1),
                       child: Text(
-                        "Capture your\nenvironment",
+                        "Capture what\nmakes you\nfeel pleasant.",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Nexa',

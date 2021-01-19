@@ -81,8 +81,11 @@ class _EVSignUpState extends State<EVSignUp> {
       body: Stack(
       children: <Widget>[
 
-        Container(
-          color: Colors.purple[100],
+        Hero(
+          tag: 'register',
+          child: Container(
+            color: Colors.purple[100],
+          ),
         ),
         
         SafeArea(
