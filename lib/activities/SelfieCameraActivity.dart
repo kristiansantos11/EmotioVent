@@ -2,6 +2,7 @@
  *
  * --> Notes: There are functions that are commented out in case we want to implement a similar
  *          function in the future that involves face RECOGNITION and DETECTION
+ * --> TODO: Add flash button in this activity.
 */
 
 import 'package:emotiovent/models/ScreenArguments.dart';
@@ -137,6 +138,9 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
     /*String _embPath = tempDir.path + '/emb.json';
     jsonFile = new File(_embPath);
     if (jsonFile.existsSync()) data = json.decode(jsonFile.readAsStringSync());*/
+
+    // TODO: Add flash button in this activity.
+    _camera.setFlashMode(FlashMode.auto);
 
     _camera.startImageStream((CameraImage image) {
       if (_camera != null) {
