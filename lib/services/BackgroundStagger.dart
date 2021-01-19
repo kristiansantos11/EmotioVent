@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 
 class BackgroundStagger extends StatelessWidget {
-  BackgroundStagger({Key key, this.controller}) :
+  BackgroundStagger({Key key, this.controller, this.begin, this.end}) :
 
     darkColor = ColorTween(
-      begin: Colors.blue[500], 
-      end: Colors.green[500]
+      begin: begin[500], 
+      end: end[500]
     ).animate(
       CurvedAnimation(
         parent: controller,
@@ -20,8 +20,8 @@ class BackgroundStagger extends StatelessWidget {
     ),
 
     normalColor = ColorTween(
-      begin: Colors.blue[400], 
-      end: Colors.green[400]
+      begin: begin[400], 
+      end: end[400]
     ).animate(
       CurvedAnimation(
         parent: controller,
@@ -33,8 +33,8 @@ class BackgroundStagger extends StatelessWidget {
     ),
 
     lightColor = ColorTween(
-      begin: Colors.blue[300], 
-      end: Colors.green[300]
+      begin: begin[300], 
+      end: end[300]
     ).animate(
       CurvedAnimation(
         parent: controller,
@@ -48,6 +48,8 @@ class BackgroundStagger extends StatelessWidget {
     super(key: key);
 
   final AnimationController controller;
+  final MaterialColor begin;
+  final MaterialColor end;
   final Animation<Color> darkColor;
   final Animation<Color> normalColor;
   final Animation<Color> lightColor;

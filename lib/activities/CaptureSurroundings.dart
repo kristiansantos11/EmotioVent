@@ -18,7 +18,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:image_picker/image_picker.dart';
 
 typedef void OnPickImageCallback(double maxWidth, double maxHeight, int quality);
 
@@ -37,20 +36,18 @@ class _CaptureSurroundingsState extends State<CaptureSurroundings> with WidgetsB
   _CaptureSurroundingsState(this.emotion);
 
   CameraController _camera;
-  CameraLensDirection _direction;
+  CameraLensDirection _direction = CameraLensDirection.back;
   Directory tempDir;
   List<ImageLabel> labels;
+  
+  int flashModeCounter = 0;
+  List<FlashMode> flashModeList = [FlashMode.off, FlashMode.torch, FlashMode.auto];
 
   bool _showContent = false;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   ImageLabeler imageLabeler;
-  PickedFile _imageFile;
-  dynamic _pickImageError;
-  String _retrieveDataError;
-
-  final ImagePicker _picker = ImagePicker();
 
   void _initializeCamera() async {
     CameraDescription description = await getCamera(_direction);
@@ -61,7 +58,7 @@ class _CaptureSurroundingsState extends State<CaptureSurroundings> with WidgetsB
 
     _camera = CameraController(
       description,
-      ResolutionPreset.high,
+      ResolutionPreset.max,
       enableAudio: false,
     );
 
@@ -111,98 +108,13 @@ class _CaptureSurroundingsState extends State<CaptureSurroundings> with WidgetsB
             _camera.dispose();
             Navigator.of(context).pushReplacementNamed(
               CaptureSurroundingsPreview.routeName, 
-              arguments: ScreenArguments(emotion: emotion, imgPath: file.path)
+              arguments: ScreenArguments(emotion: emotion, imgPath: file.path, labels: labels)
             );
           });
         }
       }
     });
   }
-
-  void _onImageButtonPressed(ImageSource source, {BuildContext context}) async {
-      await _displayPickImageDialog(context,
-          (double maxWidth, double maxHeight, int quality) async {
-        try {
-          final pickedFile = await _picker.getImage(
-            source: source,
-            maxWidth: maxWidth,
-            maxHeight: maxHeight,
-            imageQuality: quality,
-          );
-          setState(() {
-            _imageFile = pickedFile;
-          });
-        } catch (e) {
-          setState(() {
-            _pickImageError = e;
-          });
-        }
-      });
-  }
-
-  Future<void> _displayPickImageDialog(
-      BuildContext context, OnPickImageCallback onPick) async {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Pick an image from your library that reminds you of your happy moments!'),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('CANCEL'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                  child: const Text('PICK'),
-                  onPressed: () {
-                    onPick(null, null, null);
-                    if(_imageFile != null){
-                      Navigator.of(context).pushReplacementNamed(
-                        CaptureSurroundingsPreview.routeName,
-                        arguments: ScreenArguments(emotion: emotion, labels: labels, imgPath: _imageFile.path)
-                      );
-                    } else{
-                      Navigator.of(context).pop();
-                    }       
-                  }),
-            ],
-          );
-        });
-      }
-
-  Text _getRetrieveErrorWidget() {
-    if (_retrieveDataError != null) {
-      final Text result = Text(_retrieveDataError);
-      _retrieveDataError = null;
-      return result;
-    }
-    return null;
-  }
-  
-  /* For next page?
-  Widget _previewImage() {
-    final Text retrieveError = _getRetrieveErrorWidget();
-    if (retrieveError != null) {
-      return retrieveError;
-    }
-    if (_imageFile != null) {  
-      return Semantics(
-        child: Image.file(File(_imageFile.path)),
-        label: 'image_picker_example_picked_image');
-    } else if (_pickImageError != null) {
-      return Text(
-        'Pick image error: $_pickImageError',
-        textAlign: TextAlign.center,
-      );
-    } else {
-      return const Text(
-        'You have not yet picked an image.',
-        textAlign: TextAlign.center,
-      );
-    }
-  }*/
 
   Widget _cameraPreview() {
     if (_camera == null || !_camera.value.isInitialized){
@@ -245,6 +157,27 @@ class _CaptureSurroundingsState extends State<CaptureSurroundings> with WidgetsB
     }
   }
 
+  Widget flashSwitcher(FlashMode flashmode){
+    switch (flashmode){
+      case FlashMode.off:
+        return Icon(Icons.flash_off);
+        break;
+      case FlashMode.auto:
+        // TODO: Handle this case.
+        return Icon(Icons.flash_auto);
+        break;
+      case FlashMode.always:
+        // TODO: Handle this case.
+        return Icon(Icons.flash_on_outlined);
+        break;
+      case FlashMode.torch:
+        // TODO: Handle this case.
+        return Icon(Icons.flash_on_rounded);
+        break;
+    }
+    return null;
+  }
+
   @override
   void initState(){
     super.initState();
@@ -266,6 +199,7 @@ class _CaptureSurroundingsState extends State<CaptureSurroundings> with WidgetsB
   @override
   void dispose(){
     WidgetsBinding.instance.removeObserver(this);
+    _camera.dispose();
     super.dispose();
   }
 
@@ -306,25 +240,15 @@ class _CaptureSurroundingsState extends State<CaptureSurroundings> with WidgetsB
             Flexible(
               flex: 1,
               child: Container(
+                alignment: Alignment.center,
                 color: Colors.white,
                 padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround, 
                   children: [
-                    // Uncomment if you want face recognition
-                    /*FloatingActionButton(
-                      backgroundColor: (_faceFound) ? Colors.blue : Colors.blueGrey,
-                      child: Icon(Icons.add),
-                      onPressed: () {
-                        if (_faceFound) _addLabel();
-                      },
-                      heroTag: null,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),*/
+                    
                     FloatingActionButton(
-                      backgroundColor: Colors.blue,
+                      backgroundColor: Colors.orange,
                       child: Icon(Icons.camera),
                       onPressed: (){
                         onTakePictureButtonPressed();
@@ -339,16 +263,23 @@ class _CaptureSurroundingsState extends State<CaptureSurroundings> with WidgetsB
                         style: TextStyle(
                           fontFamily: 'Nexa',
                           fontWeight: FontWeight.w700,
-                          fontSize: getWidth(context) / 35,
+                          fontSize: getWidth(context) / 18,
                           color: Colors.grey[600],
                         ),
                       )
                     ),
 
                     FloatingActionButton(
-                      onPressed: (){_onImageButtonPressed(ImageSource.gallery);},
+                      backgroundColor: Colors.purple,
+                      onPressed: (){
+                        setState(() {
+                          flashModeCounter++;
+                          if(flashModeCounter >= flashModeList.length) flashModeCounter = 0;
+                        });
+                        _camera.setFlashMode(flashModeList[flashModeCounter]);
+                      },
                       heroTag: null,
-                      child: Icon(Icons.album)
+                      child: flashSwitcher(flashModeList[flashModeCounter]),
                     ),
                   ]
                 ),
@@ -358,6 +289,7 @@ class _CaptureSurroundingsState extends State<CaptureSurroundings> with WidgetsB
           ]
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

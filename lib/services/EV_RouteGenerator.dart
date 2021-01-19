@@ -1,7 +1,12 @@
 // RouteGenerator
-// TODO: Use switch-case in route generation. Dictionaries are kinda costly.
+/* This exists for:
+ *
+ * -> Widget screens that require unique arguments
+ * -> Custom transition animations
+ * -> Efficient route navigation
+ * 
+ */
 
-import 'package:camera/camera.dart';
 import 'package:emotiovent/models/ScreenArguments.dart';
 import 'package:emotiovent/screens/widgets/CaptureSurroundingsPreview.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
 import 'package:emotiovent/screens/EV_Login.dart';
 import 'package:emotiovent/screens/EV_SatisfactoryRate.dart';
-// import 'package:emotiovent/screens/EV_SignUp.dart';
+import 'package:emotiovent/screens/EV_SignUp.dart';
 import 'package:emotiovent/screens/EV_InitialScreen.dart';
 import 'package:emotiovent/screens/widgets/SelfieCameraCapturePreview.dart';
 
@@ -32,29 +37,30 @@ Route<Null> getGenerateRoute(RouteSettings settings){
         },
         transitionDuration: const Duration(milliseconds: 400),
       );
+      break;
     
-    // case EVSignUp.routeName:
-    //   ScreenArguments args = arguments;
-    //   return PageRouteBuilder(
-    //     settings: RouteSettings(name: EVSignUp.routeName),
-    //     pageBuilder: (context, animation, secondaryAnimation){
-    //       return ListenableProvider(
-    //         create: (context) => animation,
-    //         //child: EVSignUp(emotion: args.emotion),
-    //         child: EVSignUp(), 
-    //       );
-    //     },
-    //     transitionDuration: const Duration(milliseconds: 1000),
-    //     transitionsBuilder: (context, animation, secondAniamtion, child){
-    //       animation = CurvedAnimation(
-    //         curve: Curves.easeInOut, parent: animation
-    //       );
-    //       return FadeTransition(
-    //         opacity: animation,
-    //         child: child,
-    //       );
-    //     }
-    //   );
+    case EVSignUp.routeName:
+      ScreenArguments args = arguments;
+      return PageRouteBuilder(
+        settings: RouteSettings(name: EVSignUp.routeName),
+        pageBuilder: (context, animation, secondaryAnimation){
+          return ListenableProvider(
+            create: (context) => animation,
+            child: EVSignUp(emotion: args.emotion),
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 1000),
+        transitionsBuilder: (context, animation, secondAniamtion, child){
+          animation = CurvedAnimation(
+            curve: Curves.easeInOut, parent: animation
+          );
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        }
+      );
+      break;
     
     case EVLogin.routeName:
       return PageRouteBuilder(
@@ -76,6 +82,7 @@ Route<Null> getGenerateRoute(RouteSettings settings){
           );
         }
       );
+      break;
     
     case EVChooseEmotionScreen.routeName:
       return PageRouteBuilder(
@@ -97,6 +104,7 @@ Route<Null> getGenerateRoute(RouteSettings settings){
           );
         }
       );
+      break;
 
     case ActivityRandomizer.routeName:
       ScreenArguments args = arguments;
@@ -119,6 +127,7 @@ Route<Null> getGenerateRoute(RouteSettings settings){
           );
         }
       );
+      break;
 
     case EVSatisfactoryRate.routeName:
       ScreenArguments args = arguments;
@@ -141,6 +150,7 @@ Route<Null> getGenerateRoute(RouteSettings settings){
           );
         }
       );
+      break;
 
     case SelfieCameraCapturePreview.routeName:
       ScreenArguments args = arguments;
@@ -170,7 +180,7 @@ Route<Null> getGenerateRoute(RouteSettings settings){
         pageBuilder: (context, animation, secondAnimation){
           return ListenableProvider(
             create: (context) => animation,
-            child: CaptureSurroundingsPreview(emotion: args.emotion, imgPath: args.imgPath,),
+            child: CaptureSurroundingsPreview(emotion: args.emotion, imgPath: args.imgPath, labels: args.labels),
           );
         },
         transitionDuration: const Duration(milliseconds: 1000),
@@ -185,6 +195,5 @@ Route<Null> getGenerateRoute(RouteSettings settings){
           );
         }
       );
-
   }
 }

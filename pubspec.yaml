@@ -63,14 +63,14 @@ dependencies:
   sensors: ^0.4.2+6
   
   # Add the dependency for the FlutterFire plugin for Google Analytics
-  firebase_analytics: ^6.3.0
+  firebase_analytics: ^7.0.1
 
   # Add the dependencies for any other Firebase products you want to use in your app
   # For example, to use Firebase Authentication and Cloud Firestore
-  firebase_core: ^0.5.3
-  firebase_auth: ^0.18.4+1
-  firebase_ml_vision: ^0.9.10
-  cloud_firestore: ^0.14.4
+  firebase_core: ^0.7.0
+  firebase_auth: ^0.20.0+1
+  firebase_ml_vision: ^0.10.0
+  cloud_firestore: ^0.16.0
 
   image_picker: ^0.6.7+21
 

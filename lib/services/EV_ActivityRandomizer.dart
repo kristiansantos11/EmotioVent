@@ -1,3 +1,4 @@
+import 'package:emotiovent/activities/CaptureSurroundings.dart';
 import 'package:emotiovent/activities/NoiseMeterSample.dart';
 import 'package:emotiovent/activities/ShakePhoneScreen.dart';
 import 'package:emotiovent/activities/ShakeShowAnimals.dart';
@@ -21,13 +22,14 @@ class ActivityRandomizer extends StatelessWidget {
                               ShakePhoneActivity(emotion: emotion), 
                               ShakeShowAnimals(emotion: emotion),
                               FaceDetectionFromLiveCamera(emotion: emotion),
+                              CaptureSurroundings(emotion: emotion),
                               ];
                               
     Random rand = new Random();
     int index = rand.nextInt(activities.length);
     return WillPopScope(
       onWillPop: () async => false,
-      child: activities[1]
+      child: activities[4]
     );
   }
 }

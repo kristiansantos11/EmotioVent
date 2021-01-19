@@ -35,7 +35,7 @@ class _SelfieCameraCapturePreviewState extends State<SelfieCameraCapturePreview>
     backgroundController = AnimationController(vsync: this, duration: Duration(seconds: 1))..repeat(reverse: true);
 
     Timer(
-      Duration(seconds: 2),
+      Duration(seconds: 1),
       (){
         setState(() {
         _showFAB = true;
@@ -51,7 +51,9 @@ class _SelfieCameraCapturePreviewState extends State<SelfieCameraCapturePreview>
         children: <Widget>[
 
           BackgroundStagger(
-            controller: backgroundController.view
+            controller: backgroundController.view,
+            begin: Colors.pink,
+            end: Colors.purple,
           ),
 
           Column(
