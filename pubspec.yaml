@@ -24,6 +24,9 @@ dependencies:
   responsive_flutter: ^0.0.4
   flutter:
     sdk: flutter
+
+  # Si Jedi ang naglagay neto (✿◠‿◠)
+  date_field: ^0.1.2
   
   # Experimentation purposes atm
   # START

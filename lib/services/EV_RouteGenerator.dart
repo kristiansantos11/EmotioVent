@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
 import 'package:emotiovent/screens/EV_Login.dart';
 import 'package:emotiovent/screens/EV_SatisfactoryRate.dart';
-import 'package:emotiovent/screens/EV_SignUp.dart';
+// import 'package:emotiovent/screens/EV_SignUp.dart';
 import 'package:emotiovent/screens/EV_InitialScreen.dart';
 import 'package:emotiovent/screens/widgets/SelfieCameraCapturePreview.dart';
 
@@ -33,27 +33,28 @@ Route<Null> getGenerateRoute(RouteSettings settings){
         transitionDuration: const Duration(milliseconds: 400),
       );
     
-    case EVSignUp.routeName:
-      ScreenArguments args = arguments;
-      return PageRouteBuilder(
-        settings: RouteSettings(name: EVSignUp.routeName),
-        pageBuilder: (context, animation, secondaryAnimation){
-          return ListenableProvider(
-            create: (context) => animation,
-            child: EVSignUp(emotion: args.emotion),
-          );
-        },
-        transitionDuration: const Duration(milliseconds: 1000),
-        transitionsBuilder: (context, animation, secondAniamtion, child){
-          animation = CurvedAnimation(
-            curve: Curves.easeInOut, parent: animation
-          );
-          return FadeTransition(
-            opacity: animation,
-            child: child,
-          );
-        }
-      );
+    // case EVSignUp.routeName:
+    //   ScreenArguments args = arguments;
+    //   return PageRouteBuilder(
+    //     settings: RouteSettings(name: EVSignUp.routeName),
+    //     pageBuilder: (context, animation, secondaryAnimation){
+    //       return ListenableProvider(
+    //         create: (context) => animation,
+    //         //child: EVSignUp(emotion: args.emotion),
+    //         child: EVSignUp(), 
+    //       );
+    //     },
+    //     transitionDuration: const Duration(milliseconds: 1000),
+    //     transitionsBuilder: (context, animation, secondAniamtion, child){
+    //       animation = CurvedAnimation(
+    //         curve: Curves.easeInOut, parent: animation
+    //       );
+    //       return FadeTransition(
+    //         opacity: animation,
+    //         child: child,
+    //       );
+    //     }
+    //   );
     
     case EVLogin.routeName:
       return PageRouteBuilder(
