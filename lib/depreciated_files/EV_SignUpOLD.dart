@@ -13,18 +13,18 @@ import 'package:provider/provider.dart';
 import '../services/EV_AuthService.dart';
 // import 'package:emotiovent/database_classes/transferUserData.dart';
 
-class EVSignUp extends StatefulWidget {
+class EVSignUpOLD extends StatefulWidget {
   static const routeName = '/signup';
 
   final String emotion;
 
-  const EVSignUp({Key key, this.emotion}) : super(key: key);
+  const EVSignUpOLD({Key key, this.emotion}) : super(key: key);
 
   @override
-  _EVSignUpState createState() => _EVSignUpState(emotion);
+  _EVSignUpOLDState createState() => _EVSignUpOLDState(emotion);
 }
 
-class _EVSignUpState extends State<EVSignUp> {
+class _EVSignUpOLDState extends State<EVSignUpOLD> {
 
   final String emotion;
 
@@ -36,7 +36,7 @@ class _EVSignUpState extends State<EVSignUp> {
   String debugMessage = "[DEBUG] You have entered:\n";
   bool _showContent = false;
 
-  _EVSignUpState(this.emotion);
+  _EVSignUpOLDState(this.emotion);
 
   void backButtonPressed(ctx){
     Navigator.popUntil(ctx, ModalRoute.withName('/main'));

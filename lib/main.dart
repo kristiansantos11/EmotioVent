@@ -12,8 +12,6 @@ import 'package:provider/provider.dart';
 import 'services/EV_AuthService.dart';
 import 'services/EV_RouteGenerator.dart';
 
-import 'screens/EV_SignUpv2.dart';
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -49,12 +47,6 @@ class MyApp extends StatelessWidget {
         routes: {
           EVLoading.routeName : (context) => EVLoading(),
           EVError.routeName : (context) => EVError(),
-          // # Hello ulet sorry kung nagulo ko ulet ung code, di ko magets kase ung iba
-          // # so nagdadag ako ng code dito para manavigate sa bagong sign up screen haha
-          "EV_SignUpv2.dart" : (context) => EVSignUpv2(),
-
-
-
         },
         onGenerateRoute: getGenerateRoute,
       )
