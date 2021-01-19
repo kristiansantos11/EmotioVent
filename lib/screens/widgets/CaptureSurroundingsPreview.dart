@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CaptureSurroundingsPreview extends StatefulWidget {
   static const routeName = '/captureSurroundingsPreview';
@@ -23,6 +26,19 @@ class _CaptureSurroundingsPreviewState extends State<CaptureSurroundingsPreview>
   final List<ImageLabel> labels;
 
   _CaptureSurroundingsPreviewState({this.labels, this.emotion, this.imgPath});
+
+  dynamic _pickImageError;
+  String _retrieveDataError;
+  PickedFile _imageFile;
+
+  Text _getRetrieveErrorWidget() {
+    if (_retrieveDataError != null) {
+      final Text result = Text(_retrieveDataError);
+      _retrieveDataError = null;
+      return result;
+    }
+    return null;
+  }
 
   Widget _previewImage() {
     final Text retrieveError = _getRetrieveErrorWidget();
