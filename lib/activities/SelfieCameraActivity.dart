@@ -7,7 +7,6 @@
 
 import 'package:emotiovent/models/ScreenArguments.dart';
 import 'package:emotiovent/screens/widgets/SelfieCameraCapturePreview.dart';
-import 'package:emotiovent/screens/EV_SatisfactoryRate.dart';
 import 'package:emotiovent/services/EV_CameraProcessUtil.dart';
 import 'package:emotiovent/services/EV_FaceBorderPainter.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
@@ -15,15 +14,11 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/foundation.dart';
-//import 'package:emotiovent/services/EV_FaceBorderPainter.dart';
 
 import 'dart:async';
 import 'package:gallery_saver/gallery_saver.dart';
-//import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-//import 'package:image/image.dart' as imglib;
-//import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 import 'package:quiver/collection.dart';
 import 'package:flutter/services.dart';
 
@@ -37,7 +32,7 @@ class FaceDetectionFromLiveCamera extends StatefulWidget {
 }
 
 class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamera> with WidgetsBindingObserver, TickerProviderStateMixin{
-  // Final for constructor
+
   final String emotion;
   _FaceDetectionFromLiveCameraState(this.emotion);
 
@@ -54,7 +49,6 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
   bool _faceFound = false;
   bool _isSmiling = false;
   bool _showContent = false;
-  //final TextEditingController _name = new TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   AnimationController switcherController;
@@ -82,7 +76,6 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
   @override
   void dispose(){
     WidgetsBinding.instance.removeObserver(this);
-    //_camera.dispose();
     setState((){_camera = null;});
     super.dispose();
   }
@@ -102,26 +95,6 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
     }
   }
 
-  /*Future loadModel() async {
-    try {
-      final gpuDelegateV2 = tfl.GpuDelegateV2(
-          options: tfl.GpuDelegateOptionsV2(
-        false,
-        tfl.TfLiteGpuInferenceUsage.fastSingleAnswer,
-        tfl.TfLiteGpuInferencePriority.minLatency,
-        tfl.TfLiteGpuInferencePriority.auto,
-        tfl.TfLiteGpuInferencePriority.auto,
-      ));
-
-      var interpreterOptions = tfl.InterpreterOptions()
-        ..addDelegate(gpuDelegateV2);
-      interpreter = await tfl.Interpreter.fromAsset('mobilefacenet.tflite',
-          options: interpreterOptions);
-    } on Exception {
-      print('Failed to load model.');
-    }
-  }*/
-
   void _initializeCamera() async {
     //await loadModel();
     CameraDescription description = await getCamera(_direction);
@@ -135,9 +108,6 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
     await _camera.initialize();
     await Future.delayed(Duration(milliseconds: 500));
     tempDir = await getApplicationDocumentsDirectory();
-    /*String _embPath = tempDir.path + '/emb.json';
-    jsonFile = new File(_embPath);
-    if (jsonFile.existsSync()) data = json.decode(jsonFile.readAsStringSync());*/
 
     // TODO: Add flash button in this activity.
     _camera.setFlashMode(FlashMode.auto);
@@ -146,8 +116,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
       if (_camera != null) {
         if (_isDetecting) return;
         _isDetecting = true;
-        // Uncomment this if you want facial recognition
-        // String res;
+
         dynamic finalResult = Multimap<String, Face>();
         detect(image, _getDetectionMethod(), rotation).then(
           (dynamic result) async {
@@ -156,34 +125,14 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
             else
               _faceFound = true;
             Face _face;
-            /*imglib.Image convertedImage =
-                _convertCameraImage(image, _direction);*/
+
             for (_face in result) {
               if (_face.smilingProbability > 0.5){
                 _isSmiling = true;
               } else{
                 _isSmiling = false;
               }
-              /*double x, y, w, h;
-              x = (_face.boundingBox.left - 10);
-              y = (_face.boundingBox.top - 10);
-              w = (_face.boundingBox.width + 10);
-              h = (_face.boundingBox.height + 10);
-              imglib.Image croppedImage = imglib.copyCrop(
-                  convertedImage, x.round(), y.round(), w.round(), h.round());
-              croppedImage = imglib.copyResizeCropSquare(croppedImage, 112);
-              */
-              // int startTime = new DateTime.now().millisecondsSinceEpoch;
 
-              /* Uncomment these if you want to use face recognition, what I want to
-               * Achieve here is FACE DETECTION not FACE RECOGNITION.
-               *  res = _recog(croppedImage);
-               */
-
-              // int endTime = new DateTime.now().millisecondsSinceEpoch;
-              // print("Inference took ${endTime - startTime}ms");
-
-              // Replace "FACE" with res to make FACE RECOGNITION WORK.
               finalResult.add("FACE", _face);
             }
             setState(() {
@@ -211,6 +160,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
     return faceDetector.processImage;
   }
   // Uncomment if you will use bounding boxes to identify faces in the camera surface.
+  /*
   Widget _buildResults() {
     const Text noResultsText = const Text('');
     if (_scanResults == null ||
@@ -229,6 +179,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
       painter: painter,
     );
   }
+  */
 
   Widget _buildImage() {
     if (_camera == null || !_camera.value.isInitialized) {
@@ -261,7 +212,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
                           children: <Widget>[
                                 CameraPreview(_camera),
                                 // Uncomment if you will use bounding boxes to identify faces in the camera surface.
-                                _buildResults(),
+                                //_buildResults(),
                               ],
                         ),
                     ),
@@ -300,39 +251,6 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      /*appBar: AppBar(
-        title: const Text('Face recognition'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.navigate_before),
-            onPressed: (){Navigator.of(context).pop();},
-          ),
-          IconButton(
-            icon: Icon(Icons.navigate_next),
-            onPressed: (){Navigator.of(context).popAndPushNamed(EVSatisfactoryRate.routeName, arguments: emotion);}
-          ),
-          // Remove this if you want Face Recognition.
-          /*PopupMenuButton<Choice>(
-            onSelected: (Choice result) {
-              if (result == Choice.delete)
-                _resetFile();
-              else
-                _viewLabels();
-            },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<Choice>>[
-              const PopupMenuItem<Choice>(
-                child: Text('View Saved Faces'),
-                value: Choice.view,
-              ),
-              const PopupMenuItem<Choice>(
-                child: Text('Remove all faces'),
-                value: Choice.delete,
-              )
-            ],
-          ),
-          */
-        ],
-      ),*/
       body: _buildImage(),
         floatingActionButton: AnimatedOpacity(
           opacity: _showContent ? 1.0 : 0.0,
@@ -352,18 +270,6 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround, 
                     children: [
-                      // Uncomment if you want face recognition
-                      /*FloatingActionButton(
-                        backgroundColor: (_faceFound) ? Colors.blue : Colors.blueGrey,
-                        child: Icon(Icons.add),
-                        onPressed: () {
-                          if (_faceFound) _addLabel();
-                        },
-                        heroTag: null,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),*/
                       FloatingActionButton(
                         backgroundColor: (_isSmiling && _faceFound) ? Colors.blue : Colors.grey,
                         child: Icon(Icons.camera),
@@ -417,169 +323,6 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
-
-  /*imglib.Image _convertCameraImage(CameraImage image, CameraLensDirection _dir) {
-    int width = image.width;
-    int height = image.height;
-    // imglib -> Image package from https://pub.dartlang.org/packages/image
-    var img = imglib.Image(width, height); // Create Image buffer
-    const int hexFF = 0xFF000000;
-    final int uvyButtonStride = image.planes[1].bytesPerRow;
-    final int uvPixelStride = image.planes[1].bytesPerPixel;
-    for (int x = 0; x < width; x++) {
-      for (int y = 0; y < height; y++) {
-        final int uvIndex =
-            uvPixelStride * (x / 2).floor() + uvyButtonStride * (y / 2).floor();
-        final int index = y * width + x;
-        final yp = image.planes[0].bytes[index];
-        final up = image.planes[1].bytes[uvIndex];
-        final vp = image.planes[2].bytes[uvIndex];
-        // Calculate pixel color
-        int r = (yp + vp * 1436 / 1024 - 179).round().clamp(0, 255);
-        int g = (yp - up * 46549 / 131072 + 44 - vp * 93604 / 131072 + 91)
-            .round()
-            .clamp(0, 255);
-        int b = (yp + up * 1814 / 1024 - 227).round().clamp(0, 255);
-        // color: 0x FF  FF  FF  FF
-        //           A   B   G   R
-        img.data[index] = hexFF | (b << 16) | (g << 8) | r;
-      }
-    }
-    var img1 = (_dir == CameraLensDirection.front)
-        ? imglib.copyRotate(img, -90)
-        : imglib.copyRotate(img, 90);
-    return img1;
-  }*/
-
-/*
-  String _recog(imglib.Image img) {
-    List input = imageToByteListFloat32(img, 112, 128, 128);
-    input = input.reshape([1, 112, 112, 3]);
-    // Deprecated code, will search for a workaround.
-    List output = List(1 * 192).reshape([1, 192]);
-    interpreter.run(input, output);
-    output = output.reshape([192]);
-    e1 = List.from(output);
-    return compare(e1).toUpperCase();
-  }
-
-  String compare(List currEmb) {
-    if (data.length == 0) return "No Face saved";
-    double minDist = 999;
-    double currDist = 0.0;
-    String predRes = "NOT RECOGNIZED";
-    for (String label in data.keys) {
-      currDist = euclideanDistance(data[label], currEmb);
-      if (currDist <= threshold && currDist < minDist) {
-        minDist = currDist;
-        predRes = label;
-      }
-    }
-    print(minDist.toString() + " " + predRes);
-    return predRes;
-  }
-
-  void _resetFile() {
-    data = {};
-    jsonFile.deleteSync();
-  }
-
-  void _viewLabels() {
-    setState(() {
-      _camera = null;
-    });
-    String name;
-    var alert = new AlertDialog(
-      title: new Text("Saved Faces"),
-      content: new ListView.builder(
-          padding: new EdgeInsets.all(2),
-          itemCount: data.length,
-          itemBuilder: (BuildContext context, int index) {
-            name = data.keys.elementAt(index);
-            return new Column(
-              children: <Widget>[
-                new ListTile(
-                  title: new Text(
-                    name,
-                    style: new TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[400],
-                    ),
-                  ),
-                ),
-                new Padding(
-                  padding: EdgeInsets.all(2),
-                ),
-                new Divider(),
-              ],
-            );
-          }),
-      actions: <Widget>[
-        new FlatButton(
-          child: Text("OK"),
-          onPressed: () {
-            _initializeCamera();
-            Navigator.pop(context);
-          },
-        )
-      ],
-    );
-    showDialog(
-        context: context,
-        builder: (context) {
-          return alert;
-        });
-  }
-
-  void _addLabel() {
-    setState(() {
-      _camera = null;
-    });
-    print("Adding new face");
-    var alert = new AlertDialog(
-      title: new Text("Add Face"),
-      content: new Row(
-        children: <Widget>[
-          new Expanded(
-            child: new TextField(
-              controller: _name,
-              autofocus: true,
-              decoration: new InputDecoration(
-                  labelText: "Name", icon: new Icon(Icons.face)),
-            ),
-          )
-        ],
-      ),
-      actions: <Widget>[
-        new FlatButton(
-            child: Text("Save"),
-            onPressed: () {
-              _handle(_name.text.toUpperCase());
-              _name.clear();
-              Navigator.pop(context);
-            }),
-        new FlatButton(
-          child: Text("Cancel"),
-          onPressed: () {
-            _initializeCamera();
-            Navigator.pop(context);
-          },
-        )
-      ],
-    );
-    showDialog(
-        context: context,
-        builder: (context) {
-          return alert;
-        }
-    );
-  }
-
-  void _handle(String text) {
-    data[text] = e1;
-    jsonFile.writeAsStringSync(json.encode(data));
-    _initializeCamera();
-  }*/
 
   void showInSnackBar(String message) {
     // ignore: deprecated_member_use
