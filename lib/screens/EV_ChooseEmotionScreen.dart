@@ -60,8 +60,13 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
         controller.forward();
       }
     );
-    transitionController.forward();
-    
+
+    Timer(
+      Duration(milliseconds: 500),
+      (){setState(() {
+        transitionController.forward();
+      });}
+    );
   }
 
   @override
@@ -353,9 +358,6 @@ class EmotionButton extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-
-    // TODO: implement build
-
         return ScaleTransition(
           scale: Tween<double>(
             begin: 0.0,

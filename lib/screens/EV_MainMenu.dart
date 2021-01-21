@@ -27,6 +27,9 @@ class _EVMainMenuState extends State<EVMainMenu> {
       onWillPop: () async => false,
       child: Scaffold(
         key: _scaffoldKey,
+
+        // Drawer will not be used.
+        // PageView should be used in navigating to trusted contacts, emotion calendar, freedom board, etc.
         drawer: Drawer(
           child: ListView(
             children: <Widget>[
@@ -81,6 +84,10 @@ class _EVMainMenuState extends State<EVMainMenu> {
             ]
           )
         ),
+
+        // Change UI for BottomAppBar.
+        // This is where the icons for the different page views should be found
+        // Ask rigel where to place the button icons and how they work and how they should animate (?)
         bottomNavigationBar: BottomAppBar(
           color: Colors.white,
           child: Row(
@@ -141,6 +148,9 @@ class _EVMainMenuState extends State<EVMainMenu> {
               ),
             ),
 
+            // This ClipPath will be removed. I was only testing custom shapes :)
+            // The above Container widget will contain the background.
+            // The background should be high definition enough for maximum compatibility with small and large phone screens
             ClipPath(
               clipper: CustomShapeClipper(),
               child: Container(
@@ -157,6 +167,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
 
+                  // Profile Card widget.
                   Flexible(
                     flex: 7,
                     child: Container(
@@ -168,6 +179,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
                     )
                   ),
 
+                  // Calendar widget.
                   Flexible(
                     flex: 8,
                     child: Container(
