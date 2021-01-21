@@ -54,7 +54,7 @@ class _EVLoginState extends State<EVLogin> {
       email: _emailTextController.text.trim(), 
       password: _pwTextController.text.trim()
     ).then((_) => {
-        Navigator.of(ctx).popUntil(ModalRoute.withName('/main'))
+        Navigator.of(ctx).popUntil(ModalRoute.withName(EVInitialScreen.routeName))
       }).catchError((e) => {
       _success = false,
       showDialog(
@@ -181,7 +181,8 @@ class _EVLoginState extends State<EVLogin> {
                                         ResponsiveFlutter.of(context).scale(20), 
                                         20, 
                                         ResponsiveFlutter.of(context).scale(20),
-                                        10),
+                                        10
+                                        ),
                                         child: TextFormField(
                                           validator: (String value){
                                             if (value.isEmpty){
@@ -190,6 +191,7 @@ class _EVLoginState extends State<EVLogin> {
                                             return null;
                                           },
                                           controller: _emailTextController,
+                                          cursorColor: Color(0xfff77272),
                                           style: TextStyle(
                                             fontFamily: 'Proxima Nova',
                                             fontStyle: FontStyle.normal,
@@ -220,9 +222,10 @@ class _EVLoginState extends State<EVLogin> {
                                         ResponsiveFlutter.of(context).scale(20),
                                         0),
                                         child: TextFormField(
+                                          cursorColor: Color(0xfff77272),
                                           validator: (String value){
                                             if (value.isEmpty){
-                                              return 'Please enter your e-mail';
+                                              return 'Please enter your password';
                                             } 
                                             return null;
                                           },
@@ -235,21 +238,22 @@ class _EVLoginState extends State<EVLogin> {
                                             color: Colors.white54
                                           ),
                                           obscureText: true,
-                                          decoration: InputDecoration(contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                              border: OutlineInputBorder(
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(100.0),
-                                                ),
-                                                borderSide: BorderSide.none,
+                                          decoration: InputDecoration(
+                                            contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(100.0),
                                               ),
-                                              filled: true,
-                                              hintStyle: TextStyle(
-                                                  color: Colors.white24),
-                                              hintText: "Password",
-                                              fillColor: Colors.grey[600],
+                                              borderSide: BorderSide.none,
                                             ),
+                                            filled: true,
+                                            hintStyle: TextStyle(
+                                                color: Colors.white24),
+                                            hintText: "Password",
+                                            fillColor: Colors.grey[600],
                                           ),
                                         ),
+                                      ),
                                   ]
                                 )
                               ),

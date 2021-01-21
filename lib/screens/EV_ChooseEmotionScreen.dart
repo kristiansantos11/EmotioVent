@@ -66,10 +66,9 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
 
   @override
   void dispose(){
-
+    transitionController.dispose();
     controller.dispose();
     super.dispose();
-
   }
 
   @override
@@ -86,10 +85,8 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
               height: MediaQuery.of(context).size.height,
               color: colorTween.value,
             ),
-          ),
-            
+          ), 
         ),
-
 
         AnimatedOpacity(
           opacity: showContent ? 1.0 : 0.0,
@@ -212,9 +209,11 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                           ),
                         ),
                       ),
+
                       SizedBox(
                         height: ResponsiveFlutter.of(context).hp(1),
                       ),
+
                       Container(
                         child:
                         Column(
@@ -230,7 +229,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     intervalStart: 0.4,
                                     intervalEnd: 0.6,
                                     color: 0xc5D9D900, 
-                                    text: "Happy",
+                                    emotion: "Happy",
                                     controller: controller,
                                   ),
 
@@ -239,7 +238,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     intervalStart: 0.4,
                                     intervalEnd: 0.6,
                                     color: 0xc5FF8B8B, 
-                                    text: "Anger",
+                                    emotion: "Anger",
                                     controller: controller,
                                   ),
 
@@ -265,7 +264,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     intervalStart: 0.6,
                                     intervalEnd: 0.8,
                                     color: 0xc5E593FB, 
-                                    text: "Fear",
+                                    emotion: "Fear",
                                     controller: controller,
                                   ),
 
@@ -274,7 +273,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     intervalStart: 0.6,
                                     intervalEnd: 0.8,
                                     color: 0xc587A7FF, 
-                                    text: "Sad",
+                                    emotion: "Sad",
                                     controller: controller,
                                   ),
 
@@ -300,7 +299,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     intervalStart: 0.8,
                                     intervalEnd: 1.0,
                                     color: 0xc570DB77, 
-                                    text: "Disgust",
+                                    emotion: "Disgust",
                                     controller: controller
                                   ),
 
@@ -309,7 +308,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     intervalStart: 0.8,
                                     intervalEnd: 1.0,
                                     color: 0xc5EFA254,
-                                    text: "Alone",
+                                    emotion: "Alone",
                                     controller: controller,
                                   ),
 
@@ -337,7 +336,7 @@ class EmotionButton extends StatelessWidget{
   final double intervalStart;
   final double intervalEnd;
   final int color;
-  final String text;
+  final String emotion;
   final BuildContext ctx;
   final AnimationController controller;
 
@@ -347,7 +346,7 @@ class EmotionButton extends StatelessWidget{
     this.intervalStart,
     this.intervalEnd,
     this.color,
-    this.text,
+    this.emotion,
     this.controller,
   }) : super(key : key);
 
@@ -372,7 +371,7 @@ class EmotionButton extends StatelessWidget{
           ),
 
           child: Hero(
-            tag: text,
+            tag: emotion,
             child: Padding(
               padding: EdgeInsets.all(ResponsiveFlutter.of(context).scale(8)),
               child: Container(
@@ -393,11 +392,11 @@ class EmotionButton extends StatelessWidget{
                   ),
                   //minWidth: MediaQuery.of(context).size.width / 2.5,
                   //height: ResponsiveFlutter.of(context).hp(20),
-                  onPressed: () {Navigator.of(ctx).pushNamed(ActivityRandomizer.routeName, arguments: ScreenArguments(emotion: text));},
+                  onPressed: () {Navigator.of(ctx).pushNamed(ActivityRandomizer.routeName, arguments: ScreenArguments(emotion: emotion));},
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
                     child: Text(
-                      text,
+                      emotion,
                       style: TextStyle(
                         fontSize: ResponsiveFlutter.of(context).scale(20.0),
                         color: Colors.white,

@@ -21,12 +21,14 @@ class EVSignUpOLD extends StatefulWidget {
   const EVSignUpOLD({Key key, this.emotion}) : super(key: key);
 
   @override
-  _EVSignUpOLDState createState() => _EVSignUpOLDState(emotion);
+  _EVSignUpOLDState createState() => _EVSignUpOLDState(emotion: emotion);
 }
 
 class _EVSignUpOLDState extends State<EVSignUpOLD> {
 
   final String emotion;
+
+  _EVSignUpOLDState({this.emotion});
 
   final _emailTextController = TextEditingController();
   final _pwTextController = TextEditingController();
@@ -36,7 +38,7 @@ class _EVSignUpOLDState extends State<EVSignUpOLD> {
   String debugMessage = "[DEBUG] You have entered:\n";
   bool _showContent = false;
 
-  _EVSignUpOLDState(this.emotion);
+  
 
   void backButtonPressed(ctx){
     Navigator.popUntil(ctx, ModalRoute.withName('/main'));

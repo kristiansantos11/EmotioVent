@@ -136,6 +136,7 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
                           if(firebaseUser == null){
                             Navigator.of(context).pushNamed(EVSignUp.routeName, arguments: ScreenArguments(emotion: emotion));
                           } else {
+                            // TODO: Add code here to upload the record
                             Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
                           }
                         }

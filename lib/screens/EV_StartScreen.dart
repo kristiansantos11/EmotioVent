@@ -17,7 +17,21 @@ class _EVStartScreenState extends State<EVStartScreen> {
   // This was supposed to be used along with animatedOpacity
   // However, the setState inside the initState method was being called miraculously
   // I had to scrape the animation.
-  bool showContent = true;
+  bool showContent = false;
+
+  @override
+  void initState(){
+    super.initState();
+
+    Timer(
+      Duration(seconds: 1),
+      (){
+        setState(() {
+          showContent = true;
+        });
+      }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,9 +117,6 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                 ),
                             )
                         ),
-                        
-                        
-                        
 
                         Flexible(
                           flex: 5,
@@ -126,8 +137,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(18.0),
                                         ),
-                                        child:
-                                        TextButton(
+                                        child: TextButton(
                                           style: ButtonStyle(
                                             backgroundColor: MaterialStateProperty.all<Color>(Color(0xff53B6AF)),
                                             overlayColor: MaterialStateProperty.resolveWith<Color>(

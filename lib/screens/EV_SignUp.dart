@@ -4,6 +4,7 @@
  * -> At the top: Add "Register"
  * -> Make the entire screen Scrollable.
  * -> The background Container is temporary.
+ * -> The emotion is optional, because I will add a button in the chooseEmotionScreen to skip
 */
 
 import 'package:date_field/date_field.dart';
@@ -301,7 +302,7 @@ class _EVSignUpState extends State<EVSignUp> {
                             padding: MaterialStateProperty.all(EdgeInsets.all(10.0)),
                             backgroundColor: MaterialStateProperty.all(Colors.green[600]),
                           ),
-                          onPressed: () async{register();},
+                          onPressed: () async {register();},
                           child: Text(
                             "Register",
                             style: TextStyle(
@@ -316,7 +317,9 @@ class _EVSignUpState extends State<EVSignUp> {
                             padding: MaterialStateProperty.all(EdgeInsets.all(10.0)),
                             backgroundColor: MaterialStateProperty.all(Colors.purple),
                           ),
-                          onPressed: () {Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));},
+                          onPressed: () {
+                            Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
+                          },
                           child: Text(
                             "Back",
                             style: TextStyle(

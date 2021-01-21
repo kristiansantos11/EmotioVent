@@ -115,13 +115,15 @@ class _EVMainMenuState extends State<EVMainMenu> {
                   tag: 'register',
                   child: TextButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.green[300]),
+                      backgroundColor: MaterialStateProperty.all(Colors.red[300]),
                       shape: MaterialStateProperty.all(
                         RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))
                       ),
                     ),
                     child: Text("VENT", style: TextStyle(color: Colors.white, fontFamily: 'Nexa', fontWeight: FontWeight.w700)),
-                    onPressed: (){Navigator.of(context).pushNamed(EVChooseEmotionScreen.routeName);}
+                    onPressed: (){
+                      Navigator.of(context).pushNamed(EVChooseEmotionScreen.routeName);
+                    }
                   ),
                 ),
               ),
@@ -132,6 +134,12 @@ class _EVMainMenuState extends State<EVMainMenu> {
 
         body: Stack(
           children: <Widget>[
+
+            Container(
+              decoration: BoxDecoration(
+                //image: 'image_here'
+              ),
+            ),
 
             ClipPath(
               clipper: CustomShapeClipper(),
@@ -150,7 +158,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
                 children: <Widget>[
 
                   Flexible(
-                    flex: 4,
+                    flex: 7,
                     child: Container(
                       constraints: BoxConstraints.expand(),
                       alignment: Alignment.center,
@@ -161,7 +169,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
                   ),
 
                   Flexible(
-                    flex: 5,
+                    flex: 8,
                     child: Container(
 
                     )

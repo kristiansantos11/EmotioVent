@@ -8,6 +8,7 @@
  */
 
 import 'package:emotiovent/models/ScreenArguments.dart';
+import 'package:emotiovent/screens/EV_ViewProfilePicture.dart';
 import 'package:emotiovent/screens/widgets/CaptureSurroundingsPreview.dart';
 import 'package:flutter/material.dart';
 
@@ -195,6 +196,26 @@ Route<Null> getGenerateRoute(RouteSettings settings){
           );
         }
       );
+    
+    case EVViewProfilePicture.routeName:
+      return PageRouteBuilder(
+        settings: RouteSettings(name: EVViewProfilePicture.routeName),
+        pageBuilder: (context, animation, secondAnimation){
+          return ListenableProvider(
+            create: (context) => animation,
+            child: EVViewProfilePicture(),
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 1000),
+        transitionsBuilder: (context, animation, secondAnimation, child){
+          animation = CurvedAnimation(curve: Curves.easeInOut, parent: animation);
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        }
+      );
+
   }
   return null;
 }

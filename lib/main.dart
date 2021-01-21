@@ -39,15 +39,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'emotiovent',
         theme: ThemeData(
-          primarySwatch: Colors.green,
+          primarySwatch: Colors.pink,
         ),
         initialRoute: EVInitialScreen.routeName,
         
         // TODO: Move all routes into their respective generators inside the getGenerateRoute function.
-        routes: {
-          EVLoading.routeName : (context) => EVLoading(),
-          EVError.routeName : (context) => EVError(),
-        },
         onGenerateRoute: getGenerateRoute,
       )
     );

@@ -24,12 +24,9 @@ class ActivityRandomizer extends StatelessWidget {
                               FaceDetectionFromLiveCamera(emotion: emotion),
                               CaptureSurroundings(emotion: emotion),
                               ];
-                              
+
     Random rand = new Random();
     int index = rand.nextInt(activities.length);
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: activities[4]
-    );
+    return activities[index];
   }
 }

@@ -1,3 +1,4 @@
+import 'package:emotiovent/screens/EV_ViewProfilePicture.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +7,8 @@ Widget profileCard({Widget child, BuildContext context}){
     children: <Widget>[
 
       Positioned.fill(
-        child: Container()
+        child: Container(
+        )
       ),
 
       Positioned(
@@ -83,16 +85,21 @@ Widget profileCard({Widget child, BuildContext context}){
                   alignment: Alignment.topRight,
                   child: Hero(
                     tag: 'profile_picture',
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey[400],
-                          ),
-                        )
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).pushNamed(EVViewProfilePicture.routeName);
+                      },
+                      child: Container(
+                        width: 100,
+                        height: 100,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey[400],
+                            ),
+                          )
+                        ),
                       ),
                     ),
                   ),
