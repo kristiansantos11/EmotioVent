@@ -1,6 +1,3 @@
-import 'screens/unused/EV_Loading.dart';
-import 'screens/unused/EV_AppError.dart';
-
 import 'package:flutter/material.dart';
 
 import 'package:emotiovent/screens/EV_InitialScreen.dart';
@@ -49,4 +46,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

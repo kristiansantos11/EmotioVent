@@ -54,7 +54,7 @@ class _EVLoginState extends State<EVLogin> {
       email: _emailTextController.text.trim(), 
       password: _pwTextController.text.trim()
     ).then((_) => {
-        Navigator.of(ctx).popUntil(ModalRoute.withName(EVInitialScreen.routeName))
+        backButtonPressed(context)
       }).catchError((e) => {
       _success = false,
       showDialog(
@@ -298,8 +298,6 @@ class _EVLoginState extends State<EVLogin> {
                                         ),
                                       ),
 
-
-
                                       ElevatedButton(
                                         style: ButtonStyle(
                                           elevation: MaterialStateProperty.all(3.0),
@@ -310,7 +308,6 @@ class _EVLoginState extends State<EVLogin> {
                                           ),
                                           backgroundColor: MaterialStateProperty.all<Color>(Color(0xfff77272))
                                         ),
-                                        
                                         onPressed: () {_signInWithEmailAndPassword(context);},
                                         child: Text(
                                           "      LOGIN      ",

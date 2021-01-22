@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:emotiovent/models/ScreenArguments.dart';
 import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
 import 'package:emotiovent/screens/EV_SignUp.dart';
+import 'package:emotiovent/screens/ExplainBeforeRegister.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
@@ -152,7 +153,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                             )),
                                             minimumSize: MaterialStateProperty.all(Size(ResponsiveFlutter.of(context).scale(225), ResponsiveFlutter.of(context).scale(50))),
                                           ),
-                                          onPressed: () {Navigator.of(context).pushNamed(EVChooseEmotionScreen.routeName);},
+                                          onPressed: () {Navigator.of(context).pushNamed(ExplainBeforeRegister.routeName);},
                                           child: Padding(
                                             padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
                                             child:
