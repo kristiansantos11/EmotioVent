@@ -2,6 +2,7 @@ import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
 import 'package:emotiovent/screens/EV_SignUp.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 //import 'package:provider/provider.dart';
 import '../services/SlideFadeInText.dart';
 
@@ -22,7 +23,7 @@ class ExplainBeforeRegister extends StatelessWidget {
 
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.fromLTRB(getWidth(context)/8, 10, getWidth(context)/8, 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
