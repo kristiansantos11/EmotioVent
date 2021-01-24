@@ -3,7 +3,6 @@ import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:emotiovent/screens/clipper/CustomShapeClipper.dart';
 import 'package:emotiovent/screens/widgets/ProfileCard.dart';
-import 'package:emotiovent/services/FirestoreService.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,17 +10,12 @@ import 'package:provider/provider.dart';
 import '../services/EV_AuthService.dart';
 
 class EVMainMenu extends StatefulWidget {
-  final User user;
-
-  const EVMainMenu({Key key, @required this.user}) : super(key: key);
 
   @override
-  _EVMainMenuState createState() => _EVMainMenuState(user: user);
+  _EVMainMenuState createState() => _EVMainMenuState();
 }
 
 class _EVMainMenuState extends State<EVMainMenu> {
-  final User user;
-  _EVMainMenuState({@required this.user});
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -31,8 +25,9 @@ class _EVMainMenuState extends State<EVMainMenu> {
 
   @override
   Widget build(BuildContext context) {
-    UserData userData = Provider.of<UserData>(context);
-    print(userData.email);
+    final user = context.watch<User>();
+    //UserData userData = Provider.of<UserData>(context);
+    //print(userData.name);
 
     return WillPopScope(
         onWillPop: () async => false,

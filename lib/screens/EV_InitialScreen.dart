@@ -1,6 +1,7 @@
 // Initial Screen > Comes with an authwrapper that checks if the user is logged in
 // before taking them to MainMenu (if logged in) or StartScreen (if new user / not logged in)
 
+import 'package:emotiovent/models/UserInfo.dart';
 import 'package:emotiovent/screens/EV_MainMenu.dart';
 import 'package:emotiovent/screens/EV_StartScreen.dart';
 import 'package:emotiovent/services/FirestoreService.dart';
@@ -20,12 +21,9 @@ class EVInitialScreen extends StatelessWidget {
     final firebaseUser = context.watch<User>();
     FirestoreService _firestoreService = FirestoreService();
 
-    // Using ternary operators here makes the code less readable
-    // Use it if every one of your members are familiarized with its usage.
     if (firebaseUser != null){
-      return StreamProvider.value(
-        value: _firestoreService.getUser,
-        child: EVMainMenu(user: firebaseUser));
+      // This is where the StreamProvider should go so that the rest of the app can use the value.
+      return EVMainMenu();
     } else {
       return EVStartScreen();
     }

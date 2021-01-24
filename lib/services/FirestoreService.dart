@@ -4,16 +4,17 @@ import 'package:emotiovent/models/UserInfo.dart';
 
 class FirestoreService {
 
-  User user;
-  FirestoreService({this.user});
+  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
-  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  UserData userData;
-
-  Stream<UserData> get getUser {
-    return _firebaseFirestore.collection('Basic Info')
-      .doc(user.email)
-      .snapshots()
-      .map(UserData().fetchData);
+  Stream<UserData> getUser(User user) {
+    try{
+      return _firebaseFirestore.collection('Basic Info')
+            .doc(user.email)
+            .snapshots()
+            .map((snapshot) => UserData.fetchData(snapshot.data()));
+    } catch (e) {
+      print(e);
+    }
+    
   }
 }

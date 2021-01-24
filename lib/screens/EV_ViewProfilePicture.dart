@@ -58,7 +58,7 @@ class _EVViewProfilePictureState extends State<EVViewProfilePicture> {
 
   @override
   Widget build(BuildContext context) {
-    UserData userData = context.watch<UserData>();
+    //UserData userData = context.watch<UserData>();
 
     return Scaffold(
       body: Stack(
@@ -101,7 +101,10 @@ class _EVViewProfilePictureState extends State<EVViewProfilePicture> {
                             tag: 'profile_picture',
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20.0),
-                              child: Image(image: NetworkImage(userData.profilePictureLink)),
+                              
+                              // Add a comment to the container below if you're going to start patching in the image from firestore.
+                              child: Container(decoration: BoxDecoration(color: Colors.grey))
+                              //child: Image(image: NetworkImage(userData.profilePictureLink)),
                             ),
                           ),
 

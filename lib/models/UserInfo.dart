@@ -29,14 +29,27 @@ class UserData
     this.profilePictureLink,
   });
 
-  UserData fetchData(DocumentSnapshot snapshot){
+  factory UserData.fetchData(Map<String, dynamic> snapshotData){
+    print('USERNAME: ${snapshotData['username']}');
     return UserData(
-      username : snapshot.data()['username'],
-      name : snapshot.data()['name'],
-      birthdate : snapshot.data()['birthdate'],
-      contactnum : snapshot.data()['contactnum'],
-      gender : snapshot.data()['gender'],
-      profilePictureLink : snapshot.data()['profile_picture'],
+      username : snapshotData['username'],
+      name : snapshotData['name'],
+      birthdate : snapshotData['birthdate'],
+      contactnum : snapshotData['contactnum'],
+      gender : snapshotData['gender'],
+      profilePictureLink : snapshotData['profile_picture'],
+    );
+  }
+
+  factory UserData.initialData() {
+    return UserData(
+      username: '',
+      name: '',
+      birthdate: null,
+      contactnum: '',
+      gender: '',
+      profilePicture: null,
+      profilePictureLink: ''
     );
   }
 
@@ -50,6 +63,4 @@ class UserData
       'profile_picture' : profilePictureLink,
     };
   }
-
-  
 }

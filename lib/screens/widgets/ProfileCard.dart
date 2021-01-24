@@ -23,8 +23,8 @@ class _ProfileCardState extends State<ProfileCard> {
 
   @override
   Widget build(BuildContext context) {
-    UserData userData = context.watch<UserData>();
-    print(userData.name);
+    //UserData userData = context.watch<UserData>();
+    //print(userData.name);
 
     return Stack(
       children: <Widget>[
@@ -115,7 +115,14 @@ class _ProfileCardState extends State<ProfileCard> {
                         child: Container(
                           width: 100,
                           height: 100,
-                          child: Image(image: NetworkImage(userData.profilePictureLink)),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+
+                            // Add a comment on this color if image is already set up
+                            color: Colors.grey[300],
+                          ),
+                          // This is where the image goes.
+                          //child: Image(image: NetworkImage(userData.profilePictureLink)),
                           ),
                         ),
                       ),
