@@ -18,20 +18,11 @@ class _EVStartScreenState extends State<EVStartScreen> {
   // This was supposed to be used along with animatedOpacity
   // However, the setState inside the initState method was being called miraculously
   // I had to scrape the animation.
-  bool showContent = false;
+  bool showContent = true;
 
   @override
   void initState(){
     super.initState();
-
-    Timer(
-      Duration(seconds: 1),
-      (){
-        setState(() {
-          showContent = true;
-        });
-      }
-    );
   }
 
   @override

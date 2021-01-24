@@ -8,6 +8,7 @@
  */
 
 import 'package:emotiovent/models/ScreenArguments.dart';
+import 'package:emotiovent/screens/AskProfilePicture.dart';
 import 'package:emotiovent/screens/EV_ViewProfilePicture.dart';
 import 'package:emotiovent/screens/ExplainBeforeRegister.dart';
 import 'package:emotiovent/screens/widgets/CaptureSurroundingsPreview.dart';
@@ -199,12 +200,13 @@ Route<Null> getGenerateRoute(RouteSettings settings){
       );
     
     case EVViewProfilePicture.routeName:
+      ScreenArguments args = arguments;
       return PageRouteBuilder(
         settings: RouteSettings(name: EVViewProfilePicture.routeName),
         pageBuilder: (context, animation, secondAnimation){
           return ListenableProvider(
             create: (context) => animation,
-            child: EVViewProfilePicture(),
+            child: EVViewProfilePicture(user: args.user),
           );
         },
         transitionDuration: const Duration(milliseconds: 1000),
@@ -224,6 +226,25 @@ Route<Null> getGenerateRoute(RouteSettings settings){
           return ListenableProvider(
             create: (context) => animation,
             child: ExplainBeforeRegister(),
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 1000),
+        transitionsBuilder: (context, animation, secondAnimation, child){
+          animation = CurvedAnimation(curve: Curves.easeInOut, parent: animation);
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        }
+      );
+    
+    case AskProfilePicture.routeName:
+      return PageRouteBuilder(
+        settings: RouteSettings(name: AskProfilePicture.routeName),
+        pageBuilder: (context, animation, secondAnimation){
+          return ListenableProvider(
+            create: (context) => animation,
+            child: AskProfilePicture(),
           );
         },
         transitionDuration: const Duration(milliseconds: 1000),

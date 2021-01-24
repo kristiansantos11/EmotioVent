@@ -7,12 +7,17 @@
  * -> The emotion is optional, because I will add a button in the chooseEmotionScreen to skip
 */
 
+import 'dart:io';
+
+import 'package:emotiovent/models/UserInfo.dart';
 import 'package:date_field/date_field.dart';
+import 'package:emotiovent/screens/AskProfilePicture.dart';
 import 'package:emotiovent/screens/EV_InitialScreen.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../database_classes/registerAccount.dart';
+import '../services/database/registerAccount.dart';
 
 class EVSignUp extends StatefulWidget {
   static const routeName = '/signup';
@@ -36,36 +41,59 @@ class _EVSignUpState extends State<EVSignUp> {
   bool toggle2 = true;
   String email;
   String password;
-  dynamic username;
-  dynamic name;
+  String username;
+  String name;
   DateTime birthday;
-  dynamic contactnum;
-  dynamic gender;
-  dynamic classHolder;
+  String contactnum;
+  String gender;
+  dynamic response;
   String error = "";
+  UserData _user;
 
   void backButtonPressed(BuildContext ctx){
     Navigator.of(ctx).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
   }
 
-  void register() async
+  void register({@required BuildContext context}) async
   {
     if(formKey.currentState.validate() && birthday != null)
     {
+      _user = UserData(
+        email: email,
+        password: password,
+        username: username,
+        name: name,
+        birthdate: birthday,
+        contactnum: contactnum,
+        gender: gender,
+        profilePicture: File('assets/img/default_profile_picture.jpg'),
+      );
+
       print("Validated successfully."); //debug
       print("Current Data: $email,$password,$username,$name,$birthday,$contactnum,$gender"); //debug
       print("Attempting to register email & password data to firebase..."); //debug
-      classHolder = await RegisterAccount().register(email,password,username,name,birthday,contactnum,gender);
-      print("$classHolder"); //debug - *must be null to be a success
-      if(classHolder==null)
+      response = await Database().register(_user);
+      print("$response"); //debug - *must be null to be a success
+      if(response==null)
       {
-        Navigator.pop(context, {});
+        //Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
+        Navigator.of(context).pushNamed(AskProfilePicture.routeName);
       }
       else
       {
         setState(() {
-          error = classHolder;
+          error = response;
         });
+        showDialog(
+          context: context,
+          builder: (context){
+            return AlertDialog(
+              content: Text(
+                error
+              ),
+            );
+          }
+        );
       }
     }
     else
@@ -73,7 +101,6 @@ class _EVSignUpState extends State<EVSignUp> {
       print("Not Validated"); //debug
 
     }
-    setState(() {});
   }
   
   @override
@@ -302,13 +329,14 @@ class _EVSignUpState extends State<EVSignUp> {
                             padding: MaterialStateProperty.all(EdgeInsets.all(10.0)),
                             backgroundColor: MaterialStateProperty.all(Colors.green[600]),
                           ),
-                          onPressed: () async {register();},
+                          onPressed: () async {register(context: context);},
                           child: Text(
                             "Register",
                             style: TextStyle(
                               fontSize: getWidth(context)/25,
                               color: Colors.white
-                            ),),
+                            ),
+                          ),
                         )
                       ),
                       Center(
@@ -328,12 +356,6 @@ class _EVSignUpState extends State<EVSignUp> {
                           ),
                         ),
                       ),
-                      Center(
-                        child: Text("$error",
-                        style: TextStyle(
-                          color: Colors.red
-                        ),),
-                      )
                     ],
                   )
                 ],

@@ -10,82 +10,56 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:emotiovent/models/UserInfo.dart';
+import 'package:emotiovent/screens/widgets/NewProfilePictureDialog.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
+import 'package:emotiovent/services/ProfilePictureUpload.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class EVViewProfilePicture extends StatefulWidget {
   static const routeName = '/view_profile_picture';
+  final User user;
+
+  const EVViewProfilePicture({Key key, @required this.user}) : super(key: key);
+  
   @override
-  _EVViewProfilePictureState createState() => _EVViewProfilePictureState();
+  _EVViewProfilePictureState createState() => _EVViewProfilePictureState(user: user);
 }
 
 class _EVViewProfilePictureState extends State<EVViewProfilePicture> {
+  final User user;
+
+  _EVViewProfilePictureState({@required this.user});
 
   ImagePicker _imagePicker = ImagePicker();
-  PickedFile _image;
   File image;
-  File croppedImage;
   bool _showContent = false;
-
-  Future onAlbumPick() async {
-    _image = await _imagePicker.getImage(source: ImageSource.gallery);
-    setState(() {
-      image = File(_image.path);
-    });
-    File croppedFile = await ImageCropper.cropImage(
-        sourcePath: image.path,
-        aspectRatioPresets: [CropAspectRatioPreset.square],
-        androidUiSettings: AndroidUiSettings(
-            toolbarTitle: 'Crop Profile Picture',
-            toolbarColor: Colors.pink,
-            toolbarWidgetColor: Colors.white,
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false),
-        iosUiSettings: IOSUiSettings(
-          title: 'Crop Profile Picture',
-        ));
-    if (croppedFile != null) {
-      image = croppedFile;
-    }
-  }
-
-  Future onCameraPick() async {
-    _image = await _imagePicker.getImage(source: ImageSource.camera);
-    setState(() {
-      image = File(_image.path);
-    });
-    File croppedFile = await ImageCropper.cropImage(
-        sourcePath: image.path,
-        aspectRatioPresets: [CropAspectRatioPreset.square],
-        androidUiSettings: AndroidUiSettings(
-            toolbarTitle: 'Crop Profile Picture',
-            toolbarColor: Colors.pink,
-            toolbarWidgetColor: Colors.white,
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false),
-        iosUiSettings: IOSUiSettings(
-          title: 'Crop Profile Picture',
-        ));
-    if (croppedFile != null) {
-      image = croppedFile;
-    }
-  }
+  String email;
+  User firebaseUser;
+  String profilePicture;
 
   @override
   void initState(){
     super.initState();
+
     Timer(
       Duration(seconds: 1),
       (){setState(() {
         _showContent = true;
       });}
     );
+
   }
 
   @override
   Widget build(BuildContext context) {
+    UserData userData = context.watch<UserData>();
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -127,11 +101,7 @@ class _EVViewProfilePictureState extends State<EVViewProfilePicture> {
                             tag: 'profile_picture',
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[400],
-                                ),
-                              )
+                              child: Image(image: NetworkImage(userData.profilePictureLink)),
                             ),
                           ),
 
@@ -143,89 +113,9 @@ class _EVViewProfilePictureState extends State<EVViewProfilePicture> {
                               opacity: _showContent ? 1.0 : 0.0,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  showGeneralDialog(
-                                    barrierLabel: "Profile Picture",
-                                    barrierDismissible: true,
-                                    barrierColor: Colors.black.withOpacity(0.5),
-                                    transitionDuration: Duration(milliseconds: 300),
+                                  newProfilePictureDialog(
                                     context: context,
-                                    pageBuilder: (context, anim1, anim2) {
-                                      return Material(
-                                        type: MaterialType.transparency,
-                                        child: SafeArea(
-                                          child: Align(
-                                            alignment: Alignment.center,
-                                            child: Container(
-                                              height: getHeight(context)/3,
-                                              margin: EdgeInsets.only(bottom: 50, left: 25, right: 25),
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.circular(40),
-                                              ),
-                                              child: SizedBox.expand(
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(12.0),
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    children: <Widget>[
-                                                      Text(
-                                                        "Where would you like me to get the new profile picture from?",
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                          color: Colors.grey[700],
-                                                          fontFamily: 'Proxima Nova',
-                                                          fontStyle: FontStyle.normal,
-                                                          fontSize: 14,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        "Album or camera?",
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                          color: Colors.grey[800],
-                                                          fontFamily: 'Proxima Nova',
-                                                          fontStyle: FontStyle.normal,
-                                                          fontSize: 16,
-                                                        ),
-                                                      ),
-                                                      ButtonBar(
-                                                        alignment: MainAxisAlignment.center,
-                                                        children: <Widget>[
-                                                          ElevatedButton(
-                                                            onPressed: (){onAlbumPick();},
-                                                            style: ButtonStyle(
-                                                              minimumSize: MaterialStateProperty.all(Size(getWidth(context) * 0.15, getWidth(context) * 0.15)),
-                                                              shape: MaterialStateProperty.all(CircleBorder()),
-                                                            ),
-                                                            child: Icon(Icons.photo_album_rounded),
-                                                          ),
-                                                          ElevatedButton(
-                                                            onPressed: (){onCameraPick();},
-                                                            style: ButtonStyle(
-                                                              minimumSize: MaterialStateProperty.all(Size(getWidth(context) * 0.15, getWidth(context) * 0.15)),
-                                                              shape: MaterialStateProperty.all(CircleBorder()),
-                                                            ),
-                                                            child: Icon(Icons.camera_alt_rounded),
-                                                          ),
-                                                        ]
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    transitionBuilder: (context, animation, secondAnimation, child) {
-                                      animation = CurvedAnimation(curve: Curves.easeInOutCubic, parent: animation);
-                                      return ScaleTransition(
-                                        scale: animation,
-                                        child: child,
-                                      );
-                                    },
+                                    user: firebaseUser,
                                   );
                                 },
                                 style: ButtonStyle(
