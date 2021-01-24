@@ -13,9 +13,7 @@ Future<void> onAlbumPick({@required ImagePicker imagePicker,
                           }) async {
   File image;
   await imagePicker.getImage(source: ImageSource.gallery).then((_image){
-    if(_image != null){
       image = File(_image.path);
-    }
   }).then((_) async {
     await ImageCropper.cropImage(
       sourcePath: image.path,
@@ -35,6 +33,8 @@ Future<void> onAlbumPick({@required ImagePicker imagePicker,
           Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
         }
       });
+  }).catchError((){
+    print("Cancelled.");
   });
 
   return image;
@@ -66,6 +66,8 @@ Future<void> onCameraPick({@required ImagePicker imagePicker,
           Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
         }
       });
+  }).catchError((){
+    print("Cancelled.");
   });
   
   return image;
