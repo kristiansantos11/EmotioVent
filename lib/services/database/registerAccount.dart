@@ -19,13 +19,16 @@ class Database
     {
       userInfo = user.returnUserData();
       // checks if the username exists
+      print("Checking for username...");
       DocumentSnapshot snapshot = await basicInfo.doc("${user.email}").get();
+      print("Username checking done!");
       if(!snapshot.exists)
       {
         await auth.createUserWithEmailAndPassword(email: user.email, password: user.password);
         await CloudStorage().uploadProfilePicture(
           file: user.profilePicture,
-          email: user.email
+          email: user.email,
+          def: true,
         );
         user.profilePictureLink = await CloudStorage().getProfilePictureLink(email: user.email);
         await basicInfo.doc("${user.email}").set(user.returnUserData());

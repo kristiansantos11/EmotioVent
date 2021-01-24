@@ -59,7 +59,7 @@ Future newProfilePictureDialog({@required BuildContext context, @required User u
                         children: <Widget>[
                           ElevatedButton(
                             onPressed: () async {
-                              onAlbumPick(
+                              await onAlbumPick(
                                 imagePicker: _imagePicker,
                                 context: context,
                                 user: user,
@@ -72,8 +72,8 @@ Future newProfilePictureDialog({@required BuildContext context, @required User u
                             child: Icon(Icons.photo_album_rounded),
                           ),
                           ElevatedButton(
-                            onPressed: (){
-                              onCameraPick(
+                            onPressed: () async {
+                              await onCameraPick(
                                 imagePicker: _imagePicker,
                                 context: context,
                                 user: user,

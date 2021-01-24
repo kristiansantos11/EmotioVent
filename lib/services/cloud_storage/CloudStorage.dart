@@ -49,7 +49,9 @@ class CloudStorage{
       print("Upload Done.");
       await getProfilePictureLink(email: email).then(
         (String link) async {
-          await FirebaseFirestore.instance.collection('Basic Info').doc(email).set({'profile_picture' : link});
+          
+          await FirebaseFirestore.instance.collection('Basic Info').doc(email).set({'profile_picture' : link}, SetOptions(merge: true));
+
         }
       );
     }
