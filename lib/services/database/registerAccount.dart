@@ -18,7 +18,7 @@ class Database
     try
     {
       userInfo = user.returnUserData();
-      // checks if the username exists
+      // checks if the email exists
       DocumentSnapshot snapshot = await basicInfo.doc("${user.email}").get();
       if(!snapshot.exists)
       {
