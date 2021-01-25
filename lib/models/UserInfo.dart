@@ -11,7 +11,7 @@ class UserData
   String password;
   String username;
   String name;
-  DateTime birthdate;
+  dynamic birthdate;
   String contactnum;
   String gender;
   File profilePicture;

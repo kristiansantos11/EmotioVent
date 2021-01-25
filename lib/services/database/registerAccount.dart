@@ -18,7 +18,6 @@ class Database
     try
     {
       userInfo = user.returnUserData();
-      // checks if the username exists
       print("Checking for username...");
       DocumentSnapshot snapshot = await basicInfo.doc("${user.email}").get();
       print("Username checking done!");

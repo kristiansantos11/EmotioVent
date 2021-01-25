@@ -35,7 +35,7 @@ dependencies:
   # END
   
   # Share widget states across the entire application (?)
-  provider: ^4.3.3
+  provider: ^4.0.4
 
   # To save images captured by the camera plugin
   path_provider: ^1.6.24
