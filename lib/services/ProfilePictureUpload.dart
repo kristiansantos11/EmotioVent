@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:emotiovent/screens/EV_InitialScreen.dart';
 import 'package:emotiovent/services/cloud_storage/CloudStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -12,7 +13,7 @@ Future<void> onAlbumPick({@required ImagePicker imagePicker,
                           }) async {
   File image;
   await imagePicker.getImage(source: ImageSource.gallery).then((_image){
-    image = File(_image.path);
+      image = File(_image.path);
   }).then((_) async {
     await ImageCropper.cropImage(
       sourcePath: image.path,
@@ -25,16 +26,18 @@ Future<void> onAlbumPick({@required ImagePicker imagePicker,
           lockAspectRatio: true),
       iosUiSettings: IOSUiSettings(
         title: 'Crop Profile Picture',
-      )).then((File croppedImage){
+      )).then((File croppedImage) async {
         if (croppedImage != null) {
           image = croppedImage;
-          return image;
+          await CloudStorage().uploadProfilePicture(file: image, email: user.email);
+          Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
         }
       });
+  }).catchError((){
+    print("Cancelled.");
   });
-  CloudStorage().uploadProfilePicture(file: image, email: user.email);
 
-  return null;
+  return image;
 }
 
 Future<void> onCameraPick({@required ImagePicker imagePicker,
@@ -56,13 +59,16 @@ Future<void> onCameraPick({@required ImagePicker imagePicker,
           lockAspectRatio: true),
       iosUiSettings: IOSUiSettings(
         title: 'Crop Profile Picture',
-      )).then((File croppedImage){
+      )).then((File croppedImage) async {
         if (croppedImage != null) {
           image = croppedImage;
-          return image;
+          await CloudStorage().uploadProfilePicture(file: image, email: user.email);
+          Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
         }
       });
+  }).catchError((){
+    print("Cancelled.");
   });
-  CloudStorage().uploadProfilePicture(file: image, email: user.email);
-  return null;
+  
+  return image;
 }
