@@ -8,23 +8,16 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 class ProfileCard extends StatefulWidget {
-  final User user;
-
-  const ProfileCard({Key key, @required this.user}) : super(key: key);
 
   @override
-  _ProfileCardState createState() => _ProfileCardState(user: user);
+  _ProfileCardState createState() => _ProfileCardState();
 }
 
 class _ProfileCardState extends State<ProfileCard> {
-  final User user;
-
-  _ProfileCardState({@required this.user});
 
   @override
   Widget build(BuildContext context) {
-    //UserData userData = context.watch<UserData>();
-    //print(userData.name);
+    UserData userInfo = context.watch<UserData>();
 
     return Stack(
       children: <Widget>[
@@ -72,34 +65,67 @@ class _ProfileCardState extends State<ProfileCard> {
               border: Border.all(color: Color(0xfff6afaf), width: 0.5)
             ),
             child: Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(13.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: RichText(
-                      textAlign: TextAlign.left,
-                      text: TextSpan(
-                        text: "Name\n",
-                        style: TextStyle(
-                          fontFamily: 'Proxima Nova',
-                          fontSize: 25,
-                          fontWeight: FontWeight.w800,
-                          color: Colors.grey[800],
-                        ),
-                        children: <InlineSpan>[
-                          TextSpan(
-                            text: "Gender: M",
-                            style: TextStyle(
-                              fontFamily: 'Proxima Nova',
-                              fontSize: 17,
-                              fontWeight: FontWeight.w700,
-                              fontStyle: FontStyle.normal,
-                              color: Colors.grey[700],
-                            )
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.topLeft,
+                      child: RichText(
+                        textAlign: TextAlign.left,
+                        text: TextSpan(
+                          text: "${userInfo.username}\n",
+                          style: TextStyle(
+                            height: 1.3,
+                            fontFamily: 'Proxima Nova',
+                            fontSize: getWidth(context) * 0.06,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.grey[800],
                           ),
-                        ]
+                          children: <InlineSpan>[
+                            TextSpan(
+                              text: "Name: ${userInfo.name}\n",
+                              style: TextStyle(
+                                fontFamily: 'Proxima Nova',
+                                fontSize: getWidth(context) * 0.04,
+                                fontWeight: FontWeight.w700,
+                                fontStyle: FontStyle.normal,
+                                color: Colors.grey[700],
+                              )
+                            ),
+                            TextSpan(
+                              text: "Gender: ${userInfo.gender}\n",
+                              style: TextStyle(
+                                fontFamily: 'Proxima Nova',
+                                fontSize: getWidth(context) * 0.04,
+                                fontWeight: FontWeight.w700,
+                                fontStyle: FontStyle.normal,
+                                color: Colors.grey[700],
+                              )
+                            ),
+                            TextSpan(
+                              text: "Birthday: ${userInfo.birthdate.month}/${userInfo.birthdate.day}/${userInfo.birthdate.year}\n",
+                              style: TextStyle(
+                                fontFamily: 'Proxima Nova',
+                                fontSize: getWidth(context) * 0.04,
+                                fontWeight: FontWeight.w700,
+                                fontStyle: FontStyle.normal,
+                                color: Colors.grey[700],
+                              )
+                            ),
+                            TextSpan(
+                              text: "Contact: ${userInfo.contactnum}\n",
+                              style: TextStyle(
+                                fontFamily: 'Proxima Nova',
+                                fontSize: getWidth(context) * 0.04,
+                                fontWeight: FontWeight.w700,
+                                fontStyle: FontStyle.normal,
+                                color: Colors.grey[700],
+                              )
+                            ),
+                          ]
+                        ),
                       ),
                     ),
                   ),
@@ -110,23 +136,22 @@ class _ProfileCardState extends State<ProfileCard> {
                       tag: 'profile_picture',
                       child: GestureDetector(
                         onTap: (){
-                          Navigator.of(context).pushNamed(EVViewProfilePicture.routeName, arguments: ScreenArguments(user: user));
+                          Navigator.of(context).pushNamed(EVViewProfilePicture.routeName);
                         },
                         child: Container(
                           width: 100,
                           height: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-
-                            // Add a comment on this color if image is already set up
-                            color: Colors.grey[300],
-                          ),
                           // This is where the image goes.
-                          //child: Image(image: NetworkImage(userData.profilePictureLink)),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            // Reason: I moved the streamprovider to MultiProvider (finally i get it now)
+                            // However, it is not as responsive therefore there is a split second where userData returns null and then fetches data after.
+                            child: (userInfo == null) ? Image(image:AssetImage('assets/img/default_profile_picture.jpg')) : Image(image:NetworkImage(userInfo.profilePictureLink))
                           ),
                         ),
                       ),
                     ),
+                  ),
 
                 ],
               ),

@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:emotiovent/models/ScreenArguments.dart';
+import 'package:emotiovent/models/UserInfo.dart';
 import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
 import 'package:emotiovent/screens/EV_SignUp.dart';
 import 'package:emotiovent/screens/ExplainBeforeRegister.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
+import 'package:provider/provider.dart';
 
 class EVStartScreen extends StatefulWidget {
 
@@ -19,11 +21,6 @@ class _EVStartScreenState extends State<EVStartScreen> {
   // However, the setState inside the initState method was being called miraculously
   // I had to scrape the animation.
   bool showContent = true;
-
-  @override
-  void initState(){
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

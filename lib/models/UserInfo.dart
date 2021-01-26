@@ -11,7 +11,7 @@ class UserData
   String password;
   String username;
   String name;
-  dynamic birthdate;
+  DateTime birthdate;
   String contactnum;
   String gender;
   File profilePicture;
@@ -38,18 +38,6 @@ class UserData
       contactnum : snapshotData['contactnum'],
       gender : snapshotData['gender'],
       profilePictureLink : snapshotData['profile_picture'],
-    );
-  }
-
-  factory UserData.initialData() {
-    return UserData(
-      username: '',
-      name: '',
-      birthdate: null,
-      contactnum: '',
-      gender: '',
-      profilePicture: null,
-      profilePictureLink: ''
     );
   }
 

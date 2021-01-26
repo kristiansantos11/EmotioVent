@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:emotiovent/screens/EV_InitialScreen.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
+import 'package:emotiovent/services/SlideFadeInText.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 
@@ -94,6 +95,7 @@ class _EVLoginState extends State<EVLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
 
@@ -114,133 +116,96 @@ class _EVLoginState extends State<EVLogin> {
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
 
-                      Flexible(
-                        flex: 3,
+                      ShowUp(
+                        delay: 600 + 500,
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(30, 0, 0, 30),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children:<Widget>[
-                              Text(
-                                "Hello!",
-                                style: TextStyle(
-                                  fontFamily: 'Proxima Nova',
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: ResponsiveFlutter.of(context).scale(40.0),
-                                  color: Colors.grey[700],
-                                  letterSpacing: -1,
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children:<Widget>[
+                                Text(
+                                  "Hello!",
+                                  style: TextStyle(
+                                    fontFamily: 'Proxima Nova',
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: ResponsiveFlutter.of(context).scale(40.0),
+                                    color: Colors.grey[700],
+                                    letterSpacing: -1,
+                                  ),
                                 ),
-                              ),
 
-                              Text(
-                                "Welcome back to emotiovent!",
-                                style: TextStyle(
-                                  fontFamily: 'Proxima Nova',
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: ResponsiveFlutter.of(context).scale(18),
-                                  color: Colors.grey[600]
+                                Text(
+                                  "Welcome back to emotiovent!",
+                                  style: TextStyle(
+                                    fontFamily: 'Proxima Nova',
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: ResponsiveFlutter.of(context).scale(18),
+                                    color: Colors.grey[600]
+                                  ),
                                 ),
-                              ),
 
-                              Text(
-                                "How are you feeling today?",
-                                style: TextStyle(
-                                  fontFamily: 'Proxima Nova',
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: ResponsiveFlutter.of(context).scale(12),
-                                  color: Colors.black
+                                Text(
+                                  "How are you feeling today?",
+                                  style: TextStyle(
+                                    fontFamily: 'Proxima Nova',
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: ResponsiveFlutter.of(context).scale(12),
+                                    color: Colors.black
+                                  ),
                                 ),
-                              ),
 
-                            ]
-                          ),
-                        )
+                              ]
+                            ),
+                          )
+                        ),
                       ),
-                    ),
-                      Flexible(
-                        flex: 6,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children:<Widget>[
 
-                              Form(
-                                key: _formKey,
-                                child: Column(
-                                  children: <Widget>[
 
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                        ResponsiveFlutter.of(context).scale(20), 
-                                        20, 
-                                        ResponsiveFlutter.of(context).scale(20),
-                                        10
-                                        ),
-                                        child: TextFormField(
-                                          validator: (String value){
-                                            if (value.isEmpty){
-                                              return 'Please enter your e-mail';
-                                            } 
-                                            return null;
-                                          },
-                                          controller: _emailTextController,
-                                          cursorColor: Color(0xfff77272),
-                                          style: TextStyle(
-                                            fontFamily: 'Proxima Nova',
-                                            fontStyle: FontStyle.normal,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: ResponsiveFlutter.of(context).scale(18),
-                                            color: Colors.white54
-                                          ),
-                                          decoration: InputDecoration(contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                            border: OutlineInputBorder(
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(100.0),
-                                                ),
-                                                borderSide: BorderSide.none,
-                                              ),
-                                              filled: true,
-                                              hintStyle: TextStyle(
-                                                  color: Colors.white24),
-                                              hintText: "Email",
-                                              fillColor: Colors.grey[600],
-                                            ),
-                                        ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children:<Widget>[
+
+                          ShowUp(
+                            delay: 600 + 700,
+                            child: Form(
+                              key: _formKey,
+                              child: Column(
+                                children: <Widget>[
+
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                      ResponsiveFlutter.of(context).scale(20), 
+                                      20, 
+                                      ResponsiveFlutter.of(context).scale(20),
+                                      10
                                       ),
-
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                        ResponsiveFlutter.of(context).scale(20), 
-                                        0, 
-                                        ResponsiveFlutter.of(context).scale(20),
-                                        0),
-                                        child: TextFormField(
-                                          cursorColor: Color(0xfff77272),
-                                          validator: (String value){
-                                            if (value.isEmpty){
-                                              return 'Please enter your password';
-                                            } 
-                                            return null;
-                                          },
-                                          controller: _pwTextController,
-                                          style: TextStyle(
-                                            fontFamily: 'Proxima Nova',
-                                            fontStyle: FontStyle.normal,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: ResponsiveFlutter.of(context).scale(18),
-                                            color: Colors.white54
-                                          ),
-                                          obscureText: true,
-                                          decoration: InputDecoration(
-                                            contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                            border: OutlineInputBorder(
+                                      child: TextFormField(
+                                        validator: (String value){
+                                          if (value.isEmpty){
+                                            return 'Please enter your e-mail';
+                                          } 
+                                          return null;
+                                        },
+                                        controller: _emailTextController,
+                                        cursorColor: Color(0xfff77272),
+                                        style: TextStyle(
+                                          fontFamily: 'Proxima Nova',
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: ResponsiveFlutter.of(context).scale(18),
+                                          color: Colors.white54
+                                        ),
+                                        decoration: InputDecoration(contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                          border: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                 Radius.circular(100.0),
                                               ),
@@ -249,88 +214,131 @@ class _EVLoginState extends State<EVLogin> {
                                             filled: true,
                                             hintStyle: TextStyle(
                                                 color: Colors.white24),
-                                            hintText: "Password",
+                                            hintText: "Email",
                                             fillColor: Colors.grey[600],
                                           ),
+                                      ),
+                                    ),
+
+                                    Padding(
+                                      padding:EdgeInsets.fromLTRB(
+                                              ResponsiveFlutter.of(context).scale(20), 
+                                              0, 
+                                              ResponsiveFlutter.of(context).scale(20),
+                                              0),
+                                      child: TextFormField(
+                                        cursorColor: Color(0xfff77272),
+                                        validator: (String value){
+                                          if (value.isEmpty){
+                                            return 'Please enter your password';
+                                          } 
+                                          return null;
+                                        },
+                                        controller: _pwTextController,
+                                        style: TextStyle(
+                                          fontFamily: 'Proxima Nova',
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: ResponsiveFlutter.of(context).scale(18),
+                                          color: Colors.white54
+                                        ),
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(100.0),
+                                            ),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          filled: true,
+                                          hintStyle: TextStyle(
+                                              color: Colors.white24),
+                                          hintText: "Password",
+                                          fillColor: Colors.grey[600],
                                         ),
                                       ),
-                                  ]
-                                )
-                              ),
+                                    ),
+                                ]
+                              )
+                            ),
+                          ),
 
-                              Flexible(
-                                flex: 1,
-                                child: Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                                  child: ButtonBar(
-                                    alignment: MainAxisAlignment.center,
-                                    children: <Widget>[
+
+                            ShowUp(
+                              delay: 600 + 900,
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                                child: ButtonBar(
+                                  alignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    
                                       
-                                       
-                                      TextButton(
-                                        style: ButtonStyle(
-                                          shape: MaterialStateProperty.all(
-                                            RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
-                                              side: BorderSide(color: Color(0xfff77272))
-                                            ),
-                                          ),
-                                        ),
-                                        onPressed: () {backButtonPressed(context);},
-                                        child: Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                            getWidth(context)/90,
-                                            getWidth(context)/500,
-                                            getWidth(context)/90,
-                                            getWidth(context)/500,
-                                          ),
-                                          child: Text(
-                                            "       BACK       ",
-                                            style: TextStyle(
-                                              letterSpacing: 0,
-                                              fontFamily: 'Proxima Nova',
-                                              fontSize: ResponsiveFlutter.of(context).scale(14),
-                                              fontWeight: FontWeight.w700,
-                                              fontStyle: FontStyle.normal,
-                                              color: Color(0xfff77272),
-                                            ),
+                                    TextButton(
+                                      style: ButtonStyle(
+                                        shape: MaterialStateProperty.all(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
+                                            side: BorderSide(color: Color(0xfff77272))
                                           ),
                                         ),
                                       ),
-
-                                      ElevatedButton(
-                                        style: ButtonStyle(
-                                          elevation: MaterialStateProperty.all(3.0),
-                                          shape: MaterialStateProperty.all<OutlinedBorder>(
-                                            RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
-                                            ),
-                                          ),
-                                          backgroundColor: MaterialStateProperty.all<Color>(Color(0xfff77272))
+                                      onPressed: () {backButtonPressed(context);},
+                                      child: Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                          getWidth(context)/90,
+                                          getWidth(context)/500,
+                                          getWidth(context)/90,
+                                          getWidth(context)/500,
                                         ),
-                                        onPressed: () {_signInWithEmailAndPassword(context);},
                                         child: Text(
-                                          "      LOGIN      ",
+                                          "       BACK       ",
                                           style: TextStyle(
                                             letterSpacing: 0,
                                             fontFamily: 'Proxima Nova',
                                             fontSize: ResponsiveFlutter.of(context).scale(14),
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight: FontWeight.w700,
                                             fontStyle: FontStyle.normal,
-                                            color: Colors.white,
-                                          )
+                                            color: Color(0xfff77272),
+                                          ),
                                         ),
                                       ),
+                                    ),
 
-                                    ]
-                                  ),
-                                )
+                                    ElevatedButton(
+                                      style: ButtonStyle(
+                                        elevation: MaterialStateProperty.all(3.0),
+                                        shape: MaterialStateProperty.all<OutlinedBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(14)),
+                                          ),
+                                        ),
+                                        backgroundColor: MaterialStateProperty.all<Color>(Color(0xfff77272))
+                                      ),
+                                      onPressed: () {_signInWithEmailAndPassword(context);},
+                                      child: Text(
+                                        "      LOGIN      ",
+                                        style: TextStyle(
+                                          letterSpacing: 0,
+                                          fontFamily: 'Proxima Nova',
+                                          fontSize: ResponsiveFlutter.of(context).scale(14),
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.normal,
+                                          color: Colors.white,
+                                        )
+                                      ),
+                                    ),
+
+                                  ]
+                                ),
                               ),
+                            )
 
-                            ]
-                          ),
-                        
+
+                        ]
                       ),
+                        
+
 
                     ]
                   )

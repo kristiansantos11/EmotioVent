@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'services/EV_AuthService.dart';
 import 'services/EV_RouteGenerator.dart';
 
-import 'services/database/fetchUserData.dart';
+import 'services/database/FetchUserData.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -32,6 +32,12 @@ class MyApp extends StatelessWidget {
 
     return MultiProvider(
       providers: [
+        Provider<FetchUserData>(
+          create: (_) => FetchUserData(user: FirebaseAuth.instance.currentUser),
+        ),
+        StreamProvider(
+          create: (context) => context.read<FetchUserData>().info,
+        ),
         Provider<AuthenticationService>(
           create: (_) => AuthenticationService(FirebaseAuth.instance),
         ),
@@ -45,8 +51,6 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.pink,
         ),
         initialRoute: EVInitialScreen.routeName,
-        
-        // TODO: Move all routes into their respective generators inside the getGenerateRoute function.
         onGenerateRoute: getGenerateRoute,
       )
     );

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../services/database/fetchUserData.dart';
+import '../../services/database/FetchUserData.dart';
 import 'package:emotiovent/models/UserInfo.dart';
 import 'package:emotiovent/screens/EV_MainMenu.dart' ;
 

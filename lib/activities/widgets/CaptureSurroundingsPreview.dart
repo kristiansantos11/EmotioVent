@@ -6,7 +6,7 @@ import 'package:emotiovent/services/BackgroundStagger.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
 
-import '../EV_SatisfactoryRate.dart';
+import '../../screens/EV_SatisfactoryRate.dart';
 
 class CaptureSurroundingsPreview extends StatefulWidget {
   static const routeName = '/captureSurroundingsPreview';

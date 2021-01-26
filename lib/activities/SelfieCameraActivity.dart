@@ -6,7 +6,7 @@
 */
 
 import 'package:emotiovent/models/ScreenArguments.dart';
-import 'package:emotiovent/screens/widgets/SelfieCameraCapturePreview.dart';
+import 'package:emotiovent/activities/widgets/SelfieCameraCapturePreview.dart';
 import 'package:emotiovent/services/EV_CameraProcessUtil.dart';
 import 'package:emotiovent/services/EV_FaceBorderPainter.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';

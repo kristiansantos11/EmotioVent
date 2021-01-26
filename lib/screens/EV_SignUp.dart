@@ -15,10 +15,10 @@ import 'package:emotiovent/screens/AskProfilePicture.dart';
 import 'package:emotiovent/screens/EV_InitialScreen.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
-import '../services/database/registerAccount.dart';
+import '../services/database/RegisterAccount.dart';
 
 //debug dont remove this:
-import '../services/database/fetchUserData.dart';
+import '../services/database/FetchUserData.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';

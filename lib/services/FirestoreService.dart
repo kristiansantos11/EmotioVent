@@ -15,6 +15,5 @@ class FirestoreService {
     } catch (e) {
       print(e);
     }
-    
   }
 }

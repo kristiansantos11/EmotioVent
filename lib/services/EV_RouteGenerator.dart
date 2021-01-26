@@ -11,7 +11,9 @@ import 'package:emotiovent/models/ScreenArguments.dart';
 import 'package:emotiovent/screens/AskProfilePicture.dart';
 import 'package:emotiovent/screens/EV_ViewProfilePicture.dart';
 import 'package:emotiovent/screens/ExplainBeforeRegister.dart';
-import 'package:emotiovent/screens/widgets/CaptureSurroundingsPreview.dart';
+import 'package:emotiovent/activities/widgets/CaptureSurroundingsPreview.dart';
+import 'package:emotiovent/services/database/FetchUserData.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
@@ -19,7 +21,7 @@ import 'package:emotiovent/screens/EV_Login.dart';
 import 'package:emotiovent/screens/EV_SatisfactoryRate.dart';
 import 'package:emotiovent/screens/EV_SignUp.dart';
 import 'package:emotiovent/screens/EV_InitialScreen.dart';
-import 'package:emotiovent/screens/widgets/SelfieCameraCapturePreview.dart';
+import 'package:emotiovent/activities/widgets/SelfieCameraCapturePreview.dart';
 
 import 'package:emotiovent/services/EV_ActivityRandomizer.dart';
 
@@ -200,14 +202,15 @@ Route<Null> getGenerateRoute(RouteSettings settings){
       );
     
     case EVViewProfilePicture.routeName:
-      ScreenArguments args = arguments;
       return PageRouteBuilder(
         settings: RouteSettings(name: EVViewProfilePicture.routeName),
         pageBuilder: (context, animation, secondAnimation){
+
           return ListenableProvider(
             create: (context) => animation,
-            child: EVViewProfilePicture(user: args.user),
+              child: EVViewProfilePicture(),
           );
+          
         },
         transitionDuration: const Duration(milliseconds: 1000),
         transitionsBuilder: (context, animation, secondAnimation, child){

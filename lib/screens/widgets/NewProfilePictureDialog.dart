@@ -62,7 +62,6 @@ Future newProfilePictureDialog({@required BuildContext context, @required User u
                               await onAlbumPick(
                                 imagePicker: _imagePicker,
                                 context: context,
-                                user: user,
                               );
                             },
                             style: ButtonStyle(
@@ -76,7 +75,6 @@ Future newProfilePictureDialog({@required BuildContext context, @required User u
                               await onCameraPick(
                                 imagePicker: _imagePicker,
                                 context: context,
-                                user: user,
                               );
                             },
                             style: ButtonStyle(

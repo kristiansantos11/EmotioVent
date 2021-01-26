@@ -6,11 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
 Future<void> onAlbumPick({@required ImagePicker imagePicker, 
                           @required BuildContext context,
-                          @required User user,
                           }) async {
+  User user = FirebaseAuth.instance.currentUser;
   File image;
   await imagePicker.getImage(source: ImageSource.gallery).then((_image){
       image = File(_image.path);
@@ -33,7 +34,7 @@ Future<void> onAlbumPick({@required ImagePicker imagePicker,
           Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
         }
       });
-  }).catchError((){
+  }).catchError((error){
     print("Cancelled.");
   });
 
@@ -42,8 +43,8 @@ Future<void> onAlbumPick({@required ImagePicker imagePicker,
 
 Future<void> onCameraPick({@required ImagePicker imagePicker,
                           @required BuildContext context,
-                          @required User user,
                           }) async {
+  User user = FirebaseAuth.instance.currentUser;
   File image;
   await imagePicker.getImage(source: ImageSource.camera).then((_image){
     image = File(_image.path);

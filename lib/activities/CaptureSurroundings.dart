@@ -10,7 +10,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:emotiovent/models/ScreenArguments.dart';
-import 'package:emotiovent/screens/widgets/CaptureSurroundingsPreview.dart';
+import 'package:emotiovent/activities/widgets/CaptureSurroundingsPreview.dart';
 import 'package:emotiovent/services/EV_CameraProcessUtil.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';

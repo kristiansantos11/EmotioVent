@@ -26,8 +26,13 @@ class _EVMainMenuState extends State<EVMainMenu> {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.watch<User>();
-    final userinfo = Provider.of<UserData>(context);  
+
+    // FOR DEBUG PURPOSES. DO NOT DELETE.
+    final userinfo = Provider.of<UserData>(context);
+    if (userinfo == null){
+      return CircularProgressIndicator();
+    }
+
     // # lahat ng data ng user is nasa userinfo
     // # access the data by:
     // # userinfo.name, userinfo.gender, userinfo.profilePictureLink
@@ -191,9 +196,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
                         child: Container(
                           constraints: BoxConstraints.expand(),
                           alignment: Alignment.center,
-                          child: ProfileCard(
-                            user: user,
-                          ),
+                          child: ProfileCard(),
                         )
                       ),
 

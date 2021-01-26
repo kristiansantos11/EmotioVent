@@ -19,6 +19,9 @@ class Database
     {
       userInfo = user.returnUserData();
       print("Checking for username...");
+
+      // # ISSUE: Hindi gagana to kapag ang rules na naka set sa firestore ay mga authenticated users lang ang makakapag READ access.
+      // # I had to make the firestore database public para mkapag read ito kahit wala pang user na nakalogin.
       DocumentSnapshot snapshot = await basicInfo.doc("${user.email}").get();
       print("Username checking done!");
       if(!snapshot.exists)

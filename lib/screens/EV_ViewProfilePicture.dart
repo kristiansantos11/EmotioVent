@@ -9,34 +9,23 @@
 
 import 'dart:async';
 import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emotiovent/models/UserInfo.dart';
 import 'package:emotiovent/screens/widgets/NewProfilePictureDialog.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
-import 'package:emotiovent/services/ProfilePictureUpload.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class EVViewProfilePicture extends StatefulWidget {
   static const routeName = '/view_profile_picture';
-  final User user;
-
-  const EVViewProfilePicture({Key key, @required this.user}) : super(key: key);
   
   @override
-  _EVViewProfilePictureState createState() => _EVViewProfilePictureState(user: user);
+  _EVViewProfilePictureState createState() => _EVViewProfilePictureState();
 }
 
 class _EVViewProfilePictureState extends State<EVViewProfilePicture> {
-  final User user;
 
-  _EVViewProfilePictureState({@required this.user});
-
-  ImagePicker _imagePicker = ImagePicker();
+  Timer initStateTimer; 
   File image;
   bool _showContent = false;
   String email;
@@ -47,7 +36,7 @@ class _EVViewProfilePictureState extends State<EVViewProfilePicture> {
   void initState(){
     super.initState();
 
-    Timer(
+    initStateTimer = Timer(
       Duration(seconds: 1),
       (){setState(() {
         _showContent = true;
@@ -57,8 +46,18 @@ class _EVViewProfilePictureState extends State<EVViewProfilePicture> {
   }
 
   @override
+  void dispose(){
+
+    if(initStateTimer.isActive){
+      initStateTimer.cancel();
+    }
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    //UserData userData = context.watch<UserData>();
+    UserData userData = context.watch<UserData>();
 
     return Scaffold(
       body: Stack(
@@ -101,10 +100,7 @@ class _EVViewProfilePictureState extends State<EVViewProfilePicture> {
                             tag: 'profile_picture',
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20.0),
-                              
-                              // Add a comment to the container below if you're going to start patching in the image from firestore.
-                              child: Container(decoration: BoxDecoration(color: Colors.grey))
-                              //child: Image(image: NetworkImage(userData.profilePictureLink)),
+                              child: Image(image: NetworkImage(userData.profilePictureLink)),
                             ),
                           ),
 
@@ -132,75 +128,6 @@ class _EVViewProfilePictureState extends State<EVViewProfilePicture> {
                         ]
                       ),
                     ),
-
-                    /*
-                    Column(
-                      children: [
-
-                        Container(
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Do you want to replace your profile picture?",
-                            style: TextStyle(
-                              fontFamily: 'Proxima Nova',
-                              fontWeight: FontWeight.w700,
-                              fontStyle: FontStyle.normal,
-                              color: Colors.grey[600]
-                            ),
-                          ),
-                        ),
-
-                        ButtonBar(
-                          alignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            ElevatedButton(
-                              onPressed: (){
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context){
-                                    return AlertDialog(
-                                      title: Text("Where would you like me to get the new profile picture from?"),
-                                      content: Text("Album or camera?"),
-                                      actions: <Widget>[
-                                        IconButton(
-                                          icon: Icon(Icons.album),
-                                          onPressed: (){
-                                            
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  }
-                                );
-                              },
-                              child: Text(
-                                "Yes",
-                                style: TextStyle(
-                                  fontFamily: 'Nexa',
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: getWidth(context) * 0.05,
-                                ),
-                              ),
-                            ),
-
-                            ElevatedButton(
-                              onPressed: (){Navigator.of(context).pop();},
-                              child: Text(
-                                "No",
-                                style: TextStyle(
-                                  fontFamily: 'Nexa',
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: getWidth(context) * 0.05,
-                                ),
-                              ),
-                            ),
-
-                          ],
-                        ),
-
-                      ],
-                    ),
-                    */
 
                 ],
               ),
