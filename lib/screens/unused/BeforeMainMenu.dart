@@ -9,7 +9,7 @@ import 'package:emotiovent/screens/EV_MainMenu.dart' ;
 // # Actually, i think hindi ito necessary at pwede ito icombine sa EV_MainMenu.dart or doon sa Multiprovider ng 
 // # main.dart mo. So ikaw na bahala if you want to keep or adjust the code.
 
-class BeforeMainMenu extends StatefulWidget {
+/*class BeforeMainMenu extends StatefulWidget {
   @override
   _BeforeMainMenuState createState() => _BeforeMainMenuState();
 }
@@ -24,4 +24,4 @@ class _BeforeMainMenuState extends State<BeforeMainMenu> {
       child: EVMainMenu()
     );
   }
-}
+}*/

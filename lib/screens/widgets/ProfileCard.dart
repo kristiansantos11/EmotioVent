@@ -163,29 +163,3 @@ class _ProfileCardState extends State<ProfileCard> {
     );
   }
 }
-
-Widget profileCard({@required BuildContext context, @required User user}){
-  
-}
-
-/*
-child: StreamBuilder(
-                            stream: FirebaseFirestore.instance.collection('Basic Info').doc(user.email).snapshots(),
-                            builder: (context, snapshot){
-                              print(user.email);
-                              print(snapshot.data.toString());
-                              print(snapshot.connectionState);
-                              if(!snapshot.hasData){
-                                return Container(
-                                  alignment: Alignment.center,
-                                  child: CircularProgressIndicator()
-                                );
-                              } else {
-                                return Image(
-                                  image: NetworkImage(snapshot.data['profile_picture'])
-                                );
-                              }
-                            }
-                          ),
-
-*/

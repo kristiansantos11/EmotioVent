@@ -6,6 +6,7 @@ import 'package:emotiovent/screens/EV_InitialScreen.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 
 import 'services/EV_AuthService.dart';
@@ -18,7 +19,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(Phoenix(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<FetchUserData>(
-          create: (_) => FetchUserData(user: FirebaseAuth.instance.currentUser),
+          create: (_) => FetchUserData(FirebaseAuth.instance.currentUser),
         ),
         StreamProvider(
           create: (context) => context.read<FetchUserData>().info,

@@ -3,16 +3,19 @@
 
 import 'package:emotiovent/screens/EV_MainMenu.dart';
 import 'package:emotiovent/screens/EV_StartScreen.dart';
+import 'package:emotiovent/services/database/FetchUserData.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class EVInitialScreen extends StatelessWidget {
+class EVInitialScreen extends StatefulWidget {
   static const routeName = '/main';
+  @override
+  _EVInitialScreenState createState() => _EVInitialScreenState();
+}
 
-  const EVInitialScreen({
-    Key key,
-  }) : super(key: key);
+class _EVInitialScreenState extends State<EVInitialScreen> {
+  User firebaseUser;
 
   @override
   Widget build(BuildContext context) {

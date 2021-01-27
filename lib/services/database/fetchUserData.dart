@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emotiovent/models/UserInfo.dart';
+import 'package:emotiovent/services/FirestoreService.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FetchUserData
 {
   User user;
-  FetchUserData({this.user});
+  FetchUserData(this.user);
   
   // Don't remove yet  because im still tinkering on a few things.
   //final CollectionReference db = FirebaseFirestore.instance.collection('Basic Info');
@@ -40,7 +41,7 @@ class FetchUserData
   Stream<UserData> get info
   {
     return FirebaseFirestore.instance.collection('Basic Info')
-            .doc(user.email)
+            .doc(this.user.email)
             .snapshots()
             .map(currentUserData);
   }

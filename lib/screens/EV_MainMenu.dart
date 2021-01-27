@@ -1,10 +1,12 @@
 
 import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
+import 'package:emotiovent/screens/EV_InitialScreen.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:emotiovent/screens/clipper/CustomShapeClipper.dart';
 import 'package:emotiovent/screens/widgets/ProfileCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import '../services/EV_AuthService.dart';
 import 'package:emotiovent/models/UserInfo.dart';
@@ -20,22 +22,27 @@ class _EVMainMenuState extends State<EVMainMenu> {
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  void _signOut(){
-    context.read<AuthenticationService>().signOut();
+  void _signOut(BuildContext context) async {
+    await context.read<AuthenticationService>().signOut().then((String successMsg){
+      print(successMsg);
+      Phoenix.rebirth(context);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
 
     // FOR DEBUG PURPOSES. DO NOT DELETE.
-    final userinfo = Provider.of<UserData>(context);
+    final userinfo = context.watch<UserData>();
+
     if (userinfo == null){
-      return CircularProgressIndicator();
+      return Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     // # lahat ng data ng user is nasa userinfo
     // # access the data by:
     // # userinfo.name, userinfo.gender, userinfo.profilePictureLink
+
     return WillPopScope(
           onWillPop: () async => false,
           child: Scaffold(
@@ -91,7 +98,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
                     leading: Icon(Icons.logout),
                     title: Text("Logout"),
                     onTap: (){
-                      _signOut();
+                      _signOut(context);
                     }
                   ),
                   /// #DON'T DELETE. DEBUGGING PURPOSES ONLY 
@@ -162,6 +169,9 @@ class _EVMainMenuState extends State<EVMainMenu> {
               )
             ),
 
+
+            // Turn this into a PageView
+            // (search nyo nalang kung pano xd)
             body: Stack(
               children: <Widget>[
 
