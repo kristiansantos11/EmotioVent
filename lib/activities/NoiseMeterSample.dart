@@ -23,6 +23,7 @@ class _NoiseMeterSampleState extends State<NoiseMeterSample> {
   final String emotion;
   _NoiseMeterSampleState(this.emotion);
 
+  String activityName = "Scream at your Microphone!";
   bool _showContent = false;
   bool _isRecording = false;
   StreamSubscription<NoiseReading> _noiseSubscription;
@@ -82,7 +83,10 @@ class _NoiseMeterSampleState extends State<NoiseMeterSample> {
             if((counter == 0) && timer.isActive){
               setState((){
                 timer.cancel();
-                Navigator.of(ctx).pushReplacementNamed(EVSatisfactoryRate.routeName, arguments: ScreenArguments(emotion: emotion));
+                Navigator.of(ctx).pushReplacementNamed(
+                  EVSatisfactoryRate.routeName,
+                  arguments: ScreenArguments(emotion: emotion, activity: activityName)
+                );
               });
             }
           }

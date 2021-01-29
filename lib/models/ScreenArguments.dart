@@ -3,6 +3,7 @@
 // Make sure the arguments passed are optional.
 // Make sure the scaffold widgets accepting the arguments also have optional argument requirements.
 
+import 'package:emotiovent/models/EmotionRecord.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 
@@ -11,6 +12,8 @@ class ScreenArguments{
   final String imgPath;
   final List<ImageLabel> labels;
   final User user;
+  final String activity;
+  final EmotionRecord emotionRecord;
 
-  ScreenArguments({this.emotion, this.imgPath, this.labels, this.user});
+  ScreenArguments({this.emotion, this.imgPath, this.labels, this.user, this.activity, this.emotionRecord});
 }

@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:emotiovent/models/EmotionRecord.dart';
 import 'package:emotiovent/models/ScreenArguments.dart';
 import 'package:emotiovent/screens/EV_InitialScreen.dart';
 import 'package:emotiovent/screens/EV_SignUp.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
+import 'package:emotiovent/services/database/SubmitActivityResult.dart';
 import 'package:flutter/material.dart';
 import 'package:emotiovent/services/EV_ActivityRandomizer.dart';
 
@@ -14,18 +16,20 @@ class EVSatisfactoryRate extends StatefulWidget {
 
   static const routeName = '/satisfactory';
   final String emotion;
+  final String activity;
 
-  const EVSatisfactoryRate({Key key, this.emotion}) : super(key: key);
+  const EVSatisfactoryRate({Key key, @required this.emotion, @required this.activity}) : super(key: key);
 
   @override
-  _EVSatisfactoryRateState createState() => _EVSatisfactoryRateState(emotion);
+  _EVSatisfactoryRateState createState() => _EVSatisfactoryRateState(emotion: emotion, activity: activity);
 }
 
 class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
 
   final String emotion;
+  final String activity;
 
-  _EVSatisfactoryRateState(this.emotion);
+  _EVSatisfactoryRateState({@required this.emotion, @required this.activity});
 
   final double _minSliderValue = 0;
   final double _maxSliderValue = 100;
@@ -129,15 +133,37 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
                         backgroundColor: MaterialStateProperty.all(Colors.green[500]),
                         shape: MaterialStateProperty.all(CircleBorder())
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         if(_currentSliderValue.round() < 50){
                           Navigator.of(context).pushReplacementNamed(ActivityRandomizer.routeName, arguments: ScreenArguments(emotion: emotion));
                         } else {
                           if(firebaseUser == null){
-                            Navigator.of(context).pushNamed(EVSignUp.routeName, arguments: ScreenArguments(emotion: emotion));
+                            Navigator.of(context).pushNamed(
+                              EVSignUp.routeName,
+                              arguments: ScreenArguments(
+                                emotion: emotion,
+                                emotionRecord: EmotionRecord(
+                                  emotion: emotion,
+                                  activity: activity,
+                                  activityRate: _currentSliderValue.toInt(),
+                                  timestamp: DateTime.now()
+                                ),
+                              )
+                            );
                           } else {
                             // TODO: Add code here to upload the record
-                            Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
+                            await SubmitActivityResult()
+                              .submit(
+                                user: firebaseUser,
+                                record: EmotionRecord(
+                                  emotion: emotion,
+                                  activity: activity,
+                                  activityRate: _currentSliderValue.toInt(),
+                                  timestamp: DateTime.now()
+                                ),
+                              ).then((_){
+                                Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
+                              });
                           }
                         }
                       }

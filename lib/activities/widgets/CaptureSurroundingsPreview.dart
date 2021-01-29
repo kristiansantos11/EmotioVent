@@ -28,9 +28,9 @@ class _CaptureSurroundingsPreviewState extends State<CaptureSurroundingsPreview>
 
   _CaptureSurroundingsPreviewState({this.emotion, this.imgPath});
 
+  String activityName = "Capture your Surroundings";
   AnimationController backgroundController;
   bool _showFAB = false;
-  String whatDoISee = "";
 
   @override
   void initState(){
@@ -126,7 +126,12 @@ class _CaptureSurroundingsPreviewState extends State<CaptureSurroundingsPreview>
           tooltip: "Continue",
           foregroundColor: Colors.green,
           backgroundColor: Colors.white,
-          onPressed: () {Navigator.of(context).pushNamed(EVSatisfactoryRate.routeName, arguments: ScreenArguments(emotion: emotion));}
+          onPressed: () {
+            Navigator.of(context).pushNamed(
+              EVSatisfactoryRate.routeName,
+              arguments: ScreenArguments(emotion: emotion, activity: activityName)
+            );
+          }
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

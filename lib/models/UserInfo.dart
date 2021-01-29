@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:emotiovent/services/FirestoreService.dart';
 import 'package:meta/meta.dart';
 
 class UserData
@@ -30,7 +29,7 @@ class UserData
   });
 
   factory UserData.fetchData(Map<String, dynamic> snapshotData){
-    print('USERNAME: ${snapshotData['username']}');
+    print('USERNAME: ${snapshotData['username']}'); // Debug
     return UserData(
       username : snapshotData['username'],
       name : snapshotData['name'],

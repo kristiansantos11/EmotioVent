@@ -17,33 +17,20 @@ class Database
   {
     try
     {
-      userInfo = user.returnUserData();
-      print("Checking for username...");
+      await auth.createUserWithEmailAndPassword(email: user.email, password: user.password);
+      await CloudStorage().uploadProfilePicture(
+        file: user.profilePicture,
+        email: user.email,
+        def: true,
+      );
+      user.profilePictureLink = await CloudStorage().getProfilePictureLink(email: user.email);
+      await basicInfo.doc("${user.email}").set(user.returnUserData());
+      return null;
 
-      // # ISSUE: Hindi gagana to kapag ang rules na naka set sa firestore ay mga authenticated users lang ang makakapag READ access.
-      // # I had to make the firestore database public para mkapag read ito kahit wala pang user na nakalogin.
-      DocumentSnapshot snapshot = await basicInfo.doc("${user.email}").get();
-      print("Username checking done!");
-      if(!snapshot.exists)
-      {
-        await auth.createUserWithEmailAndPassword(email: user.email, password: user.password);
-        await CloudStorage().uploadProfilePicture(
-          file: user.profilePicture,
-          email: user.email,
-          def: true,
-        );
-        user.profilePictureLink = await CloudStorage().getProfilePictureLink(email: user.email);
-        await basicInfo.doc("${user.email}").set(user.returnUserData());
-        return null;
-      }
-      else
-      {
-        return("Email exists!");
-      }
     }
     catch(e)
     {
-      return("Please check your email!: ${e.toString()}");
+      return(e.toString());
     }
   }
 

@@ -21,6 +21,7 @@ class _ShakePhoneActivityState extends State<ShakePhoneActivity> {
   final String emotion;
   _ShakePhoneActivityState(this.emotion);
 
+  String activityName = "Shakey shakey!";
   ShakeDetector detector;
   bool _showContent = false;
   int _shakeCounter = 30;
@@ -49,7 +50,10 @@ class _ShakePhoneActivityState extends State<ShakePhoneActivity> {
         // Do stuff on phone shake
         if (_shakeCounter == 0){
           detector.stopListening();
-          Navigator.of(context).pushReplacementNamed(EVSatisfactoryRate.routeName, arguments: ScreenArguments(emotion: emotion));
+          Navigator.of(context).pushReplacementNamed(
+            EVSatisfactoryRate.routeName,
+            arguments: ScreenArguments(emotion: emotion, activity: activityName)
+          );
         }
       }
     );

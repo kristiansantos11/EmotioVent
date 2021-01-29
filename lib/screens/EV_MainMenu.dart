@@ -1,6 +1,8 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
 import 'package:emotiovent/screens/EV_InitialScreen.dart';
+import 'package:emotiovent/screens/AppSettings.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:emotiovent/screens/clipper/CustomShapeClipper.dart';
 import 'package:emotiovent/screens/widgets/ProfileCard.dart';
@@ -11,6 +13,8 @@ import 'package:provider/provider.dart';
 import '../services/EV_AuthService.dart';
 import 'package:emotiovent/models/UserInfo.dart';
 
+import 'EmotionHistory.dart';
+
 
 class EVMainMenu extends StatefulWidget {
 
@@ -20,6 +24,9 @@ class EVMainMenu extends StatefulWidget {
 
 class _EVMainMenuState extends State<EVMainMenu> {
 
+  PageController pageController;
+  int currentPage;
+
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _signOut(BuildContext context) async {
@@ -27,6 +34,12 @@ class _EVMainMenuState extends State<EVMainMenu> {
       print(successMsg);
       Phoenix.rebirth(context);
     });
+  }
+  
+  @override
+  void initState(){
+    super.initState();
+    pageController = PageController();
   }
 
   @override
@@ -135,15 +148,31 @@ class _EVMainMenuState extends State<EVMainMenu> {
                     ),
                   ),
 
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(getWidth(context) / 35, 0, getWidth(context) / 35, 0),
-                    child: Container(
-                      width: 30,
-                      height: 30,
-                      child: Image(
-                        image: AssetImage('assets/img/emotiovent_icon_final.png')
-                      ),
+                  ElevatedButton(
+                    onPressed: (){pageController.animateToPage(0, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);},
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(CircleBorder()),
+                      backgroundColor: MaterialStateProperty.all((currentPage == 0) ? Colors.pink : Colors.grey)
                     ),
+                    child: Icon(Icons.home_filled, color: Colors.white)
+                  ),
+
+                  ElevatedButton(
+                    onPressed: (){pageController.animateToPage(1, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);},
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(CircleBorder()),
+                      backgroundColor: MaterialStateProperty.all((currentPage == 1) ? Colors.pink : Colors.grey)
+                    ),
+                    child: Icon(Icons.contacts, color: Colors.white)
+                  ),
+
+                  ElevatedButton(
+                    onPressed: (){pageController.animateToPage(1, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);},
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(CircleBorder()),
+                      backgroundColor: MaterialStateProperty.all((currentPage == 2) ? Colors.pink : Colors.grey)
+                    ),
+                    child: Icon(Icons.settings, color: Colors.white)
                   ),
 
                   Padding(
@@ -169,58 +198,68 @@ class _EVMainMenuState extends State<EVMainMenu> {
               )
             ),
 
+            body: PageView(
+              onPageChanged: (page){
+                setState(() {
+                  currentPage = page;
+                });
+              },
+              controller: pageController,
+              physics: NeverScrollableScrollPhysics(),
+              children: [
 
-            // Turn this into a PageView
-            // (search nyo nalang kung pano xd)
-            body: Stack(
-              children: <Widget>[
+                Stack(
+                  children: <Widget>[
 
-                Container(
-                  decoration: BoxDecoration(
-                    //image: 'background_image_here'
-                  ),
-                ),
-
-                // This ClipPath will be removed. I was only testing custom shapes :)
-                // The above Container widget will contain the background.
-                // The background should be high definition enough for maximum compatibility with small and large phone screens
-                ClipPath(
-                  clipper: CustomShapeClipper(),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [Color(0xfff6afaf), Color(0xfff6afaf)]),
-                    ),
-                    height: getHeight(context) / 2,
-                    width: getWidth(context),
-                  ),
-                ),
-
-                SafeArea(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-
-                      // Profile Card widget.
-                      Flexible(
-                        flex: 7,
-                        child: Container(
-                          constraints: BoxConstraints.expand(),
-                          alignment: Alignment.center,
-                          child: ProfileCard(),
-                        )
+                    Container(
+                      decoration: BoxDecoration(
+                        //image: 'background_image_here'
                       ),
+                    ),
 
-                      // Calendar widget.
-                      Flexible(
-                        flex: 8,
-                        child: Container(
+                    // This ClipPath will be removed. I was only testing custom shapes :)
+                    // The above Container widget will contain the background.
+                    // The background should be high definition enough for maximum compatibility with small and large phone screens
+                    ClipPath(
+                      clipper: CustomShapeClipper(),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [Color(0xfff6afaf), Color(0xfff6afaf)]),
+                        ),
+                        height: getHeight(context) / 2,
+                        width: getWidth(context),
+                      ),
+                    ),
 
-                        )
-                      )
+                    SafeArea(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
 
-                    ]
-                  ),
+                          // Profile Card widget.
+                          Flexible(
+                            flex: 7,
+                            child: Container(
+                              constraints: BoxConstraints.expand(),
+                              alignment: Alignment.center,
+                              child: ProfileCard(),
+                            )
+                          ),
+
+                          // Calendar widget.
+                          Flexible(
+                            flex: 8,
+                            child: EmotionHistory()
+                          )
+
+                        ]
+                      ),
+                    )
+
+                  ],
                 ),
+
+                AppSettings()
 
               ],
             ),

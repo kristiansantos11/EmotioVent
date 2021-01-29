@@ -12,8 +12,6 @@ import 'package:emotiovent/screens/AskProfilePicture.dart';
 import 'package:emotiovent/screens/EV_ViewProfilePicture.dart';
 import 'package:emotiovent/screens/ExplainBeforeRegister.dart';
 import 'package:emotiovent/activities/widgets/CaptureSurroundingsPreview.dart';
-import 'package:emotiovent/services/database/FetchUserData.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
@@ -69,7 +67,7 @@ Route<Null> getGenerateRoute(RouteSettings settings){
     
     case EVLogin.routeName:
       return PageRouteBuilder(
-        settings: RouteSettings(name: EVLogin.routeName), // To make popUntil work.
+        settings: RouteSettings(name: EVLogin.routeName),
         pageBuilder: (context, animation, secondaryAnimation){
           return ListenableProvider(
             create: (context) => animation,
@@ -141,7 +139,7 @@ Route<Null> getGenerateRoute(RouteSettings settings){
         pageBuilder: (context, animation, secondAnimation){
           return ListenableProvider(
             create: (context) => animation,
-            child: EVSatisfactoryRate(emotion: args.emotion),
+            child: EVSatisfactoryRate(emotion: args.emotion, activity: args.emotion),
           );
         },
         transitionDuration: const Duration(milliseconds: 1000),

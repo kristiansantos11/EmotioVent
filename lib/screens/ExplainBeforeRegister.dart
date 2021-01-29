@@ -4,7 +4,7 @@ import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 //import 'package:provider/provider.dart';
-import '../services/SlideFadeInText.dart';
+import 'widget_transition/SlideFadeInText.dart';
 
 class ExplainBeforeRegister extends StatelessWidget {
   static const routeName = '/explainBeforeRegister';

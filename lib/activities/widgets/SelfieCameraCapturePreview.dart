@@ -24,6 +24,8 @@ class _SelfieCameraCapturePreviewState extends State<SelfieCameraCapturePreview>
 
   _SelfieCameraCapturePreviewState(this.emotion, this.imgPath);
 
+  String activityName = "Smile!";
+
   AnimationController backgroundController;
   Animation<Color> backgroundAnimation;
 
@@ -123,7 +125,12 @@ class _SelfieCameraCapturePreviewState extends State<SelfieCameraCapturePreview>
           tooltip: "Continue",
           foregroundColor: Colors.green,
           backgroundColor: Colors.white,
-          onPressed: () {Navigator.of(context).pushNamed(EVSatisfactoryRate.routeName, arguments: ScreenArguments(emotion: emotion));}
+          onPressed: () {
+            Navigator.of(context).pushNamed(
+              EVSatisfactoryRate.routeName,
+              arguments: ScreenArguments(emotion: emotion, activity: activityName)
+            );
+          }
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
