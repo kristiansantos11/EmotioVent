@@ -139,7 +139,7 @@ Route<Null> getGenerateRoute(RouteSettings settings){
         pageBuilder: (context, animation, secondAnimation){
           return ListenableProvider(
             create: (context) => animation,
-            child: EVSatisfactoryRate(emotion: args.emotion, activity: args.emotion),
+            child: EVSatisfactoryRate(emotion: args.emotion, activity: args.activity),
           );
         },
         transitionDuration: const Duration(milliseconds: 1000),
