@@ -8,12 +8,22 @@ class EmotionHistory extends StatefulWidget {
 }
 
 class _EmotionHistoryState extends State<EmotionHistory> {
+  int monthlyCount;
+
+
   @override
   Widget build(BuildContext context) {
     List<EmotionRecord> emotionRecord = context.watch<List<EmotionRecord>>();
     if(emotionRecord == null){
-      return CircularProgressIndicator();
+      return Center(child: CircularProgressIndicator());
     }
+
+    emotionRecord.forEach(
+      (record){
+        
+      }
+    );
+
     return ListView.builder(
       itemCount: emotionRecord.length,
       itemBuilder: (_, int index) {

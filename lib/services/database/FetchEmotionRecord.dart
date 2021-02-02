@@ -23,7 +23,7 @@ class FetchEmotionRecord {
         activity: snapshot.data()['activity'],
         activityRate: snapshot.data()['activityRate'],
         emotion: snapshot.data()['emotion'],
-        timestamp: DateTime.parse(snapshot.id)
+        timestamp: snapshot.data()['timestamp'].toDate(),
       );
     }
     else

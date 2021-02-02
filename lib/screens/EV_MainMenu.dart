@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 import '../services/EV_AuthService.dart';
 import 'package:emotiovent/models/UserInfo.dart';
 
-import 'EmotionHistory.dart';
+import 'widgets/EmotionHistory.dart';
 
 
 class EVMainMenu extends StatefulWidget {
@@ -39,7 +39,10 @@ class _EVMainMenuState extends State<EVMainMenu> {
   @override
   void initState(){
     super.initState();
-    pageController = PageController();
+    pageController = PageController(initialPage: 0);
+    setState(() {
+      currentPage = 0;
+    });
   }
 
   @override

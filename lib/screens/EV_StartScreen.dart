@@ -38,20 +38,6 @@ class _EVStartScreenState extends State<EVStartScreen> {
                 ),
               ),
 
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    tileMode: TileMode.repeated,
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: <Color>[
-                      Colors.grey.withAlpha(25),
-                      Colors.black87,
-                    ]
-                  )
-                ),
-              ),
-
               AnimatedOpacity(
                 opacity: showContent ? 1.0 : 0.0,
                 duration: const Duration(seconds: 1),
@@ -94,7 +80,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: 'Roboto',
-                                        fontSize: ResponsiveFlutter.of(context).scale(12),
+                                        fontSize: ResponsiveFlutter.of(context).scale(15),
                                         height: 1,
                                         fontStyle: FontStyle.normal,
                                         fontWeight: FontWeight.w900,
@@ -111,7 +97,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                           flex: 5,
                           child:
                             Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 
                   
@@ -172,6 +158,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                         tag: 'login',
                                         child: TextButton(
                                             style: ButtonStyle(
+                                              backgroundColor: MaterialStateProperty.all<Color>(Color(0xff53B6AF)),
                                               minimumSize: MaterialStateProperty.all(
                                                 Size(ResponsiveFlutter.of(context).scale(225), 
                                                     ResponsiveFlutter.of(context).scale(50)
@@ -180,10 +167,6 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                               shape: MaterialStateProperty.all(
                                                 RoundedRectangleBorder(
                                                   borderRadius: BorderRadius.circular(ResponsiveFlutter.of(context).scale(25.0)),
-                                                  side: BorderSide(
-                                                    color: Colors.white,
-                                                    width: 3,
-                                                  )
                                                 ),
                                               ),
                                             ),

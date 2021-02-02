@@ -26,5 +26,6 @@ class EmotionRecord{
       'emotion' : this.emotion,
       'activity': this.activity,
       'activityRate' : this.activityRate,
+      'timestamp' : this.timestamp
   };
 }
