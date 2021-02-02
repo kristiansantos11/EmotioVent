@@ -9,11 +9,13 @@
 
 import 'dart:io';
 
+import 'package:emotiovent/models/EmotionRecord.dart';
 import 'package:emotiovent/models/UserInfo.dart';
 import 'package:date_field/date_field.dart';
 import 'package:emotiovent/screens/AskProfilePicture.dart';
 import 'package:emotiovent/screens/EV_InitialScreen.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
+import 'package:emotiovent/services/database/SubmitActivityResult.dart';
 import 'package:flutter/material.dart';
 import '../services/database/RegisterAccount.dart';
 
@@ -27,8 +29,9 @@ class EVSignUp extends StatefulWidget {
   static const routeName = '/signup';
 
   final String emotion;
+  final EmotionRecord emotionRecord;
 
-  const EVSignUp({Key key, this.emotion}) : super(key: key);
+  const EVSignUp({Key key, this.emotion, this.emotionRecord}) : super(key: key);
 
   @override
   _EVSignUpState createState() => _EVSignUpState(emotion: emotion);
@@ -36,8 +39,9 @@ class EVSignUp extends StatefulWidget {
 
 class _EVSignUpState extends State<EVSignUp> {
   final String emotion;
+  final EmotionRecord emotionRecord;
 
-  _EVSignUpState({this.emotion});
+  _EVSignUpState({this.emotion, this.emotionRecord});
 
   final formKey = GlobalKey<FormState>();
   
@@ -77,6 +81,9 @@ class _EVSignUpState extends State<EVSignUp> {
       print("Current Data: $email,$password,$username,$name,$birthday,$contactnum,$gender"); //debug
       print("Attempting to register email & password data to firebase..."); //debug
       response = await Database().register(_user);
+      if (emotionRecord != null){
+        await SubmitActivityResult().submit(user: FirebaseAuth.instance.currentUser, record: emotionRecord);
+      }
       print("$response"); //debug - *must be null to be a success
       if(response==null)
       {

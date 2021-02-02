@@ -167,7 +167,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
                   ),
 
                   ElevatedButton(
-                    onPressed: (){pageController.animateToPage(1, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);},
+                    onPressed: (){pageController.animateToPage(2, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);},
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all(CircleBorder()),
                       backgroundColor: MaterialStateProperty.all((currentPage == 2) ? Colors.pink : Colors.grey)

@@ -13,7 +13,7 @@ class EmotionRecord{
     @required this.timestamp
   });
 
-  factory EmotionRecord.fetchData(Map<String, dynamic> snapshotData) {
+  factory EmotionRecord.fetchRecord(Map<String, dynamic> snapshotData) {
     return EmotionRecord(
       emotion: snapshotData['emotion'],
       activity: snapshotData['activity'],

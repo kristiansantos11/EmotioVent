@@ -49,7 +49,7 @@ Route<Null> getGenerateRoute(RouteSettings settings){
         pageBuilder: (context, animation, secondaryAnimation){
           return ListenableProvider(
             create: (context) => animation,
-            child: EVSignUp(emotion: args != null ? args.emotion : null),
+            child: EVSignUp(emotion: args != null ? args.emotion : null, emotionRecord: args != null ? args.emotionRecord : null),
           );
         },
         transitionDuration: const Duration(milliseconds: 1000),

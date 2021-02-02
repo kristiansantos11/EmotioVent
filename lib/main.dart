@@ -1,4 +1,6 @@
+import 'package:emotiovent/models/EmotionRecord.dart';
 import 'package:emotiovent/models/UserInfo.dart';
+import 'package:emotiovent/services/database/FetchEmotionRecord.dart';
 import 'package:flutter/material.dart';
 
 import 'package:emotiovent/screens/EV_InitialScreen.dart';
@@ -32,17 +34,23 @@ class MyApp extends StatelessWidget {
 
     return MultiProvider(
       providers: [
+        Provider<AuthenticationService>(
+          create: (_) => AuthenticationService(FirebaseAuth.instance),
+        ),
+        StreamProvider(
+          create: (context) => context.read<AuthenticationService>().authStateChanges,
+        ),
         Provider<FetchUserData>(
           create: (_) => FetchUserData(FirebaseAuth.instance.currentUser),
         ),
         StreamProvider(
           create: (context) => context.read<FetchUserData>().info,
         ),
-        Provider<AuthenticationService>(
-          create: (_) => AuthenticationService(FirebaseAuth.instance),
+        Provider<FetchEmotionRecord>(
+          create: (_) => FetchEmotionRecord(FirebaseAuth.instance.currentUser),
         ),
         StreamProvider(
-          create: (context) => context.read<AuthenticationService>().authStateChanges,
+          create: (context) => context.read<FetchEmotionRecord>().getUserList
         ),
       ],
       child: MaterialApp(

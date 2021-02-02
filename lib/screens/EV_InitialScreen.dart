@@ -3,7 +3,6 @@
 
 import 'package:emotiovent/screens/EV_MainMenu.dart';
 import 'package:emotiovent/screens/EV_StartScreen.dart';
-import 'package:emotiovent/services/database/FetchUserData.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
