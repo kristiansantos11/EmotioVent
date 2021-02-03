@@ -74,18 +74,20 @@ class _EmotionStatisticsState extends State<EmotionStatistics> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
 
+        // # TODO: Pakibago yung color property sa loob ng bawat statisticBox depende sa color palette ng UI.
+
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             statisticBox(
               context: context,
-              color: Colors.red,
+              color: Colors.red, // Pabago
               title: "Most felt emotion:",
               subtitle: mostFeltEmotion
             ),
             statisticBox(
               context: context,
-              color: Colors.deepOrange,
+              color: Colors.deepOrange, // Pabago
               title: "Text",
               subtitle: "Text",
             ),
@@ -97,13 +99,13 @@ class _EmotionStatisticsState extends State<EmotionStatistics> {
           children: <Widget>[
             statisticBox(
               context: context,
-              color: Colors.blue,
+              color: Colors.blue, // Pabago
               title: "Text",
               subtitle: "Text",
             ),
             statisticBox(
               context: context,
-              color: Colors.lightGreen,
+              color: Colors.lightGreen, // Pabago
               title: "Text",
               subtitle: "Text",
             ), 
@@ -115,7 +117,7 @@ class _EmotionStatisticsState extends State<EmotionStatistics> {
   }
 }
 
-Widget statisticBox({@required String title, @required String subtitle, @required MaterialColor color, Widget child, AssetImage background, @required BuildContext context}){
+Widget statisticBox({@required String title, @required String subtitle, @required dynamic color, Widget child, @required BuildContext context}){
   return ClipRRect(
       borderRadius: BorderRadius.circular(18.0),
       child: Center(
@@ -124,13 +126,7 @@ Widget statisticBox({@required String title, @required String subtitle, @require
           width: getWidth(context) * 0.38,
           height: getWidth(context) * 0.38,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: <Color>[
-                color[300], color[700]
-              ]
-            ),
+            color: color,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
