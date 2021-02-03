@@ -1,9 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:emotiovent/models/ScreenArguments.dart';
 import 'package:emotiovent/models/UserInfo.dart';
 import 'package:emotiovent/screens/EV_ViewProfilePicture.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 

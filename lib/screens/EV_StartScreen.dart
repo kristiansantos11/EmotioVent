@@ -74,54 +74,55 @@ class _EVStartScreenState extends State<EVStartScreen> {
                       child: Column(
                         children: <Widget>[
                          
-                             Padding(
-                               padding: EdgeInsets.fromLTRB(0,
-                          ResponsiveFlutter.of(context).verticalScale(180), 50, 130),
-                               child: Flexible(
-                                  flex: 2,
-                          
-                                  child: Container(
-                                    
-                                    padding: EdgeInsets.fromLTRB(
-                                      ResponsiveFlutter.of(context).wp(5),
-                                      ResponsiveFlutter.of(context).wp(1),
-                                      ResponsiveFlutter.of(context).wp(5),
-                                      ResponsiveFlutter.of(context).wp(1),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: <Widget>[
-                                        Text(
-                                          "Emotiovent",
-                                          
-                                          style: TextStyle(
-                                            fontFamily: 'Proxima Nova',
-                                            color: Colors.grey[600],
-                                            fontSize:
-                                                ResponsiveFlutter.of(context).scale(50),
-                                            fontWeight: FontWeight.w700,
+                              Flexible(
+                                flex: 2,
+                                child: Padding(
+                                 padding: EdgeInsets.fromLTRB(
+                                            0,
+                                            ResponsiveFlutter.of(context).verticalScale(180),
+                                            50, 
+                                            130
                                           ),
-                                        ),
-                                        Text("How are you feeling today?",
+                                 child: Container(
+                                      padding: EdgeInsets.fromLTRB(
+                                        ResponsiveFlutter.of(context).wp(5),
+                                        ResponsiveFlutter.of(context).wp(1),
+                                        ResponsiveFlutter.of(context).wp(5),
+                                        ResponsiveFlutter.of(context).wp(1),
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: <Widget>[
+                                          Text(
+                                            "Emotiovent",
                                             
                                             style: TextStyle(
-                                                fontFamily: 'Proxima Nova',
-                                                fontSize: ResponsiveFlutter.of(context)
-                                                    .scale(17),
-                                                height: 0.5,
-                                                fontStyle: FontStyle.normal,
-                                                fontWeight: FontWeight.w900,
-                                                color: Colors.black87)),
-                                      ],
-                                    ),
-                                  )),
-                               ),
+                                              fontFamily: 'Proxima Nova',
+                                              color: Colors.grey[600],
+                                              fontSize:
+                                                  ResponsiveFlutter.of(context).scale(50),
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                          Text("How are you feeling today?",
+                                              style: TextStyle(
+                                                  fontFamily: 'Proxima Nova',
+                                                  fontSize: ResponsiveFlutter.of(context).scale(17),
+                                                  height: 0.5,
+                                                  fontStyle: FontStyle.normal,
+                                                  fontWeight: FontWeight.w900,
+                                                  color: Colors.black87)),
+                                        ],
+                                      ),
+                                    )
+                                 ),
+                             ),
                              
                              
-                          Center(
-                            child: Flexible(
-                                flex: 5,
-                                child:Padding(
+                          Flexible(
+                            flex: 5,
+                            child: Center(
+                              child:Padding(
                       padding: EdgeInsets.fromLTRB(25,
                           ResponsiveFlutter.of(context).verticalScale(0), 25, 100),
                                 child: Column(
@@ -263,7 +264,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                         ]),
                                   ],
                                 )),
-                          ),
+                            ),
                           ),
                         ],
                       )),

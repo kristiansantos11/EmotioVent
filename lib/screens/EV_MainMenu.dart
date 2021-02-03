@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
 import 'package:emotiovent/screens/EV_InitialScreen.dart';
 import 'package:emotiovent/screens/AppSettings.dart';
+import 'package:emotiovent/screens/EmotionCalendar.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:emotiovent/screens/clipper/CustomShapeClipper.dart';
 import 'package:emotiovent/screens/widgets/ProfileCard.dart';
@@ -12,7 +13,7 @@ import 'package:provider/provider.dart';
 import '../services/EV_AuthService.dart';
 import 'package:emotiovent/models/UserInfo.dart';
 
-import 'widgets/EmotionHistory.dart';
+import 'widgets/EmotionStatistics.dart';
 
 class EVMainMenu extends StatefulWidget {
   @override
@@ -62,72 +63,39 @@ class _EVMainMenuState extends State<EVMainMenu> {
       child: Scaffold(
         key: _scaffoldKey,
 
-        // Drawer will not be used.
-        // PageView should be used in navigating to trusted contacts, emotion calendar, freedom board, etc.
-        drawer: Drawer(
-            child: ListView(children: <Widget>[
-          DrawerHeader(
-            child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Text("emotiovent",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Nexa',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 40,
-                    ))),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage('assets/img/StartScreenBG.jpg'))),
-          ),
-          ListTile(
-              leading: Icon(Icons.settings),
-              title: Text("Settings"),
-              onTap: () {}),
-          ListTile(
-              leading: Icon(Icons.contacts),
-              title: Text("Trusted Contacts"),
-              onTap: () {}),
-          ListTile(
-              leading: Icon(Icons.message_rounded),
-              title: Text("Messages"),
-              onTap: () {}),
-          ListTile(
-              leading: Icon(Icons.logout),
-              title: Text("Logout"),
-              onTap: () {
-                _signOut(context);
-              }),
-
-          /// #DON'T DELETE. DEBUGGING PURPOSES ONLY
-          ListTile(
-              leading: Icon(Icons.bug_report),
-              title: Text("Debug"),
-              onTap: () {
-                //checks the streamed data by fetchUserData.dart
-                print("Fetched data: ${userinfo.name}");
-                print("Fetched data: ${userinfo.gender}");
-              }),
-        ])),
-
         // Change UI for BottomAppBar.
         // This is where the icons for the different page views should be found
         // Ask rigel where to place the button icons and how they work and how they should animate (?)
         bottomNavigationBar: BottomAppBar(
             color: Colors.white,
+            
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.fromLTRB(getWidth(context) / 35, 0, 0, 0),
-                  child: IconButton(
-                      iconSize: 50,
-                      icon: Icon(Icons.menu),
-                      onPressed: () {
-                        _scaffoldKey.currentState.openDrawer();
-                      }),
+                  child: Hero(
+                    tag: 'register',
+                    child: TextButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.red[300]),
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0))),
+                        ),
+                        child: Text("VENT",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Nexa',
+                                fontWeight: FontWeight.w700)),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(EVChooseEmotionScreen.routeName);
+                        }),
+                  ),
                 ),
+
                 ElevatedButton(
                     onPressed: () {
                       pageController.animateToPage(0,
@@ -161,29 +129,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
                         backgroundColor: MaterialStateProperty.all(
                             (currentPage == 2) ? Colors.pink : Colors.grey)),
                     child: Icon(Icons.settings, color: Colors.white)),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, getWidth(context) / 35, 0),
-                  child: Hero(
-                    tag: 'register',
-                    child: TextButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.red[300]),
-                          shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0))),
-                        ),
-                        child: Text("VENT",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Nexa',
-                                fontWeight: FontWeight.w700)),
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushNamed(EVChooseEmotionScreen.routeName);
-                        }),
-                  ),
-                ),
+                
               ],
             )),
 
@@ -204,29 +150,34 @@ class _EVMainMenuState extends State<EVMainMenu> {
                       ),
                 ),
 
-                // This ClipPath will be removed. I was only testing custom shapes :)
-                // The above Container widget will contain the background.
-                // The background should be high definition enough for maximum compatibility with small and large phone screens
+                // TODO: # Lagay nalang yung path sa loob ng AssetImage widget.
                 Container(
-                  decoration: BoxDecoration(image: DecorationImage()),
+                  decoration: BoxDecoration(image: DecorationImage(
+                    image: AssetImage('')
+                  )),
                 ),
 
                 SafeArea(
                   child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        // Profile Card widget.
-                        Flexible(
-                            flex: 7,
-                            child: Container(
-                              constraints: BoxConstraints.expand(),
-                              alignment: Alignment.center,
-                              child: ProfileCard(),
-                            )),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      // Profile Card widget.
+                      Flexible(
+                          flex: 7,
+                          child: Container(
+                            constraints: BoxConstraints.expand(),
+                            alignment: Alignment.center,
+                            child: ProfileCard(),
+                          )),
 
-                        // Calendar widget.
-                        Flexible(flex: 8, child: EmotionHistory())
-                      ]),
+                      // Calendar widget.
+                      Flexible(
+                        flex: 8,
+                        child: EmotionStatistics() // # TODO: Replace with EmotionStatistics() after debugging
+                      ),
+
+                    ]
+                  ),
                 )
               ],
             ),

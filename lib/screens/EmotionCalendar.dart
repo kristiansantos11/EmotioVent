@@ -2,25 +2,23 @@ import 'package:emotiovent/models/EmotionRecord.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class EmotionHistory extends StatefulWidget {
+class EmotionCalendar extends StatefulWidget {
   @override
-  _EmotionHistoryState createState() => _EmotionHistoryState();
+  _EmotionCalendarState createState() => _EmotionCalendarState();
 }
 
-class _EmotionHistoryState extends State<EmotionHistory> {
-  int monthlyCount;
-
-
+class _EmotionCalendarState extends State<EmotionCalendar> {
   @override
   Widget build(BuildContext context) {
+    int counter = 0;
     List<EmotionRecord> emotionRecord = context.watch<List<EmotionRecord>>();
     if(emotionRecord == null){
       return Center(child: CircularProgressIndicator());
     }
 
     emotionRecord.forEach(
-      (record){
-        
+      (emotion){
+        counter = counter + 1;
       }
     );
 
