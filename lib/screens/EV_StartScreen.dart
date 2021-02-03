@@ -31,6 +31,22 @@ class _EVStartScreenState extends State<EVStartScreen> {
                   children: <Widget>[
 
                   Container(
+                    decoration: BoxDecoration(
+                    image: DecorationImage(
+                    image: AssetImage("assets/img/ss-deco.png"),
+                    ), 
+                    )  
+                    ),
+                  
+                  Container(
+                    decoration: BoxDecoration(
+                    image: DecorationImage(
+                    image: AssetImage("assets/img/ss-deco2.png"),
+                    ), 
+                    )  
+                    ),
+
+                  Container(
                   decoration: BoxDecoration(
                   image: DecorationImage(
                   image: AssetImage("assets/img/ss-bg-green.png"),
@@ -40,11 +56,11 @@ class _EVStartScreenState extends State<EVStartScreen> {
                   ),
 
                   Container(
-                  decoration: BoxDecoration(
-                  image: DecorationImage(
-                  image: AssetImage("assets/img/ss-bg-yellow.png"),
-                  fit: BoxFit.cover,
-                  alignment: Alignment.bottomRight,
+                    decoration: BoxDecoration(
+                    image: DecorationImage(
+                    image: AssetImage("assets/img/ss-bg-yellow.png"),
+                    fit: BoxFit.cover,
+                    alignment: Alignment.bottomRight,
                   )
                   )
                   ),
@@ -57,7 +73,6 @@ class _EVStartScreenState extends State<EVStartScreen> {
                       alignment: Alignment.bottomLeft,
                       ),
                       ),
-
                       ),
                     
                   
@@ -74,12 +89,15 @@ class _EVStartScreenState extends State<EVStartScreen> {
                       child: Column(
                         children: <Widget>[
                          
-                             Padding(
+                             Stack (
+                               children: [Padding(
                                padding: EdgeInsets.fromLTRB(0,
                           ResponsiveFlutter.of(context).verticalScale(180), 50, 130),
                                child: Flexible(
                                   flex: 2,
-                          
+                                  
+
+                             
                                   child: Container(
                                     
                                     padding: EdgeInsets.fromLTRB(
@@ -112,10 +130,14 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                                 fontStyle: FontStyle.normal,
                                                 fontWeight: FontWeight.w900,
                                                 color: Colors.black87)),
+                                        
+                                    
                                       ],
                                     ),
                                   )),
                                ),
+                               ]),
+                               
                              
                              
                           Center(
