@@ -60,12 +60,12 @@ class _EVMainMenuState extends State<EVMainMenu> {
         bottomNavigationBar: BottomAppBar(
             color: Colors.white,
             
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.fromLTRB(getWidth(context) / 35, 0, 0, 0),
-                  child: Hero(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Hero(
                     tag: 'register',
                     child: TextButton(
                         style: ButtonStyle(
@@ -83,45 +83,46 @@ class _EVMainMenuState extends State<EVMainMenu> {
                         onPressed: () {
                           Navigator.of(context)
                               .pushNamed(EVChooseEmotionScreen.routeName);
-                        }),
-                  ),
-                ),
+                        }
+                      ),
+                    ),
 
-                ElevatedButton(
-                    onPressed: () {
-                      pageController.animateToPage(0,
-                          duration: Duration(milliseconds: 300),
-                          curve: Curves.easeInOut);
-                    },
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all(CircleBorder()),
-                        backgroundColor: MaterialStateProperty.all(
-                            (currentPage == 0) ? Colors.pink : Colors.grey)),
-                    child: Icon(Icons.home_filled, color: Colors.white)),
-                ElevatedButton(
-                    onPressed: () {
-                      pageController.animateToPage(1,
-                          duration: Duration(milliseconds: 300),
-                          curve: Curves.easeInOut);
-                    },
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all(CircleBorder()),
-                        backgroundColor: MaterialStateProperty.all(
-                            (currentPage == 1) ? Colors.pink : Colors.grey)),
-                    child: Icon(Icons.contacts, color: Colors.white)),
-                ElevatedButton(
-                    onPressed: () {
-                      pageController.animateToPage(2,
-                          duration: Duration(milliseconds: 300),
-                          curve: Curves.easeInOut);
-                    },
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all(CircleBorder()),
-                        backgroundColor: MaterialStateProperty.all(
-                            (currentPage == 2) ? Colors.pink : Colors.grey)),
-                    child: Icon(Icons.settings, color: Colors.white)),
-                
-              ],
+                  ElevatedButton(
+                      onPressed: () {
+                        pageController.animateToPage(0,
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.easeInOut);
+                      },
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all(CircleBorder()),
+                          backgroundColor: MaterialStateProperty.all(
+                              (currentPage == 0) ? Colors.pink : Colors.grey)),
+                      child: Icon(Icons.home_filled, color: Colors.white)),
+                  ElevatedButton(
+                      onPressed: () {
+                        pageController.animateToPage(1,
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.easeInOut);
+                      },
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all(CircleBorder()),
+                          backgroundColor: MaterialStateProperty.all(
+                              (currentPage == 1) ? Colors.pink : Colors.grey)),
+                      child: Icon(Icons.contacts, color: Colors.white)),
+                  ElevatedButton(
+                      onPressed: () {
+                        pageController.animateToPage(2,
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.easeInOut);
+                      },
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all(CircleBorder()),
+                          backgroundColor: MaterialStateProperty.all(
+                              (currentPage == 2) ? Colors.pink : Colors.grey)),
+                      child: Icon(Icons.settings, color: Colors.white)),
+                  
+                ],
+              ),
             )),
 
         body: PageView(
@@ -164,7 +165,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
                       // Calendar widget.
                       Flexible(
                         flex: 8,
-                        child: EmotionStatistics() // # TODO: Replace with EmotionStatistics() after debugging
+                        child: EmotionStatistics()
                       ),
 
                     ]
@@ -172,7 +173,10 @@ class _EVMainMenuState extends State<EVMainMenu> {
                 )
               ],
             ),
+            // # This is the Contacts page
             Contacts(),
+
+            // # This is the AppSettings page, where I put the logout button :)
             AppSettings(),
           ],
         ),
