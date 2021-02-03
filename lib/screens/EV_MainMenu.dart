@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import '../services/EV_AuthService.dart';
 import 'package:emotiovent/models/UserInfo.dart';
 
+import 'Contacts.dart';
 import 'widgets/EmotionStatistics.dart';
 
 class EVMainMenu extends StatefulWidget {
@@ -25,16 +26,6 @@ class _EVMainMenuState extends State<EVMainMenu> {
   int currentPage;
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  void _signOut(BuildContext context) async {
-    await context
-        .read<AuthenticationService>()
-        .signOut()
-        .then((String successMsg) {
-      print(successMsg);
-      Phoenix.rebirth(context);
-    });
-  }
 
   @override
   void initState() {
@@ -181,7 +172,8 @@ class _EVMainMenuState extends State<EVMainMenu> {
                 )
               ],
             ),
-            AppSettings()
+            Contacts(),
+            AppSettings(),
           ],
         ),
       ),
