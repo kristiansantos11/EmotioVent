@@ -82,52 +82,98 @@ class _EVStartScreenState extends State<EVStartScreen> {
                   duration: const Duration(seconds: 1),
                   child: SafeArea(
 
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Stack(
+                          
                           children: <Widget>[
+
+                           
+                            Positioned(
+                              top: 232,
+                              left: 20,
+                              child: Container(
+                               height: 130,
+                               width: 260,
+                                decoration: BoxDecoration(
+                                  image:DecorationImage(
+                                  image: AssetImage("assets/img/violet-bar.png"),
+                                  
+                                  )
+                                )
+                              ),
+                            ), 
                             
-                            Flexible(
-                              flex: 5,
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                  10,
-                                  0,
-                                  0,
-                                  0,
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
+                             Positioned(
+                              top: 240,
+                              right: 120,
+                              child: Container(
+                               height: 120,
+                               width: 280,
+                                decoration: BoxDecoration(
+                                  image:DecorationImage(
+                                  image: AssetImage("assets/img/fading-dots.png"),
+                                  
+                                  )
+                                )
+                              ),
+                            ), 
 
-                                    Text(
-                                      "emotiovent",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        letterSpacing: -1,
-                                        fontFamily: 'Proxima Nova',
-                                        color: Colors.grey[600],
-                                        fontSize:
-                                            ResponsiveFlutter.of(context).scale(50),
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
+                            Column(
+                              children: <Widget>[
+                                Flexible(
+                                flex: 5,
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                    18,
+                                    245,
+                                    0,
+                                    0,
+                                  ),
+                                  child: Column(
+                                  
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
 
-                                    Text(
-                                      "How are you feeling today?",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
+                                      Text(
+                                        "Emotiovent",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          letterSpacing: -1,
                                           fontFamily: 'Proxima Nova',
-                                          fontSize: ResponsiveFlutter.of(context).scale(17),
-                                          height: 0.5,
-                                          fontStyle: FontStyle.normal,
-                                          fontWeight: FontWeight.w900,
-                                          color: Colors.black87)
-                                    ),
+                                          color: Color.fromARGB(225, 56, 70, 127),
+                                          fontSize:
+                                              ResponsiveFlutter.of(context).scale(50),
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                      
+                                      Container(
+                                        padding: const EdgeInsets.fromLTRB(
+                                    15,
+                                    15,
+                                    0,
+                                    0,
+                                        )
+                                      ),
+                                     
+                                          Text(
+                                            
+                                          "How are you feeling today?",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontFamily: 'Proxima Nova',
+                                              fontSize: ResponsiveFlutter.of(context).scale(15),
+                                              height: 0.5,
+                                              fontStyle: FontStyle.normal,
+                                              fontWeight: FontWeight.w900,
+                                              color: Colors.black87)
+                                        ),
+                                      
 
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
+                              ]
                             ),
                                 
                                 
@@ -137,9 +183,9 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                 child:Padding(
                                   padding: EdgeInsets.fromLTRB(
                                           25,
-                                          ResponsiveFlutter.of(context).verticalScale(0), 25, 100),
+                                          ResponsiveFlutter.of(context).verticalScale(0), 25, 150),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment: MainAxisAlignment.end,
                                     children: <Widget>[
                                       Column(
                                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -156,7 +202,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                                         backgroundColor:
                                                             MaterialStateProperty.all<
                                                                     Color>(
-                                                                Color(0xff53B6AF)),
+                                                                Color.fromARGB(255,255,131,131)),
                                                         overlayColor:
                                                             MaterialStateProperty
                                                                 .resolveWith<Color>(
@@ -229,7 +275,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                                       style: ButtonStyle(
                                                         backgroundColor:
                                                             MaterialStateProperty.all(
-                                                                Color(0xff53B6AF)),
+                                                                Color.fromARGB(255,255,131,131)),
                                                         minimumSize:
                                                             MaterialStateProperty.all(
                                                                 Size(
