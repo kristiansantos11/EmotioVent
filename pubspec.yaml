@@ -40,7 +40,7 @@ dependencies:
   # To save images captured by the camera plugin
   path_provider: ^1.6.24
   path: ^1.7.0
-  gallery_saver: ^2.0.1
+  gallery_saver: ^2.0.3
 
   # HTTP Requests to acquire images from some-random-api.ml
   http: ^0.12.2
