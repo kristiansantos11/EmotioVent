@@ -136,10 +136,13 @@ class _EVMainMenuState extends State<EVMainMenu> {
           children: [
             Stack(
               children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                      //image: 'background_image_here'
-                      ),
+                ClipPath(
+                  clipper: CustomShapeClipper(),
+                  child: Container(
+                    width: getWidth(context),
+                    height: getHeight(context) / 2,
+                    color: Color(0xffffb5b5),
+                  ),
                 ),
 
                 // TODO: # Lagay nalang yung path sa loob ng AssetImage widget.

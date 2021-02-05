@@ -76,6 +76,30 @@ class _EmotionStatisticsState extends State<EmotionStatistics> {
 
         // # TODO: Pakibago yung color property sa loob ng bawat statisticBox depende sa color palette ng UI.
 
+        Container(
+          height: getHeight(context) / 13,
+          color: Colors.red,
+          child: ButtonBar(
+            alignment: MainAxisAlignment.spaceEvenly,
+            buttonPadding: EdgeInsets.all(8.0),
+            children: <Widget>[
+              TextButton(
+                onPressed: () {},
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.cyan[300]),
+                ),
+                child: Text(
+                  "Today",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -123,8 +147,8 @@ Widget statisticBox({@required String title, @required String subtitle, @require
       child: Center(
         child: Container(
           padding: EdgeInsets.all(18.0),
-          width: getWidth(context) * 0.38,
-          height: getWidth(context) * 0.38,
+          width: getWidth(context) * 0.42,
+          height: getWidth(context) * 0.30,
           decoration: BoxDecoration(
             color: color,
           ),
