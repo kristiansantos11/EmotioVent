@@ -99,12 +99,67 @@ class _EVLoginState extends State<EVLogin> {
               height: getHeight(context),
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/img/login-bg.png"),
-                    fit: BoxFit.cover)),
+
+        SafeArea(
+              child: Stack(
+              children: <Container>[
+
+                Container(
+                  decoration: BoxDecoration(
+                  image: DecorationImage(
+                  image: AssetImage("assets/img/ss-deco.png"),
+                  ), 
+                  )  
+                  ),
+            
+                Container(
+                  decoration: BoxDecoration(
+                  image: DecorationImage(
+                  image: AssetImage("assets/img/ss-deco2.png"),
+                  ), 
+                  )  
+                  ),
+                Container(
+                    decoration: BoxDecoration(
+                    image: DecorationImage(
+                    image: AssetImage("assets/img/ss-bg-green.png"),
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
+                    )
+                    )
+                    ),
+
+                    Container(
+                    decoration: BoxDecoration(
+                    image: DecorationImage(
+                    image: AssetImage("assets/img/ss-bg-yellow.png"),
+                    fit: BoxFit.cover,
+                    alignment: Alignment.bottomRight,
+                    )
+                    )
+                    ),
+
+                    Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                        image: AssetImage("assets/img/ss-bg-red.png"),
+                        fit: BoxFit.cover,
+                        alignment: Alignment.bottomLeft,
+                        ),
+                        ),
+                        ),
+                    
+              ]    
+            ),
           ),
+
+
+          // Container(
+          //   decoration: BoxDecoration(
+          //       image: DecorationImage(
+          //           image: AssetImage("assets/img/login-bg.png"),
+          //           fit: BoxFit.cover)),
+          // ),
           AnimatedOpacity(
             opacity: showContent ? 1.0 : 0.0,
             duration: const Duration(milliseconds: 500),
