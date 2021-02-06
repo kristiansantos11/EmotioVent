@@ -177,9 +177,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                             ),
                                 
                                 
-                            Flexible(
-                              flex: 9,
-                              child: Center(
+                             Center(
                                 child:Padding(
                                   padding: EdgeInsets.fromLTRB(
                                           25,
@@ -323,7 +321,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                     ],
                                   )),
                               ),
-                            ),
+                           
                           ],
                         )
                       ),
