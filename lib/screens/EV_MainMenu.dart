@@ -146,11 +146,11 @@ class _EVMainMenuState extends State<EVMainMenu> {
                 ),
 
                 // TODO: # Lagay nalang yung path sa loob ng AssetImage widget.
-                Container(
-                  decoration: BoxDecoration(image: DecorationImage(
-                    image: AssetImage('')
-                  )),
-                ),
+                // Container(
+                //   decoration: BoxDecoration(image: DecorationImage(
+                //     image: AssetImage('')
+                //   )),
+                // ),
 
                 SafeArea(
                   child: Column(
