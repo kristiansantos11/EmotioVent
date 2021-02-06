@@ -28,18 +28,6 @@ class UserData
     this.profilePictureLink,
   });
 
-  factory UserData.fetchData(Map<String, dynamic> snapshotData){
-    print('USERNAME: ${snapshotData['username']}'); // Debug
-    return UserData(
-      username : snapshotData['username'],
-      name : snapshotData['name'],
-      birthdate : snapshotData['birthdate'],
-      contactnum : snapshotData['contactnum'],
-      gender : snapshotData['gender'],
-      profilePictureLink : snapshotData['profile_picture'],
-    );
-  }
-
   Map<String, dynamic> returnUserData(){
     return {
       'username' : username,

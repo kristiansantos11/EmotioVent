@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:emotiovent/models/ScreenArguments.dart';
-import 'package:emotiovent/models/UserInfo.dart';
+import 'package:emotiovent/models/UserData.dart';
 import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
 import 'package:emotiovent/screens/EV_SignUp.dart';
 import 'package:emotiovent/screens/ExplainBeforeRegister.dart';
@@ -228,10 +228,10 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                                                 Size(
                                                                     ResponsiveFlutter
                                                                             .of(context)
-                                                                        .scale(225),
+                                                                        .scale(200),
                                                                     ResponsiveFlutter
                                                                             .of(context)
-                                                                        .scale(50))),
+                                                                        .scale(35))),
                                                       ),
                                                       onPressed: () {
                                                         Navigator.of(context).pushNamed(
@@ -240,7 +240,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                                       },
                                                       child: Padding(
                                                           padding: EdgeInsets.fromLTRB(
-                                                              5, 10, 5, 10),
+                                                              3, 7, 3, 7),
                                                           child: Text("REGISTER",
                                                               style: TextStyle(
                                                                 fontFamily:
@@ -279,10 +279,10 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                                                 Size(
                                                                     ResponsiveFlutter
                                                                             .of(context)
-                                                                        .scale(225),
+                                                                        .scale(200),
                                                                     ResponsiveFlutter
                                                                             .of(context)
-                                                                        .scale(50))),
+                                                                        .scale(35))),
                                                         shape:
                                                             MaterialStateProperty.all(
                                                           RoundedRectangleBorder(
@@ -300,7 +300,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                                       },
                                                       child: Padding(
                                                           padding: EdgeInsets.fromLTRB(
-                                                              50, 10, 50, 10),
+                                                              3, 7, 3, 7),
                                                           child: Text("LOGIN",
                                                               style: TextStyle(
                                                                 fontFamily:

@@ -9,7 +9,7 @@
 
 import 'dart:async';
 import 'dart:io';
-import 'package:emotiovent/models/UserInfo.dart';
+import 'package:emotiovent/models/UserData.dart';
 import 'package:emotiovent/screens/widgets/NewProfilePictureDialog.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:firebase_auth/firebase_auth.dart';

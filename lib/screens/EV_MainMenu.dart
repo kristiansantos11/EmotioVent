@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import '../services/EV_AuthService.dart';
-import 'package:emotiovent/models/UserInfo.dart';
+import 'package:emotiovent/models/UserData.dart';
 
 import 'Contacts.dart';
 import 'widgets/EmotionStatistics.dart';
@@ -26,6 +26,16 @@ class _EVMainMenuState extends State<EVMainMenu> {
   int currentPage;
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _signOut(BuildContext context) async {
+    await context
+        .read<AuthenticationService>()
+        .signOut()
+        .then((String successMsg) {
+      print(successMsg);
+      Phoenix.rebirth(context);
+    });
+  }
 
   @override
   void initState() {
@@ -42,7 +52,20 @@ class _EVMainMenuState extends State<EVMainMenu> {
     final userinfo = context.watch<UserData>();
 
     if (userinfo == null) {
-      return Scaffold(body: Center(child: CircularProgressIndicator()));
+      return Scaffold(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              onPressed: (){_signOut(context);},
+              child: Text("LOGOUT")
+            ),
+            Center(
+              child: CircularProgressIndicator()
+            ),
+          ],
+        )
+      );
     }
 
     // # lahat ng data ng user is nasa userinfo
@@ -52,6 +75,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         key: _scaffoldKey,
 
         // Change UI for BottomAppBar.

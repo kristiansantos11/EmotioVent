@@ -10,7 +10,7 @@
 import 'dart:io';
 
 import 'package:emotiovent/models/EmotionRecord.dart';
-import 'package:emotiovent/models/UserInfo.dart';
+import 'package:emotiovent/models/UserData.dart';
 import 'package:date_field/date_field.dart';
 import 'package:emotiovent/screens/AskProfilePicture.dart';
 import 'package:emotiovent/screens/EV_InitialScreen.dart';
@@ -62,7 +62,7 @@ class _EVSignUpState extends State<EVSignUp> {
     Navigator.of(ctx).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
   }
 
-  void register({@required BuildContext context}) async
+  Future register({@required BuildContext context}) async
   {
     if(formKey.currentState.validate() && birthday != null)
     {
@@ -339,7 +339,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                 padding: MaterialStateProperty.all(EdgeInsets.all(10.0)),
                                 backgroundColor: MaterialStateProperty.all(Colors.green[600]),
                               ),
-                              onPressed: () async {register(context: context);},
+                              onPressed: () {register(context: context);},
                               child: Text(
                                 "Register",
                                 style: TextStyle(

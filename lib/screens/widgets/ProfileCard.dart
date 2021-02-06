@@ -1,4 +1,4 @@
-import 'package:emotiovent/models/UserInfo.dart';
+import 'package:emotiovent/models/UserData.dart';
 import 'package:emotiovent/screens/EV_ViewProfilePicture.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:provider/provider.dart';
@@ -11,11 +11,18 @@ class ProfileCard extends StatefulWidget {
 }
 
 class _ProfileCardState extends State<ProfileCard> {
+  var profile_picture;
 
   @override
   Widget build(BuildContext context) {
     UserData userInfo = context.watch<UserData>();
 
+    try{
+      profile_picture = Image(image:NetworkImage(userInfo.profilePictureLink));
+    } on NetworkImageLoadException {
+      profile_picture = Image(image:AssetImage('assets/img/default_profile_picture.jpg'));
+    }
+    
     return Stack(
       children: <Widget>[
 

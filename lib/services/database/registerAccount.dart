@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:emotiovent/models/UserInfo.dart';
+import 'package:emotiovent/models/UserData.dart';
 import 'package:emotiovent/services/cloud_storage/CloudStorage.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 

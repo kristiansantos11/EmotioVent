@@ -1,5 +1,5 @@
 import 'package:emotiovent/models/EmotionRecord.dart';
-import 'package:emotiovent/models/UserInfo.dart';
+import 'package:emotiovent/models/UserData.dart';
 import 'package:emotiovent/services/database/FetchEmotionRecord.dart';
 import 'package:flutter/material.dart';
 
