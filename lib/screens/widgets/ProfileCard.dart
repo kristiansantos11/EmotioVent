@@ -11,16 +11,16 @@ class ProfileCard extends StatefulWidget {
 }
 
 class _ProfileCardState extends State<ProfileCard> {
-  var profile_picture;
+  var profilePicture;
 
   @override
   Widget build(BuildContext context) {
     UserData userInfo = context.watch<UserData>();
 
     try{
-      profile_picture = Image(image:NetworkImage(userInfo.profilePictureLink));
+      profilePicture = Image(image:NetworkImage(userInfo.profilePictureLink));
     } on NetworkImageLoadException {
-      profile_picture = Image(image:AssetImage('assets/img/default_profile_picture.jpg'));
+      profilePicture = Image(image:AssetImage('assets/img/default_profile_picture.jpg'));
     }
     
     return Stack(
@@ -150,7 +150,7 @@ class _ProfileCardState extends State<ProfileCard> {
                             borderRadius: BorderRadius.circular(20.0),
                             // Reason: I moved the streamprovider to MultiProvider (finally i get it now)
                             // However, it is not as responsive therefore there is a split second where userData returns null and then fetches data after.
-                            child: (userInfo == null) ? Image(image:AssetImage('assets/img/default_profile_picture.jpg')) : Image(image:NetworkImage(userInfo.profilePictureLink))
+                            child: (userInfo == null) ? Image(image:AssetImage('assets/img/default_profile_picture.jpg')) : profilePicture
                           ),
                         ),
                       ),
