@@ -32,12 +32,11 @@ class _WallDataState extends State<WallData> {
       print("Scroll is: $scroll");
       WidgetsBinding.instance.addPostFrameCallback((_) {
           if( _scrollController.hasClients){
-                    _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+            _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
           }
     });
   }
 
-  dynamic wallData;
   String username;
   String textMessage;
   DateTime currentTime;

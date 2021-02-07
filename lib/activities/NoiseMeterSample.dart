@@ -68,7 +68,7 @@ class _NoiseMeterSampleState extends State<NoiseMeterSample> {
 
   void onError(PlatformException e) {
     print(e.toString());
-    _isRecording = false;
+    this._isRecording = false;
   }
 
   void start() async {
@@ -103,7 +103,7 @@ class _NoiseMeterSampleState extends State<NoiseMeterSample> {
         _noiseSubscription.cancel();
         _noiseSubscription = null;
       }
-      this.setState(() {
+      setState(() {
         this._isRecording = false;
       });
     } catch (err) {

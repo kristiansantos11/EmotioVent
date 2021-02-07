@@ -117,17 +117,18 @@ class _EVMainMenuState extends State<EVMainMenu> {
                         pageController.animateToPage(0,
                             duration: Duration(milliseconds: 300),
                             curve: Curves.easeInOut);
+                        WallData.limit = 7;
                       },
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all(CircleBorder()),
                           backgroundColor: MaterialStateProperty.all(
                               (currentPage == 0) ? Colors.pink : Colors.grey)),
-                      child: Icon(Icons.home_filled, color: Colors.white)),
+                      child: Icon(Icons.home_filled, color: Colors.white)
+                  ),
                   // # Freedom Wall Button  -jedi  
                   ElevatedButton(
                       onPressed: () {
-                        pageController.animateToPage(
-                          1,
+                        pageController.animateToPage(1,
                           duration: Duration(milliseconds: 300),
                           curve: Curves.easeInOut,
                         );
@@ -142,6 +143,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
                         pageController.animateToPage(2,
                             duration: Duration(milliseconds: 300),
                             curve: Curves.easeInOut);
+                        WallData.limit = 7;
                       },
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all(CircleBorder()),
