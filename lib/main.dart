@@ -2,6 +2,7 @@ import 'package:emotiovent/models/EmotionRecord.dart';
 import 'package:emotiovent/models/UserData.dart';
 import 'package:emotiovent/screens/FreedomWall.dart';
 import 'package:emotiovent/services/database/FetchEmotionRecord.dart';
+import 'package:emotiovent/services/database/FreedomWallGetter.dart';
 import 'package:flutter/material.dart';
 
 import 'package:emotiovent/screens/EV_InitialScreen.dart';
@@ -51,6 +52,12 @@ class MyApp extends StatelessWidget {
         StreamProvider(
           create: (context) => context.read<FetchEmotionRecord>().getUserList
         ),
+        Provider<FreedomWallGetter>(
+          create: (_) => FreedomWallGetter(),
+        ),
+        StreamProvider(
+          create: (context) => context.read<FreedomWallGetter>().wallData
+        ),
       ],
       child: MaterialApp(
         title: 'emotiovent',
@@ -60,9 +67,6 @@ class MyApp extends StatelessWidget {
         initialRoute: EVInitialScreen.routeName,
         onGenerateRoute: getGenerateRoute,
         //# paki-lipat nalang. eto ung para sa FREEDOM WALL -jedi
-        routes: {
-          "/FreedomWall" : (context) => FreedomWall(),
-        }
       )
     );
   }

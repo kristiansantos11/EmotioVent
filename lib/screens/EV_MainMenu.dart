@@ -3,6 +3,7 @@ import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
 import 'package:emotiovent/screens/EV_InitialScreen.dart';
 import 'package:emotiovent/screens/AppSettings.dart';
 import 'package:emotiovent/screens/EmotionCalendar.dart';
+import 'package:emotiovent/screens/FreedomWall.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:emotiovent/screens/clipper/CustomShapeClipper.dart';
 import 'package:emotiovent/screens/widgets/ProfileCard.dart';
@@ -122,29 +123,19 @@ class _EVMainMenuState extends State<EVMainMenu> {
                           backgroundColor: MaterialStateProperty.all(
                               (currentPage == 0) ? Colors.pink : Colors.grey)),
                       child: Icon(Icons.home_filled, color: Colors.white)),
+                  // # Freedom Wall Button  -jedi  
                   ElevatedButton(
                       onPressed: () {
-                        pageController.animateToPage(1,
-                            duration: Duration(milliseconds: 300),
-                            curve: Curves.easeInOut);
+                        pageController.animateToPage(
+                          1,
+                          duration: Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
                       },
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all(CircleBorder()),
                           backgroundColor: MaterialStateProperty.all(
                               (currentPage == 1) ? Colors.pink : Colors.grey)),
-                      child: Icon(Icons.contacts, color: Colors.white)),
-                  // # Freedom Wall Button  -jedi  
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context,"/FreedomWall",arguments: 
-                        {
-                          "Limit" : 7 //CHANGE THIS VALUE TO CHANGE THE AMOUNT OF INITIAL MESSAGES TO APPEAR.
-                        });
-                      },
-                      style: ButtonStyle(
-                          shape: MaterialStateProperty.all(CircleBorder()),
-                          backgroundColor: MaterialStateProperty.all(
-                              (currentPage == 3) ? Colors.pink : Colors.grey)),
                       child: Icon(Icons.wysiwyg_sharp, color: Colors.white)),
                   ElevatedButton(
                       onPressed: () {
@@ -214,7 +205,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
               ],
             ),
             // # This is the Contacts page
-            Contacts(),
+            WallData(),
 
             // # This is the AppSettings page, where I put the logout button :)
             AppSettings(),

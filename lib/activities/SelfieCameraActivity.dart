@@ -76,7 +76,7 @@ class _FaceDetectionFromLiveCameraState extends State<FaceDetectionFromLiveCamer
   @override
   void dispose(){
     WidgetsBinding.instance.removeObserver(this);
-    setState((){_camera = null;});
+    _camera.dispose();
     super.dispose();
   }
 

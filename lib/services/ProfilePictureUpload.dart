@@ -67,7 +67,7 @@ Future<void> onCameraPick({@required ImagePicker imagePicker,
           Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
         }
       });
-  }).catchError((){
+  }).catchError((error){
     print("Cancelled.");
   });
   

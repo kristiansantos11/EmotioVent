@@ -77,27 +77,70 @@ class _EmotionStatisticsState extends State<EmotionStatistics> {
         // # TODO: Pakibago yung color property sa loob ng bawat statisticBox depende sa color palette ng UI.
 
         Container(
-          height: getHeight(context) / 13,
-          color: Colors.red,
-          child: ButtonBar(
-            alignment: MainAxisAlignment.spaceEvenly,
-            buttonPadding: EdgeInsets.all(8.0),
+          height: getHeight(context) / 15,
+          width: getWidth(context) * 0.75,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.0),
+            color: Color(0xffe7f8f2),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               TextButton(
                 onPressed: () {},
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.cyan[300]),
+                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xffb5ead7)),
                 ),
                 child: Text(
                   "Today",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {},
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
+                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xffb5ead7)),
+                ),
+                child: Text(
+                  "Week",
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {},
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
+                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xffb5ead7)),
+                ),
+                child: Text(
+                  "Month",
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {},
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
+                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xffb5ead7)),
+                ),
+                child: Text(
+                  "Year",
+                  style: TextStyle(
+                    color: Colors.grey[600],
                   ),
                 ),
               ),
             ],
-          ),
+          )
         ),
 
         Row(
@@ -105,13 +148,13 @@ class _EmotionStatisticsState extends State<EmotionStatistics> {
           children: <Widget>[
             statisticBox(
               context: context,
-              color: Colors.red, // Pabago
+              color: Color(0xffff8383), // Pabago
               title: "Most felt emotion:",
               subtitle: mostFeltEmotion
             ),
             statisticBox(
               context: context,
-              color: Colors.deepOrange, // Pabago
+              color: Color(0xffffb7b2), // Pabago
               title: "Text",
               subtitle: "Text",
             ),
@@ -123,13 +166,13 @@ class _EmotionStatisticsState extends State<EmotionStatistics> {
           children: <Widget>[
             statisticBox(
               context: context,
-              color: Colors.blue, // Pabago
+              color: Color(0xffe2f0cb), // Pabago
               title: "Text",
               subtitle: "Text",
             ),
             statisticBox(
               context: context,
-              color: Colors.lightGreen, // Pabago
+              color: Color(0xffb5ead7), // Pabago
               title: "Text",
               subtitle: "Text",
             ), 
@@ -160,7 +203,7 @@ Widget statisticBox({@required String title, @required String subtitle, @require
                 title,
                 style: TextStyle(
                   height: 1,
-                  color: Colors.white,
+                  color: Color(0xff3c3b3b),
                   letterSpacing: -0.5,
                   fontFamily: 'Proxima Nova',
                   fontWeight: FontWeight.w700,
@@ -171,7 +214,7 @@ Widget statisticBox({@required String title, @required String subtitle, @require
                 subtitle,
                 style: TextStyle(
                   letterSpacing: -0.5,
-                  color: Colors.grey[200],
+                  color: Color(0xff3c3b3b),
                   fontFamily: 'Proxima Nova',
                   fontSize: ResponsiveFlutter.of(context).scale(15)
                 ),

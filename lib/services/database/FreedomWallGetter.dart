@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:emotiovent/models/thewall.dart';
+import 'package:emotiovent/models/TheWall.dart';
 
 class FreedomWallGetter
 {
   int limit;
-  FreedomWallGetter({this.limit});
+  FreedomWallGetter({this.limit = 7});
 
   final CollectionReference freedomwall = FirebaseFirestore.instance.collection("Freedom Wall");
 
@@ -19,7 +19,15 @@ class FreedomWallGetter
     }).toList();
   }
 
-  Stream<List<TheWall>> get wallData{
+  Stream<List<TheWall>> get wallData {
     return freedomwall.limit(limit).orderBy("Time",descending: true).snapshots().map(wall);
+  }
+
+  void limitIncrement() {
+    this.limit = this.limit + 3;
+  }
+
+  void limitReset() {
+    this.limit = 7;
   }
 }
