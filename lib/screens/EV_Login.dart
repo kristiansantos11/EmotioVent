@@ -256,7 +256,8 @@ class _EVLoginState extends State<EVLogin> {
                                                         ResponsiveFlutter.of(
                                                                 context)
                                                             .scale(18),
-                                                    color: Colors.white54),
+                                                    color: Colors.white54
+                                                ),
                                                 decoration: InputDecoration(
                                                   contentPadding:
                                                       EdgeInsets.fromLTRB(

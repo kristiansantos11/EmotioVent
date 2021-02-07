@@ -60,7 +60,6 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: EVInitialScreen.routeName,
         onGenerateRoute: getGenerateRoute,
-        //# paki-lipat nalang. eto ung para sa FREEDOM WALL -jedi
       )
     );
   }

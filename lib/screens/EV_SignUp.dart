@@ -18,6 +18,7 @@ import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:emotiovent/services/database/SubmitActivityResult.dart';
 import 'package:flutter/material.dart';
 import '../services/database/RegisterAccount.dart';
+import 'package:responsive_flutter/responsive_flutter.dart';
 
 //debug dont remove this:
 import '../services/database/FetchUserData.dart';
@@ -122,7 +123,7 @@ class _EVSignUpState extends State<EVSignUp> {
           Hero(
             tag: 'register',
             child: Container(
-              color: Colors.purple[100],
+              color: Colors.pink[50],
             ),
           ),
           
@@ -131,200 +132,430 @@ class _EVSignUpState extends State<EVSignUp> {
               key: formKey,
                 child: ListView(
                   children: [
+                    Container(
+                      alignment: Alignment.bottomLeft,
+                      padding: EdgeInsets.fromLTRB(28, 0, 0, 0),
+                      height: getHeight(context) * 0.15,
+                      width: getWidth(context),
+                      child: Text(
+                        "Register now:",
+                        style: TextStyle(
+                          letterSpacing: -1,
+                          fontFamily: 'Proxima Nova',
+                          fontWeight: FontWeight.w800,
+                          fontSize: ResponsiveFlutter.of(context).scale(40),
+                          color: Colors.grey[700]
+                        ),
+                      ),
+                    ),
+
+                    Container(
+                      alignment: Alignment.topLeft,
+                      padding: EdgeInsets.fromLTRB(28, 0, 0, 0),
+                      child: Text(
+                        "Tell us who you are",
+                        style: TextStyle(
+                          letterSpacing: -1,
+                          fontFamily: 'Proxima Nova',
+                          fontWeight: FontWeight.w700,
+                          fontSize: ResponsiveFlutter.of(context).scale(20),
+                          color: Colors.grey[600]
+                        ),
+                      ),
+                    ),
+
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          TextFormField(
-                            validator: (val) {
-                              if(val=="")
-                              {
-                                return "Empty Email";
-                              }
-                              else
-                              {
-                                email = val;
-                                return null;
-                              }
-                            },
-                            decoration: InputDecoration(
-                            filled : true,
-                            fillColor: Colors.white70,
-                            hintText: "Email",
-                            ),
-                          style: TextStyle(
-                          fontSize: 20
-                        ),
-                          ),
-                          Row( children: <Widget>[
-                            Expanded(
-                              child: TextFormField(
+
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextFormField(
                               validator: (val) {
                                 if(val=="")
                                 {
-                                  return "Empty Password";
+                                  return "Empty Email";
                                 }
                                 else
                                 {
-                                  password = val;
+                                  email = val;
                                   return null;
                                 }
                               },
-                              obscureText: toggle1,
+                              cursorColor: Color(0xfff77272),
+                                style: TextStyle(
+                                    fontFamily: 'Proxima Nova',
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize:
+                                        ResponsiveFlutter.of(
+                                                context)
+                                            .scale(18),
+                                    color: Colors.white54
+                                ),
                               decoration: InputDecoration(
-                              filled : true,
-                              fillColor: Colors.white70,
-                              hintText: "Password",
+                                contentPadding:
+                                    EdgeInsets.fromLTRB(
+                                        20, 10, 20, 10),
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(
+                                    Radius.circular(100.0),
+                                  ),
+                                  borderSide: BorderSide.none,
+                                ),
+                                filled: true,
+                                hintStyle: TextStyle(
+                                    color: Colors.white24),
+                                hintText: "Email",
+                                fillColor: Colors.grey[600],
                               ),
-                              style: TextStyle(
-                              fontSize: 20
                             ),
                           ),
-                            ),
-                            IconButton(
-                            onPressed: () {
-                              if(toggle1==true)
-                              {
-                                toggle1=false;
-                              }
-                              else{
-                                toggle1=true;
-                              }
-                              setState(() {});
-                            },
-                            icon: Icon(Icons.remove_red_eye),
-                            color: Colors.black,
-                          )
-                          ],),
-                          Row( children: <Widget>[
-                            Expanded(
-                              child: TextFormField(
+
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row( children: <Widget>[
+                              Expanded(
+                                child: TextFormField(
+                                  validator: (val) {
+                                    if(val=="")
+                                    {
+                                      return "Empty Password";
+                                    }
+                                    else
+                                    {
+                                      password = val;
+                                      return null;
+                                    }
+                                  },
+                                  cursorColor: Color(0xfff77272),
+                                  style: TextStyle(
+                                      fontFamily: 'Proxima Nova',
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize:
+                                          ResponsiveFlutter.of(
+                                                  context)
+                                              .scale(18),
+                                      color: Colors.white54
+                                  ),
+                                  decoration: InputDecoration(
+                                    contentPadding:
+                                        EdgeInsets.fromLTRB(
+                                            20, 10, 20, 10),
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(
+                                        Radius.circular(100.0),
+                                      ),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    filled: true,
+                                    hintStyle: TextStyle(
+                                        color: Colors.white24),
+                                    hintText: "Password",
+                                    fillColor: Colors.grey[600],
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                              onPressed: () {
+                                if(toggle1==true)
+                                {
+                                  toggle1=false;
+                                }
+                                else{
+                                  toggle1=true;
+                                }
+                                setState(() {});
+                              },
+                              icon: Icon(Icons.remove_red_eye),
+                              color: Colors.black,
+                            )
+                            ],),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row( children: <Widget>[
+                              Expanded(
+                                child: TextFormField(
+                                validator: (val) {
+                                  if(val=="")
+                                  {
+                                    return "Empty Password";
+                                  }
+                                  if(val!=password)
+                                  {
+                                    return "Password do not match";
+                                  }
+                                  else
+                                  {
+                                    return null;
+                                  }
+                                },
+                                obscureText: toggle2,
+                                cursorColor: Color(0xfff77272),
+                                  style: TextStyle(
+                                      fontFamily: 'Proxima Nova',
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize:
+                                          ResponsiveFlutter.of(
+                                                  context)
+                                              .scale(18),
+                                      color: Colors.white54
+                                  ),
+                                  decoration: InputDecoration(
+                                    contentPadding:
+                                        EdgeInsets.fromLTRB(
+                                            20, 10, 20, 10),
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(
+                                        Radius.circular(100.0),
+                                      ),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    filled: true,
+                                    hintStyle: TextStyle(
+                                        color: Colors.white24),
+                                    hintText: "Confirm Password",
+                                    fillColor: Colors.grey[600],
+                                  ),
+                                ),
+                              ),
+                            ],),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextFormField(
                               validator: (val) {
                                 if(val=="")
                                 {
-                                  return "Empty Password";
-                                }
-                                if(val!=password)
-                                {
-                                  return "Password do not match";
+                                  return "Empty Username";
                                 }
                                 else
                                 {
+                                  username = val;
                                   return null;
                                 }
                               },
-                              obscureText: toggle2,
-                              decoration: InputDecoration(
-                              filled : true,
-                              fillColor: Colors.white70,
-                              hintText: "Confirm Password",
-                              ),
-                              style: TextStyle(
-                              fontSize: 20
+                              cursorColor: Color(0xfff77272),
+                                    style: TextStyle(
+                                        fontFamily: 'Proxima Nova',
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize:
+                                            ResponsiveFlutter.of(
+                                                    context)
+                                                .scale(18),
+                                        color: Colors.white54
+                                    ),
+                                    decoration: InputDecoration(
+                                      contentPadding:
+                                          EdgeInsets.fromLTRB(
+                                              20, 10, 20, 10),
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.all(
+                                          Radius.circular(100.0),
+                                        ),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      filled: true,
+                                      hintStyle: TextStyle(
+                                          color: Colors.white24),
+                                      hintText: "Username",
+                                      fillColor: Colors.grey[600],
+                                    ),
                             ),
                           ),
+
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              validator: (val) {
+                                if(val=="")
+                                {
+                                  return "Empty Name";
+                                }
+                                else
+                                {
+                                  name = val;
+                                  return null;
+                                }
+                              },
+                              cursorColor: Color(0xfff77272),
+                                    style: TextStyle(
+                                        fontFamily: 'Proxima Nova',
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize:
+                                            ResponsiveFlutter.of(
+                                                    context)
+                                                .scale(18),
+                                        color: Colors.white54
+                                    ),
+                                    decoration: InputDecoration(
+                                      contentPadding:
+                                          EdgeInsets.fromLTRB(
+                                              20, 10, 20, 10),
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.all(
+                                          Radius.circular(100.0),
+                                        ),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      filled: true,
+                                      hintStyle: TextStyle(
+                                          color: Colors.white24),
+                                      hintText: "Name",
+                                      fillColor: Colors.grey[600],
+                                    ),
                             ),
-                          ],),
-                          TextFormField(
-                            validator: (val) {
-                              if(val=="")
-                              {
-                                return "Empty Username";
-                              }
-                              else
-                              {
-                                username = val;
-                                return null;
-                              }
-                            },
-                            decoration: InputDecoration(
-                            filled : true,
-                            fillColor: Colors.white70,
-                            hintText: "Username",
-                            ),
-                          style: TextStyle(
-                          fontSize: 20
-                        ),
-                          ),
-                          TextFormField(
-                            validator: (val) {
-                              if(val=="")
-                              {
-                                return "Empty Name";
-                              }
-                              else
-                              {
-                                name = val;
-                                return null;
-                              }
-                            },
-                            decoration: InputDecoration(
-                            filled : true,
-                            fillColor: Colors.white70,
-                            hintText: "Name",
-                            ),
-                          style: TextStyle(
-                          fontSize: 20
-                        ),
                           ),
                           SizedBox(height: 20),
-                          Text("Birthday",
-                          style: TextStyle(
-                            fontSize: 20
-                          ),),
-                          DateField(
-                            onDateSelected: (DateTime value) {
-                              setState(() {
-                                birthday = value;
-                              });
-                            }, 
-                            selectedDate: birthday,),
-                          SizedBox(height: 10),
-                          TextFormField(
-                            validator: (val) {
-                              if(val == "")
-                              {
-                                return "Empty number!";
-                              }
-                              if(RegExp(r'^[0-9]*$').hasMatch(val)&&RegExp(r'$[0-9]\d{10}$|^[0-9]\d{10}$').hasMatch(val))
-                              {
-                                contactnum = val;
-                                return null;
-                              }
-                              else{
-                                return "Input a valid number!";
-                              }
-                            },
-                            decoration: InputDecoration(
-                            filled : true,
-                            fillColor: Colors.white70,
-                            hintText: "Contact No.",
-                            ),
-                          style: TextStyle(
-                          fontSize: 20
-                        ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Birthday",
+                            style: TextStyle(
+                                fontFamily: 'Proxima Nova',
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.bold,
+                                fontSize:
+                                    ResponsiveFlutter.of(
+                                            context)
+                                        .scale(18),
+                                color: Colors.grey[600]
+                            ),),
                           ),
-                          TextFormField(
-                            validator: (val) {
-                              if(val=="")
-                              {
-                                return "Empty Gender";
-                              }
-                              else
-                              {
-                                gender = val;
-                                return null;
-                              }
-                            },
-                            decoration: InputDecoration(
-                            filled : true,
-                            fillColor: Colors.white70,
-                            hintText: "Gender",
+
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: DateField(
+                              decoration: InputDecoration(
+                                        contentPadding:
+                                            EdgeInsets.fromLTRB(
+                                                20, 10, 20, 10),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.all(
+                                            Radius.circular(100.0),
+                                          ),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                        filled: true,
+                                        hintStyle: TextStyle(
+                                            color: Colors.white24),
+                                        hintText: "Name",
+                                        fillColor: Colors.grey[600],
+                                      ),
+                              onDateSelected: (DateTime value) {
+                                setState(() {
+                                  birthday = value;
+                                });
+                              }, 
+                              selectedDate: birthday,),
+                          ),
+
+                          SizedBox(height: 10),
+
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              validator: (val) {
+                                if(val == "")
+                                {
+                                  return "Empty number!";
+                                }
+                                if(RegExp(r'^[0-9]*$').hasMatch(val)&&RegExp(r'$[0-9]\d{10}$|^[0-9]\d{10}$').hasMatch(val))
+                                {
+                                  contactnum = val;
+                                  return null;
+                                }
+                                else{
+                                  return "Input a valid number!";
+                                }
+                              },
+                              cursorColor: Color(0xfff77272),
+                                      style: TextStyle(
+                                          fontFamily: 'Proxima Nova',
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize:
+                                              ResponsiveFlutter.of(
+                                                      context)
+                                                  .scale(18),
+                                          color: Colors.white54
+                                      ),
+                                      decoration: InputDecoration(
+                                        contentPadding:
+                                            EdgeInsets.fromLTRB(
+                                                20, 10, 20, 10),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.all(
+                                            Radius.circular(100.0),
+                                          ),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                        filled: true,
+                                        hintStyle: TextStyle(
+                                            color: Colors.white24),
+                                        hintText: "Contact Number",
+                                        fillColor: Colors.grey[600],
+                                      ),
                             ),
-                          style: TextStyle(
-                          fontSize: 20
-                        ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              validator: (val) {
+                                if(val=="")
+                                {
+                                  return "Empty Gender";
+                                }
+                                else
+                                {
+                                  gender = val;
+                                  return null;
+                                }
+                              },
+                              cursorColor: Color(0xfff77272),
+                                        style: TextStyle(
+                                            fontFamily: 'Proxima Nova',
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize:
+                                                ResponsiveFlutter.of(
+                                                        context)
+                                                    .scale(18),
+                                            color: Colors.white54
+                                        ),
+                                        decoration: InputDecoration(
+                                          contentPadding:
+                                              EdgeInsets.fromLTRB(
+                                                  20, 10, 20, 10),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.all(
+                                              Radius.circular(100.0),
+                                            ),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          filled: true,
+                                          hintStyle: TextStyle(
+                                              color: Colors.white24),
+                                          hintText: "Gender",
+                                          fillColor: Colors.grey[600],
+                                        ),
+                            ),
                           ),
 
                           // Note: Just to add a little distance between Register button and TextFormField
@@ -333,58 +564,78 @@ class _EVSignUpState extends State<EVSignUp> {
                             height: getHeight(context) / 50,
                           ),
 
-                          Center(
-                            child: TextButton(
-                              style: ButtonStyle(
-                                padding: MaterialStateProperty.all(EdgeInsets.all(10.0)),
-                                backgroundColor: MaterialStateProperty.all(Colors.green[600]),
-                              ),
-                              onPressed: () {register(context: context);},
-                              child: Text(
-                                "Register",
-                                style: TextStyle(
-                                  fontSize: getWidth(context)/25,
-                                  color: Colors.white
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              
+                              TextButton(
+                                style: ButtonStyle(
+                                  minimumSize: MaterialStateProperty.all(Size(ResponsiveFlutter.of(context).scale(90.0), 0)),
+                                  padding: MaterialStateProperty.all(EdgeInsets.all(15.0)),
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0)
+                                    ),
+                                  ),
+                                  backgroundColor: MaterialStateProperty.all(Colors.red[300]),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
+                                },
+                                child: Text(
+                                  "Back",
+                                  style: TextStyle(
+                                    fontSize: ResponsiveFlutter.of(context).scale(15),
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
-                            )
-                          ),
-                          Center(
-                            child: TextButton(
-                              style: ButtonStyle(
-                                padding: MaterialStateProperty.all(EdgeInsets.all(10.0)),
-                                backgroundColor: MaterialStateProperty.all(Colors.purple),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
-                              },
-                              child: Text(
-                                "Back",
-                                style: TextStyle(
-                                  color: Colors.white,
+
+                              TextButton(
+                                style: ButtonStyle(
+                                  minimumSize: MaterialStateProperty.all(Size(ResponsiveFlutter.of(context).scale(90.0), 0)),
+                                  padding: MaterialStateProperty.all(EdgeInsets.all(15.0)),
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0)
+                                    ),
+                                  ),
+                                  backgroundColor: MaterialStateProperty.all(Colors.green[600]),
+                                ),
+                                onPressed: () {register(context: context);},
+                                child: Text(
+                                  "Register",
+                                  style: TextStyle(
+                                    fontSize: ResponsiveFlutter.of(context).scale(15),
+                                    color: Colors.white
+                                  ),
                                 ),
                               ),
-                            ),
+                              
+                            ],
                           ),
 
+                          
+
                           // #debug purposes dont remove pls
-                          Center(
-                            child: TextButton(
-                              style: ButtonStyle(
-                                padding: MaterialStateProperty.all(EdgeInsets.all(10.0)),
-                                backgroundColor: MaterialStateProperty.all(Colors.purple),
-                              ),
-                              onPressed: () {
-                                print("test 123");
-                              },
-                              child: Text(
-                                "DEBUG",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
+                          // Center(
+                          //   child: TextButton(
+                          //     style: ButtonStyle(
+                          //       padding: MaterialStateProperty.all(EdgeInsets.all(10.0)),
+                          //       backgroundColor: MaterialStateProperty.all(Colors.purple),
+                          //     ),
+                          //     onPressed: () {
+                          //       print("test 123");
+                          //     },
+                          //     child: Text(
+                          //       "DEBUG",
+                          //       style: TextStyle(
+                          //         color: Colors.white,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     )
