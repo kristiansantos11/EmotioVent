@@ -52,12 +52,6 @@ class MyApp extends StatelessWidget {
         StreamProvider(
           create: (context) => context.read<FetchEmotionRecord>().getUserList
         ),
-        Provider<FreedomWallGetter>(
-          create: (_) => FreedomWallGetter(),
-        ),
-        StreamProvider(
-          create: (context) => context.read<FreedomWallGetter>().wallData
-        ),
       ],
       child: MaterialApp(
         title: 'emotiovent',

@@ -9,6 +9,10 @@ import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 class WallData extends StatefulWidget {
+  const WallData({Key key}) : super(key: key);
+
+  static int limit = 7;
+
   @override
   _WallDataState createState() => _WallDataState();
 }
@@ -38,20 +42,19 @@ class _WallDataState extends State<WallData> {
   String textMessage;
   DateTime currentTime;
 
+  UniqueKey uniqueKey = new UniqueKey();
+
   @override
   Widget build(BuildContext context) {
-    List<TheWall> limitData = context.watch<List<TheWall>>();
-    int limit = context.watch<FreedomWallGetter>().limit;
     UserData userData = context.watch<UserData>();
 
-    if ((limitData == null) && (userData == null)){
+    if (userData == null){
       return Center(child: CircularProgressIndicator());
     }
     
     print("Current user is ${userData.username}");
     username = userData.username;
-    wallData = Provider.of<List<TheWall>>(context); 
-    print("Current Number of Messages is $limit");
+    print("Current Number of Messages is ${WallData.limit}");
     var _controller = TextEditingController();
     try{
       return Center(
@@ -105,12 +108,15 @@ class _WallDataState extends State<WallData> {
                       )
                     ),
                   ]),
-                MessageBanner(),
+                Posts(
+                  key: uniqueKey,
+                ),
                 TextButton.icon(
                   onPressed: () {
                     setState(() {
                       //_scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-                      context.read<FreedomWallGetter>().limitIncrement();
+                      WallData.limit = WallData.limit + 3;
+                      uniqueKey = UniqueKey();
                     });
                   },
                   icon: Icon(Icons.add),
@@ -129,18 +135,37 @@ class _WallDataState extends State<WallData> {
   }
 }
 
+class Posts extends StatefulWidget {
+  const Posts({Key key}) : super(key: key);
+
+  @override
+  _PostsState createState() => _PostsState();
+}
+
+class _PostsState extends State<Posts> {
+  @override
+  Widget build(BuildContext context) {
+    return StreamProvider<List<TheWall>>.value(
+      value: FreedomWallGetter(limit: WallData.limit).wallData,
+      child: MessageBanner(),
+    );
+  }
+}
+
 class MessageBanner extends StatefulWidget {
+  const MessageBanner({Key key}) : super(key: key);
+
   @override
   _MessageBannerState createState() => _MessageBannerState();
 }
 
 class _MessageBannerState extends State<MessageBanner> {
+  ScrollController _scrollController = new ScrollController();
   
   @override
-  ScrollController _scrollController = new ScrollController();
   Widget build(BuildContext context) {
-    List<TheWall> wallData = Provider.of<List<TheWall>>(context);
-    print("(Builder) Current Limit of _WallDataState = ${context.read<FreedomWallGetter>().limit}");
+    List<TheWall> wallData = context.watch<List<TheWall>>();
+    print("(Builder) Current Limit of _WallDataState = ${WallData.limit}");
     print("Users' Message Fetched: ");
     if (wallData == null){
       return Center(child: CircularProgressIndicator());

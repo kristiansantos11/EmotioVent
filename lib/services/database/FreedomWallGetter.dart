@@ -20,14 +20,6 @@ class FreedomWallGetter
   }
 
   Stream<List<TheWall>> get wallData {
-    return freedomwall.limit(limit).orderBy("Time",descending: true).snapshots().map(wall);
-  }
-
-  void limitIncrement() {
-    this.limit = this.limit + 3;
-  }
-
-  void limitReset() {
-    this.limit = 7;
+    return freedomwall.limit(this.limit).orderBy("Time",descending: true).snapshots().map(wall);
   }
 }
