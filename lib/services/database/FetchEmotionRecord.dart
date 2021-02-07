@@ -11,11 +11,11 @@ class FetchEmotionRecord {
 
   EmotionRecord currentEmotionRecord(QueryDocumentSnapshot snapshot)
   {
-    print("Passing data info..."); //debugging purposes only
+    //print("Passing data info..."); //debugging purposes only
     if(snapshot.exists)
     {
-      print("Snapshot exists!"); //debugging purposes only
-      print("Current User's email is ${user.email}"); 
+      //print("Snapshot exists!"); //debugging purposes only
+      //print("Current User's email is ${user.email}"); 
       return EmotionRecord(
         // # TODO: Kelangan pala ifetch lahat ng documents sa loob ng collection na 'emotion_record'
         // # Tapos sa bawat document sa loob ng emotion_record masasave sa isang list (dapat kasama na info sa bawat document)
