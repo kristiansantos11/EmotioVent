@@ -133,6 +133,19 @@ class _EVMainMenuState extends State<EVMainMenu> {
                           backgroundColor: MaterialStateProperty.all(
                               (currentPage == 1) ? Colors.pink : Colors.grey)),
                       child: Icon(Icons.contacts, color: Colors.white)),
+                  // # Freedom Wall Button  -jedi  
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context,"/FreedomWall",arguments: 
+                        {
+                          "Limit" : 7 //CHANGE THIS VALUE TO CHANGE THE AMOUNT OF INITIAL MESSAGES TO APPEAR.
+                        });
+                      },
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all(CircleBorder()),
+                          backgroundColor: MaterialStateProperty.all(
+                              (currentPage == 3) ? Colors.pink : Colors.grey)),
+                      child: Icon(Icons.wysiwyg_sharp, color: Colors.white)),
                   ElevatedButton(
                       onPressed: () {
                         pageController.animateToPage(2,

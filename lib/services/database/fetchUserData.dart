@@ -12,11 +12,11 @@ class FetchUserData
 
   UserData currentUserData(DocumentSnapshot snapshot)
   {
-    print("Passing data info..."); //debugging purposes only
+    //print("Passing data info..."); //debugging purposes only
     if(snapshot.exists)
     {
-      print("Snapshot exists!"); //debugging purposes only
-      print("Current User's email is ${user.email}"); 
+      //print("Snapshot exists!"); //debugging purposes only
+      //print("Current User's email is ${user.email}"); 
       return UserData(
         // # ISSUE: for some reason, hindi ata nakasama sa properties ng "Basic Info" ang username. Hindi ata nainclude sa pag register.
         // # ^^ Already fixed.
