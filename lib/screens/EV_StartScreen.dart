@@ -192,7 +192,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                               tag: 'register',
                                               child: Container(
                                                 width: 170,
-                                                height: 50,
+                                                height: 40,
                                                   decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(18.0),
@@ -242,7 +242,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                                       },
                                                       child: Padding(
                                                           padding: EdgeInsets.fromLTRB(
-                                                              3, 7, 3, 7),
+                                                              3, 3, 3, 0),
                                                           child: Text("REGISTER",
                                                               style: TextStyle(
                                                                 fontFamily:
@@ -273,7 +273,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                                   tag: 'login',
                                                   child: Container(
                                                     width: 170,
-                                                height: 50,
+                                                height: 40,
                                                   child: TextButton(
                                                       style: ButtonStyle(
                                                         backgroundColor:
@@ -305,7 +305,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                                       },
                                                       child: Padding(
                                                           padding: EdgeInsets.fromLTRB(
-                                                              3, 7, 3, 7),
+                                                              3, 3, 3, 0),
                                                           child: Text("LOGIN",
                                                               style: TextStyle(
                                                                 fontFamily:
