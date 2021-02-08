@@ -180,8 +180,8 @@ class _EVStartScreenState extends State<EVStartScreen> {
                              Center(
                                 child:Padding(
                                   padding: EdgeInsets.fromLTRB(
-                                          25,
-                                          ResponsiveFlutter.of(context).verticalScale(0), 25, 150),
+                                          80,
+                                          ResponsiveFlutter.of(context).verticalScale(0), 25, 220),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: <Widget>[
@@ -191,6 +191,8 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                             Hero(
                                               tag: 'register',
                                               child: Container(
+                                                width: 170,
+                                                height: 50,
                                                   decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(18.0),
@@ -263,12 +265,15 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                             Padding(
                                                 padding: EdgeInsets.fromLTRB(
                                                     0,
-                                                    ResponsiveFlutter.of(context).hp(2),
+                                                    ResponsiveFlutter.of(context).hp(1),
                                                     0,
                                                     ResponsiveFlutter.of(context)
                                                         .verticalScale(10)),
                                                 child: Hero(
                                                   tag: 'login',
+                                                  child: Container(
+                                                    width: 170,
+                                                height: 50,
                                                   child: TextButton(
                                                       style: ButtonStyle(
                                                         backgroundColor:
@@ -317,7 +322,7 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                                                 letterSpacing: 1.5,
                                                               )))),
                                                 )),
-                                          ]),
+                                      )]),
                                     ],
                                   )),
                               ),
