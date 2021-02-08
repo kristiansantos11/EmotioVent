@@ -84,18 +84,20 @@ class _EVStartScreenState extends State<EVStartScreen> {
 
                         child: Stack(
                           
-                          children: <Widget>[
+                        children: <Widget>[
 
                            
-                            Positioned(
-                              top: 232,
-                              left: 20,
-                              child: Container(
-                               height: 130,
-                               width: 260,
-                                decoration: BoxDecoration(
-                                  image:DecorationImage(
-                                  image: AssetImage("assets/img/violet-bar.png"),
+                        Container(
+                          child: Positioned(
+                          top: ResponsiveFlutter.of(context).scale(275),
+                          left: ResponsiveFlutter.of(context).scale(15),
+               
+                          child: Container(
+                          width: 263,
+                          height: 25,
+                          decoration: BoxDecoration(
+                          color: Color.fromARGB(112, 157,68,216),
+                          borderRadius: BorderRadius.circular(10),
                                   
                                   )
                                 )
