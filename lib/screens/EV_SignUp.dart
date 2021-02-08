@@ -616,8 +616,6 @@ class _EVSignUpState extends State<EVSignUp> {
                             ],
                           ),
 
-                          
-
                           // #debug purposes dont remove pls
                           // Center(
                           //   child: TextButton(
@@ -636,6 +634,7 @@ class _EVSignUpState extends State<EVSignUp> {
                           //     ),
                           //   ),
                           // ),
+
                         ],
                       ),
                     )

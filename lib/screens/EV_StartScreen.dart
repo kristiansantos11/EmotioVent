@@ -176,155 +176,164 @@ class _EVStartScreenState extends State<EVStartScreen> {
                               ]
                             ),
                                 
-                                
-                             Center(
+                            Center(
                                 child:Padding(
                                   padding: EdgeInsets.fromLTRB(
                                           80,
-                                          ResponsiveFlutter.of(context).verticalScale(0), 25, 220),
+                                          ResponsiveFlutter.of(context).verticalScale(0), 25, 210),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: <Widget>[
                                       Column(
-                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                          children: <Widget>[
-                                            Hero(
-                                              tag: 'register',
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: <Widget>[
+                                          Hero(
+                                            tag: 'register',
+                                            child: Container(
+                                              width: 170,
+                                              height: 40,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(18.0),
+                                                ),
+                                                child: TextButton(
+                                                    style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStateProperty.all<
+                                                                  Color>(
+                                                              Color.fromARGB(255,255,131,131)),
+                                                      overlayColor:
+                                                          MaterialStateProperty
+                                                              .resolveWith<Color>(
+                                                                  (Set<MaterialState>
+                                                                      states) {
+                                                        if (states.contains(
+                                                            MaterialState.hovered))
+                                                          return Colors.green[500];
+                                                        if (states.contains(
+                                                            MaterialState.pressed))
+                                                          return Colors.white;
+                                                        return null; // Defer to the widget's default.
+                                                      }),
+                                                      shape:
+                                                          MaterialStateProperty.all(
+                                                              RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                ResponsiveFlutter.of(
+                                                                        context)
+                                                                    .scale(25.0)),
+                                                      )),
+                                                      minimumSize:
+                                                          MaterialStateProperty.all(
+                                                              Size(
+                                                                  ResponsiveFlutter
+                                                                          .of(context)
+                                                                      .scale(200),
+                                                                  ResponsiveFlutter
+                                                                          .of(context)
+                                                                      .scale(35))),
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.of(context).pushNamed(
+                                                          ExplainBeforeRegister
+                                                              .routeName);
+                                                    },
+                                                    child: Padding(
+                                                        padding: EdgeInsets.fromLTRB(
+                                                            3, 3, 3, 0),
+                                                        child: Text("REGISTER",
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'Proxima Nova',
+                                                              fontStyle:
+                                                                  FontStyle.normal,
+                                                              fontSize:
+                                                                  ResponsiveFlutter
+                                                                          .of(context)
+                                                                      .scale(14),
+                                                              color: Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              letterSpacing: 1.5,
+                                                            ))))),
+                                          ),
+                                          SizedBox(
+                                            height: getHeight(context) / 900,
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                              0,
+                                              ResponsiveFlutter.of(context).hp(1),
+                                              0,
+                                              ResponsiveFlutter.of(context)
+                                                  .verticalScale(10)
+                                            ),
+                                            child: Hero(
+                                                tag: 'login',
                                               child: Container(
                                                 width: 170,
                                                 height: 40,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(18.0),
+                                                child: TextButton(
+                                                  style: ButtonStyle(
+                                                    backgroundColor:
+                                                        MaterialStateProperty.all(
+                                                            Color.fromARGB(255,255,131,131)),
+                                                    minimumSize:
+                                                        MaterialStateProperty.all(
+                                                            Size(
+                                                                ResponsiveFlutter
+                                                                        .of(context)
+                                                                    .scale(200),
+                                                                ResponsiveFlutter
+                                                                        .of(context)
+                                                                    .scale(35))),
+                                                    shape:
+                                                        MaterialStateProperty.all(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                ResponsiveFlutter
+                                                                        .of(context)
+                                                                    .scale(25.0)),
+                                                      ),
+                                                    ),
                                                   ),
-                                                  child: TextButton(
-                                                      style: ButtonStyle(
-                                                        backgroundColor:
-                                                            MaterialStateProperty.all<
-                                                                    Color>(
-                                                                Color.fromARGB(255,255,131,131)),
-                                                        overlayColor:
-                                                            MaterialStateProperty
-                                                                .resolveWith<Color>(
-                                                                    (Set<MaterialState>
-                                                                        states) {
-                                                          if (states.contains(
-                                                              MaterialState.hovered))
-                                                            return Colors.green[500];
-                                                          if (states.contains(
-                                                              MaterialState.pressed))
-                                                            return Colors.white;
-                                                          return null; // Defer to the widget's default.
-                                                        }),
-                                                        shape:
-                                                            MaterialStateProperty.all(
-                                                                RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  ResponsiveFlutter.of(
-                                                                          context)
-                                                                      .scale(25.0)),
-                                                        )),
-                                                        minimumSize:
-                                                            MaterialStateProperty.all(
-                                                                Size(
-                                                                    ResponsiveFlutter
-                                                                            .of(context)
-                                                                        .scale(200),
-                                                                    ResponsiveFlutter
-                                                                            .of(context)
-                                                                        .scale(35))),
-                                                      ),
-                                                      onPressed: () {
-                                                        Navigator.of(context).pushNamed(
-                                                            ExplainBeforeRegister
-                                                                .routeName);
-                                                      },
-                                                      child: Padding(
-                                                          padding: EdgeInsets.fromLTRB(
-                                                              3, 3, 3, 0),
-                                                          child: Text("REGISTER",
-                                                              style: TextStyle(
-                                                                fontFamily:
-                                                                    'Proxima Nova',
-                                                                fontStyle:
-                                                                    FontStyle.normal,
-                                                                fontSize:
-                                                                    ResponsiveFlutter
-                                                                            .of(context)
-                                                                        .scale(14),
-                                                                color: Colors.white,
-                                                                fontWeight:
-                                                                    FontWeight.bold,
-                                                                letterSpacing: 1.5,
-                                                              ))))),
+                                                  onPressed: () {
+                                                    Navigator.pushNamed(
+                                                        context, '/login');
+                                                  },
+                                                  child: Padding(
+                                                    padding: EdgeInsets.fromLTRB(
+                                                        3, 3, 3, 0),
+                                                    child: Text("LOGIN",
+                                                      style: TextStyle(
+                                                        fontFamily:
+                                                            'Proxima Nova',
+                                                        fontStyle:
+                                                            FontStyle.normal,
+                                                        fontSize:
+                                                            ResponsiveFlutter
+                                                                    .of(context)
+                                                                .scale(14),
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        letterSpacing: 1.5,
+                                                      )
+                                                    )
+                                                  )
+                                                ),
+                                              )
                                             ),
-                                            SizedBox(
-                                              height: getHeight(context) / 900,
-                                            ),
-                                            Padding(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    0,
-                                                    ResponsiveFlutter.of(context).hp(1),
-                                                    0,
-                                                    ResponsiveFlutter.of(context)
-                                                        .verticalScale(10)),
-                                                child: Hero(
-                                                  tag: 'login',
-                                                  child: Container(
-                                                    width: 170,
-                                                height: 40,
-                                                  child: TextButton(
-                                                      style: ButtonStyle(
-                                                        backgroundColor:
-                                                            MaterialStateProperty.all(
-                                                                Color.fromARGB(255,255,131,131)),
-                                                        minimumSize:
-                                                            MaterialStateProperty.all(
-                                                                Size(
-                                                                    ResponsiveFlutter
-                                                                            .of(context)
-                                                                        .scale(200),
-                                                                    ResponsiveFlutter
-                                                                            .of(context)
-                                                                        .scale(35))),
-                                                        shape:
-                                                            MaterialStateProperty.all(
-                                                          RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    ResponsiveFlutter
-                                                                            .of(context)
-                                                                        .scale(25.0)),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      onPressed: () {
-                                                        Navigator.pushNamed(
-                                                            context, '/login');
-                                                      },
-                                                      child: Padding(
-                                                          padding: EdgeInsets.fromLTRB(
-                                                              3, 3, 3, 0),
-                                                          child: Text("LOGIN",
-                                                              style: TextStyle(
-                                                                fontFamily:
-                                                                    'Proxima Nova',
-                                                                fontStyle:
-                                                                    FontStyle.normal,
-                                                                fontSize:
-                                                                    ResponsiveFlutter
-                                                                            .of(context)
-                                                                        .scale(14),
-                                                                color: Colors.white,
-                                                                fontWeight:
-                                                                    FontWeight.bold,
-                                                                letterSpacing: 1.5,
-                                                              )))),
-                                                )),
-                                      )]),
+                                          )
+
+                                        ]
+                                      ),
+
                                     ],
-                                  )),
+                                  )
+                                ),
                               ),
                            
                           ],
