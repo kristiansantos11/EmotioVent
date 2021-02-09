@@ -86,47 +86,54 @@ class _EVStartScreenState extends State<EVStartScreen> {
                           
                         children: <Widget>[
 
-                           
-                        Container(
-                          child: Positioned(
-                          top: ResponsiveFlutter.of(context).scale(275),
-                          left: ResponsiveFlutter.of(context).scale(15),
-               
-                          child: Container(
-                          width: 263,
-                          height: 25,
-                          decoration: BoxDecoration(
-                          color: Color.fromARGB(112, 157,68,216),
-                          borderRadius: BorderRadius.circular(10),
+
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(0,
+                                ResponsiveFlutter.of(context).scale(225),
+                                ResponsiveFlutter.of(context).scale(150),
+                                0),
+                                child: Container(
+                                  height: ResponsiveFlutter.of(context).scale(130),
+                                  decoration: BoxDecoration(
+                                    image:DecorationImage(
+                                    image: AssetImage("assets/img/fading-dots.png"),
                                   
+                                    )
                                   )
-                                )
+                                ),
                               ),
-                            ), 
                             
-                             Positioned(
-                              top: 240,
-                              right: 120,
-                              child: Container(
-                               height: 120,
-                               width: 280,
-                                decoration: BoxDecoration(
-                                  image:DecorationImage(
-                                  image: AssetImage("assets/img/fading-dots.png"),
-                                  
-                                  )
-                                )
+                            
+
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(13,0,0,0),
+                              child: Column(
+                                children: <Widget> [
+                                 SizedBox(
+                                     height: ResponsiveFlutter.of(context).scale(280),
+                                 ),
+
+                                 Container(
+                                    width: ResponsiveFlutter.of(context).scale(263),
+                                    height: ResponsiveFlutter.of(context).scale(25),
+                                    decoration: BoxDecoration(
+                                    color: Color.fromARGB(112, 157,68,216),
+                                    borderRadius: BorderRadius.circular(10),
+                                    
+                                    )
+                                  ),
+                                ]
                               ),
-                            ), 
+                            ),
 
                             Column(
                               children: <Widget>[
                                 Flexible(
                                 flex: 5,
                                 child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                    18,
-                                    245,
+                                  padding: EdgeInsets.fromLTRB(
+                                    ResponsiveFlutter.of(context).scale(18),
+                                    ResponsiveFlutter.of(context).scale(245),
                                     0,
                                     0,
                                   ),
@@ -178,12 +185,14 @@ class _EVStartScreenState extends State<EVStartScreen> {
                               ]
                             ),
                                 
-                            Center(
+                            Column (
+                                children: <Widget> [
+                                  Flexible(
                                 child:Padding(
                                   padding: EdgeInsets.fromLTRB(
-                                          80,
+                                          125,
                                           ResponsiveFlutter.of(context).verticalScale(0), 25, 
-                                          ResponsiveFlutter.of(context).verticalScale(190)
+                                          ResponsiveFlutter.of(context).verticalScale(210)
                                           ),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.end,
@@ -342,9 +351,9 @@ class _EVStartScreenState extends State<EVStartScreen> {
                            
                           ],
                         )
-                      ),
+                        ]),
                   ),
-                
+                )  
               ],
             ),
             ]
