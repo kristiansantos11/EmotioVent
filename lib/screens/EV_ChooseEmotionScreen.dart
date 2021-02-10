@@ -289,46 +289,19 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                       emotion: "Disgust",
                                       controller: controller
                                     ),
-
-                                    EmotionButton(
-                                      ctx: context,
-                                      intervalStart: 0.8,
-                                      intervalEnd: 1.0,
-                                      color: 0xc5EFA254,
-                                      emotion: "Alone",
-                                      controller: controller,
-                                    ),
-
-                                  ],
-                                ),
-
-                            ]
-                          ),
-                        ),
-                      ]
-                    ),
-
-                      
-                    AnimatedOpacity(
-                      opacity: showContent ? 1.0 : 0.0,
-                      duration: animatedOpacityDuration,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: TextButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all<Color>(Color(0xff53B6AF)),
-                                shape: MaterialStateProperty.all<OutlinedBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
                                   ),
                                 ),
                               ),
                               //height: ResponsiveFlutter.of(context).scale(35.0),
 
-                              onPressed: () {backToStartScreen(context);},
+                                    intervalStart: 0.8,
+                                    intervalEnd: 1.0,
+                                    color: Color(0xc5EFA254),
+                                    emotion: "Alone",
+                                    controller: controller,
+                                  ),
 
                               child:
-                                Text(
                                 "Back",
                                 style: TextStyle(
                                   fontSize: ResponsiveFlutter.of(context).scale(14),
@@ -356,7 +329,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
 class EmotionButton extends StatelessWidget{
   final double intervalStart;
   final double intervalEnd;
-  final int color;
+  final Color color;
   final String emotion;
   final BuildContext ctx;
   final AnimationController controller;
@@ -365,29 +338,7 @@ class EmotionButton extends StatelessWidget{
     Key key,
     this.ctx,
     this.intervalStart,
-    this.intervalEnd,
-    this.color,
-    this.emotion,
-    this.controller,
-  }) : super(key : key);
-
-
-  @override
-  Widget build(BuildContext context) {
-        return ScaleTransition(
-          scale: Tween<double>(
-            begin: 0.0,
             end: 1.0,
-          ).animate(
-            CurvedAnimation(
-              curve: Interval(
-                intervalStart, intervalEnd,
-                curve: Curves.easeInOut
-              ),
-              parent: controller,
-            ),
-          ),
-
           child: Hero(
             tag: emotion,
             child: Padding(
@@ -406,7 +357,7 @@ class EmotionButton extends StatelessWidget{
                         borderRadius: BorderRadius.circular(18.0),
                       ),
                     ),
-                    backgroundColor: MaterialStateProperty.all<Color>(Color(color)),
+                    backgroundColor: MaterialStateProperty.all<Color>(color),
                   ),
                   //minWidth: MediaQuery.of(context).size.width / 2.5,
                   //height: ResponsiveFlutter.of(context).hp(20),

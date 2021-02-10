@@ -35,6 +35,9 @@ dependencies:
   video_player: ^1.0.1
   # END
   
+  # Permission Handler
+  permission_handler: ^5.1.0+2
+
   # Share widget states across the entire application (?)
   provider: ^4.0.4
 
