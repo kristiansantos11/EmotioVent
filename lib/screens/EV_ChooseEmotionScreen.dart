@@ -233,7 +233,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     ctx: context, 
                                     intervalStart: 0.4,
                                     intervalEnd: 0.6,
-                                    color: 0xc5D9D900, 
+                                    color: Color(0xc5D9D900), 
                                     emotion: "Happy",
                                     controller: controller,
                                   ),
@@ -242,7 +242,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     ctx: context, 
                                     intervalStart: 0.4,
                                     intervalEnd: 0.6,
-                                    color: 0xc5FF8B8B, 
+                                    color: Color(0xc5FF8B8B), 
                                     emotion: "Anger",
                                     controller: controller,
                                   ),
@@ -268,7 +268,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     ctx: context, 
                                     intervalStart: 0.6,
                                     intervalEnd: 0.8,
-                                    color: 0xc5E593FB, 
+                                    color: Color(0xc5E593FB), 
                                     emotion: "Fear",
                                     controller: controller,
                                   ),
@@ -277,7 +277,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     ctx: context, 
                                     intervalStart: 0.6,
                                     intervalEnd: 0.8,
-                                    color: 0xc587A7FF, 
+                                    color: Color(0xc587A7FF), 
                                     emotion: "Sad",
                                     controller: controller,
                                   ),
@@ -303,7 +303,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     ctx: context,
                                     intervalStart: 0.8,
                                     intervalEnd: 1.0,
-                                    color: 0xc570DB77, 
+                                    color: Color(0xc570DB77), 
                                     emotion: "Disgust",
                                     controller: controller
                                   ),
@@ -312,7 +312,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     ctx: context,
                                     intervalStart: 0.8,
                                     intervalEnd: 1.0,
-                                    color: 0xc5EFA254,
+                                    color: Color(0xc5EFA254),
                                     emotion: "Alone",
                                     controller: controller,
                                   ),
@@ -340,7 +340,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
 class EmotionButton extends StatelessWidget{
   final double intervalStart;
   final double intervalEnd;
-  final int color;
+  final Color color;
   final String emotion;
   final BuildContext ctx;
   final AnimationController controller;
@@ -390,7 +390,7 @@ class EmotionButton extends StatelessWidget{
                         borderRadius: BorderRadius.circular(18.0),
                       ),
                     ),
-                    backgroundColor: MaterialStateProperty.all<Color>(Color(color)),
+                    backgroundColor: MaterialStateProperty.all<Color>(color),
                   ),
                   //minWidth: MediaQuery.of(context).size.width / 2.5,
                   //height: ResponsiveFlutter.of(context).hp(20),
