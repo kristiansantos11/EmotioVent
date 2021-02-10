@@ -191,11 +191,11 @@ class _EVStartScreenState extends State<EVStartScreen> {
                                 child:Padding(
                                   padding: EdgeInsets.fromLTRB(
                                           125,
-                                          ResponsiveFlutter.of(context).verticalScale(0), 25, 
-                                          ResponsiveFlutter.of(context).verticalScale(210)
+                                          ResponsiveFlutter.of(context).verticalScale(400), 25, 
+                                          ResponsiveFlutter.of(context).verticalScale(0)
                                           ),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                          
                                     children: <Widget>[
                                       Column(
                                         mainAxisAlignment: MainAxisAlignment.spaceAround,
