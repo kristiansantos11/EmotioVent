@@ -231,6 +231,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                       return null;
                                     }
                                   },
+                                  obscureText: toggle1,
                                   cursorColor: Color(0xfff77272),
                                   style: TextStyle(
                                       fontFamily: 'Proxima Nova',
