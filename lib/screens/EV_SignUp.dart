@@ -120,12 +120,35 @@ class _EVSignUpState extends State<EVSignUp> {
     return Scaffold(
         body: Stack(
         children: <Widget>[
-          Hero(
-            tag: 'register',
-            child: Container(
-              color: Colors.pink[50],
-            ),
-          ),
+
+          Container(
+                    decoration: BoxDecoration(
+                    image: DecorationImage(
+                    image: AssetImage("assets/img/red-bg.png"),
+                    fit: BoxFit.cover
+                    )
+                    )
+                    ),
+
+                    Container(
+                      decoration: BoxDecoration(
+                      image: DecorationImage(
+                      image: AssetImage("assets/img/ss-deco.png"),
+                      ), 
+                      )  
+                      ),
+                    
+                    Opacity(
+                      opacity: 0.5,
+                                  child: Container(
+                        decoration: BoxDecoration(
+                        image: DecorationImage(
+                        image: AssetImage("assets/img/ss-deco2.png"),
+                        ), 
+                        )  
+                        ),
+                    ),
+
           
           SafeArea(
             child: Form(
@@ -144,7 +167,7 @@ class _EVSignUpState extends State<EVSignUp> {
                           fontFamily: 'Proxima Nova',
                           fontWeight: FontWeight.w800,
                           fontSize: ResponsiveFlutter.of(context).scale(40),
-                          color: Colors.grey[700]
+                          color: Color.fromARGB(225,56,70,127)
                         ),
                       ),
                     ),
@@ -159,7 +182,7 @@ class _EVSignUpState extends State<EVSignUp> {
                           fontFamily: 'Proxima Nova',
                           fontWeight: FontWeight.w700,
                           fontSize: ResponsiveFlutter.of(context).scale(20),
-                          color: Colors.grey[600]
+                          color: Colors.black
                         ),
                       ),
                     ),
@@ -193,7 +216,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                         ResponsiveFlutter.of(
                                                 context)
                                             .scale(18),
-                                    color: Colors.white54
+                                    color: Colors.white,
                                 ),
                               decoration: InputDecoration(
                                 contentPadding:
@@ -208,7 +231,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                 ),
                                 filled: true,
                                 hintStyle: TextStyle(
-                                    color: Colors.white24),
+                                    color: Colors.white),
                                 hintText: "Email",
                                 fillColor: Colors.grey[600],
                               ),
@@ -241,7 +264,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                           ResponsiveFlutter.of(
                                                   context)
                                               .scale(18),
-                                      color: Colors.white54
+                                      color: Colors.white
                                   ),
                                   decoration: InputDecoration(
                                     contentPadding:
@@ -256,7 +279,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                     ),
                                     filled: true,
                                     hintStyle: TextStyle(
-                                        color: Colors.white24),
+                                        color: Colors.white),
                                     hintText: "Password",
                                     fillColor: Colors.grey[600],
                                   ),
@@ -308,7 +331,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                           ResponsiveFlutter.of(
                                                   context)
                                               .scale(18),
-                                      color: Colors.white54
+                                      color: Colors.white
                                   ),
                                   decoration: InputDecoration(
                                     contentPadding:
@@ -323,7 +346,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                     ),
                                     filled: true,
                                     hintStyle: TextStyle(
-                                        color: Colors.white24),
+                                        color: Colors.white),
                                     hintText: "Confirm Password",
                                     fillColor: Colors.grey[600],
                                   ),
@@ -355,7 +378,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                             ResponsiveFlutter.of(
                                                     context)
                                                 .scale(18),
-                                        color: Colors.white54
+                                        color: Colors.white
                                     ),
                                     decoration: InputDecoration(
                                       contentPadding:
@@ -370,7 +393,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                       ),
                                       filled: true,
                                       hintStyle: TextStyle(
-                                          color: Colors.white24),
+                                          color: Colors.white),
                                       hintText: "Username",
                                       fillColor: Colors.grey[600],
                                     ),
@@ -400,7 +423,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                             ResponsiveFlutter.of(
                                                     context)
                                                 .scale(18),
-                                        color: Colors.white54
+                                        color: Colors.white
                                     ),
                                     decoration: InputDecoration(
                                       contentPadding:
@@ -415,7 +438,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                       ),
                                       filled: true,
                                       hintStyle: TextStyle(
-                                          color: Colors.white24),
+                                          color: Colors.white),
                                       hintText: "Name",
                                       fillColor: Colors.grey[600],
                                     ),
@@ -433,7 +456,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                     ResponsiveFlutter.of(
                                             context)
                                         .scale(18),
-                                color: Colors.grey[600]
+                                color: Colors.black
                             ),),
                           ),
 
@@ -453,7 +476,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                         ),
                                         filled: true,
                                         hintStyle: TextStyle(
-                                            color: Colors.white24),
+                                            color: Colors.white),
                                         hintText: "Name",
                                         fillColor: Colors.grey[600],
                                       ),
@@ -493,7 +516,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                               ResponsiveFlutter.of(
                                                       context)
                                                   .scale(18),
-                                          color: Colors.white54
+                                          color: Colors.white
                                       ),
                                       decoration: InputDecoration(
                                         contentPadding:
@@ -508,7 +531,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                         ),
                                         filled: true,
                                         hintStyle: TextStyle(
-                                            color: Colors.white24),
+                                            color: Colors.white),
                                         hintText: "Contact Number",
                                         fillColor: Colors.grey[600],
                                       ),
@@ -537,7 +560,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                                 ResponsiveFlutter.of(
                                                         context)
                                                     .scale(18),
-                                            color: Colors.white54
+                                            color: Colors.white
                                         ),
                                         decoration: InputDecoration(
                                           contentPadding:
@@ -552,7 +575,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                           ),
                                           filled: true,
                                           hintStyle: TextStyle(
-                                              color: Colors.white24),
+                                              color: Colors.white),
                                           hintText: "Gender",
                                           fillColor: Colors.grey[600],
                                         ),
@@ -570,25 +593,23 @@ class _EVSignUpState extends State<EVSignUp> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               
-                              TextButton(
-                                style: ButtonStyle(
-                                  minimumSize: MaterialStateProperty.all(Size(ResponsiveFlutter.of(context).scale(90.0), 0)),
-                                  padding: MaterialStateProperty.all(EdgeInsets.all(15.0)),
-                                  shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.0)
-                                    ),
+                              Container(
+                                child: TextButton(
+                                  style: ButtonStyle(
+                                    
+                                    padding: MaterialStateProperty.all(EdgeInsets.all(15.0)),
+
+                                    backgroundColor: MaterialStateProperty.all(Color.fromARGB(255,154,162,255)),
                                   ),
-                                  backgroundColor: MaterialStateProperty.all(Colors.red[300]),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
-                                },
-                                child: Text(
-                                  "Back",
-                                  style: TextStyle(
-                                    fontSize: ResponsiveFlutter.of(context).scale(15),
-                                    color: Colors.white,
+                                  onPressed: () {
+                                    Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
+                                  },
+                                  child: Text(
+                                    "Back",
+                                    style: TextStyle(
+                                      fontSize: ResponsiveFlutter.of(context).scale(15),
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -602,7 +623,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                       borderRadius: BorderRadius.circular(20.0)
                                     ),
                                   ),
-                                  backgroundColor: MaterialStateProperty.all(Colors.green[600]),
+                                  backgroundColor: MaterialStateProperty.all(Color.fromARGB(226,240,203,255)),
                                 ),
                                 onPressed: () {register(context: context);},
                                 child: Text(
