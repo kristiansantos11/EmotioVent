@@ -65,7 +65,10 @@ class _EmotionStatisticsState extends State<EmotionStatistics> {
     ];
 
     String mostFeltEmotion;
-    if (emotionCounters != null && emotionCounters.isNotEmpty){
+    if(emotionCounter == 0){
+      
+    }
+    else if (emotionCounter != 0 && emotionCounters.isNotEmpty){
       emotionCounters.sort((a, b) => a['counter'].compareTo(b['counter']));
       mostFeltEmotion = emotionCounters.last['emotion'];
     }

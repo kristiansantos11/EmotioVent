@@ -50,17 +50,13 @@ class _EVMainMenuState extends State<EVMainMenu> {
   @override
   Widget build(BuildContext context) {
     // FOR DEBUG PURPOSES. DO NOT DELETE.
-    final userinfo = context.watch<UserData>();
+    UserData userinfo = context.watch<UserData>();
 
     if (userinfo == null) {
       return Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextButton(
-              onPressed: (){_signOut(context);},
-              child: Text("LOGOUT")
-            ),
             Center(
               child: CircularProgressIndicator()
             ),
@@ -111,13 +107,13 @@ class _EVMainMenuState extends State<EVMainMenu> {
                         }
                       ),
                     ),
-
+                  // # Home button
                   ElevatedButton(
                       onPressed: () {
                         pageController.animateToPage(0,
                             duration: Duration(milliseconds: 300),
                             curve: Curves.easeInOut);
-                        WallData.limit = 7;
+                        FreedomWall.limit = 7;
                       },
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all(CircleBorder()),
@@ -125,7 +121,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
                               (currentPage == 0) ? Colors.pink : Colors.grey)),
                       child: Icon(Icons.home_filled, color: Colors.white)
                   ),
-                  // # Freedom Wall Button  -jedi  
+                  // # Calendar button
                   ElevatedButton(
                       onPressed: () {
                         pageController.animateToPage(1,
@@ -137,18 +133,32 @@ class _EVMainMenuState extends State<EVMainMenu> {
                           shape: MaterialStateProperty.all(CircleBorder()),
                           backgroundColor: MaterialStateProperty.all(
                               (currentPage == 1) ? Colors.pink : Colors.grey)),
-                      child: Icon(Icons.wysiwyg_sharp, color: Colors.white)),
+                      child: Icon(Icons.calendar_today, color: Colors.white)),
+                  // # Freedom Wall Button
                   ElevatedButton(
                       onPressed: () {
                         pageController.animateToPage(2,
-                            duration: Duration(milliseconds: 300),
-                            curve: Curves.easeInOut);
-                        WallData.limit = 7;
+                          duration: Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
                       },
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all(CircleBorder()),
                           backgroundColor: MaterialStateProperty.all(
                               (currentPage == 2) ? Colors.pink : Colors.grey)),
+                      child: Icon(Icons.wysiwyg_sharp, color: Colors.white)),
+                  // # App Settings button
+                  ElevatedButton(
+                      onPressed: () {
+                        pageController.animateToPage(3,
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.easeInOut);
+                        FreedomWall.limit = 7;
+                      },
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all(CircleBorder()),
+                          backgroundColor: MaterialStateProperty.all(
+                              (currentPage == 3) ? Colors.pink : Colors.grey)),
                       child: Icon(Icons.settings, color: Colors.white)),
                   
                 ],
@@ -166,6 +176,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
           children: [
             Stack(
               children: <Widget>[
+                
                 ClipPath(
                   clipper: CustomShapeClipper(),
                   child: Container(
@@ -195,7 +206,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
                             child: ProfileCard(),
                           )),
 
-                      // Calendar widget.
+                      // Statistics widget.
                       Flexible(
                         flex: 8,
                         child: EmotionStatistics()
@@ -206,8 +217,11 @@ class _EVMainMenuState extends State<EVMainMenu> {
                 )
               ],
             ),
-            // # This is the Contacts page
-            WallData(),
+            // # Calendar page
+            EmotionCalendar(),
+
+            // # This is the FreedomWall page
+            FreedomWall(),
 
             // # This is the AppSettings page, where I put the logout button :)
             AppSettings(),
