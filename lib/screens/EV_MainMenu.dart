@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emotiovent/screens/EV_ChooseEmotionScreen.dart';
 import 'package:emotiovent/screens/EV_InitialScreen.dart';
 import 'package:emotiovent/screens/AppSettings.dart';
-import 'package:emotiovent/screens/EmotionCalendar.dart';
 import 'package:emotiovent/screens/FreedomWall.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:emotiovent/screens/clipper/CustomShapeClipper.dart';
@@ -15,6 +14,8 @@ import '../services/EV_AuthService.dart';
 import 'package:emotiovent/models/UserData.dart';
 
 import 'Contacts.dart';
+import 'EmotionCalendar.dart';
+import 'EmotionRecordList.dart';
 import 'widgets/EmotionStatistics.dart';
 
 class EVMainMenu extends StatefulWidget {
@@ -218,6 +219,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
               ],
             ),
             // # Calendar page
+            //EmotionRecordList(),
             EmotionCalendar(),
 
             // # This is the FreedomWall page
