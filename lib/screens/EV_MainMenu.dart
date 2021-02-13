@@ -220,7 +220,21 @@ class _EVMainMenuState extends State<EVMainMenu> {
             ),
             // # Calendar page
             //EmotionRecordList(),
-            EmotionCalendar(),
+            Stack(
+              children: [
+                Container(
+                  width: getWidth(context),
+                  height: getHeight(context),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/img/startup-bg.png'),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+                EmotionCalendar(),
+              ],
+            ),
 
             // # This is the FreedomWall page
             FreedomWall(),

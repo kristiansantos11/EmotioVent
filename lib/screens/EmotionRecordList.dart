@@ -33,7 +33,8 @@ class _EmotionRecordListState extends State<EmotionRecordList> {
               child: Container(
                       height: 100,
                       decoration: BoxDecoration(
-                      border: Border(right: BorderSide(color: Colors.green, width: 5))),
+                      border: Border(right: BorderSide(color: Colors.green, width: 5))
+                      ),
                       child: ListTile(
                         contentPadding: EdgeInsets.all(12.0),
                         isThreeLine: true,

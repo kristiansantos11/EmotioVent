@@ -17,6 +17,8 @@ class _EmotionCalendarState extends State<EmotionCalendar> with TickerProviderSt
   Set<DateTime> ventDates = Set();
   AnimationController _animationController;
   DateTime currentSelectedDay;
+  
+  bool isMonthFormat = true;
 
   void _onDaySelected(DateTime day, List events, List holidays) {
     print('CALLBACK: _onDaySelected');
@@ -82,6 +84,12 @@ class _EmotionCalendarState extends State<EmotionCalendar> with TickerProviderSt
         children: <Widget>[
 
           Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/img/fading-dots.png'),
+                fit: BoxFit.contain,
+              ),
+            ),
             alignment: Alignment.center,
             padding: EdgeInsets.all(20.0),
             child: Text(
@@ -95,17 +103,85 @@ class _EmotionCalendarState extends State<EmotionCalendar> with TickerProviderSt
             ),
           ),
 
-          _buildTableCalendar(),
-          SizedBox(height: 8.0),
-          (currentSelectedDay != null) ? Text(
-            "Activities done in: " + currentSelectedDay.day.toString() + "/" + currentSelectedDay.month.toString() + "/" + currentSelectedDay.year.toString(), 
-            style: TextStyle(
-              color: Colors.black, 
-              fontSize: ResponsiveFlutter.of(context).scale(15),
-              fontFamily: 'Proxima Nova',
-              fontWeight: FontWeight.w700,
-            )
-          ) : Container(),
+          Padding(
+            padding: EdgeInsets.all(ResponsiveFlutter.of(context).scale(7.0)),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(18.0),
+                color: Colors.grey[50],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(18.0),
+                child: Column(
+                  children: [
+                    _buildTableCalendar(),
+                    GestureDetector(
+                      onTap: () {
+                        if (isMonthFormat){
+                          setState(() {
+                            _calendarController.setCalendarFormat(CalendarFormat.week);
+                            isMonthFormat = false;
+                          });
+                        } else {
+                          setState(() {
+                            _calendarController.setCalendarFormat(CalendarFormat.month);
+                            isMonthFormat = true;
+                          });
+                        }
+                        
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(0, 2.0, 0, 0),
+                        child: Container(
+                          alignment: Alignment.bottomCenter,
+                          height: ResponsiveFlutter.of(context).verticalScale(30.0),
+                          color: Colors.grey[400],
+                          child: Center(
+                            child: Text(
+                              "Tap to minimize or expand the calendar!",
+                              style: TextStyle(
+                                fontFamily: 'Proxima Nova',
+                                fontStyle: FontStyle.normal,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ),
+          ),
+
+          (currentSelectedDay != null) ? Padding(
+            padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 8.0),
+            child: Text(
+              "Activities done in: " + currentSelectedDay.day.toString() + "/" + currentSelectedDay.month.toString() + "/" + currentSelectedDay.year.toString(), 
+              style: TextStyle(
+                color: Colors.black, 
+                fontSize: ResponsiveFlutter.of(context).scale(15),
+                fontFamily: 'Proxima Nova',
+                fontWeight: FontWeight.w700,
+              )
+            ),
+          ) : Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                alignment: Alignment.bottomCenter,
+                child: Text(
+                  "Choose a day inside the calendar!",
+                  style: TextStyle(
+                    fontFamily: 'Proxima Nova',
+                    fontWeight: FontWeight.w700,
+                    fontSize: ResponsiveFlutter.of(context).scale(14.0)
+                  ),
+                )
+              ),
+            ],
+          ),
           Expanded(child: _buildEventList()),
         ],
       ),
@@ -161,13 +237,13 @@ class _EmotionCalendarState extends State<EmotionCalendar> with TickerProviderSt
         ),
       ),
       builders: CalendarBuilders(
-        dayBuilder: (context, date, _){
+        dayBuilder: (context, date, _) {
           return Padding(
             padding: const EdgeInsets.all(4.0),
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
-                color: Colors.grey[200],
+                color: Colors.grey[300],
               ),
               alignment: Alignment.center,
               child: Text(
@@ -266,7 +342,7 @@ class _EmotionCalendarState extends State<EmotionCalendar> with TickerProviderSt
             ? Colors.brown[500]
             : _calendarController.isToday(date)
                 ? Colors.brown[300]
-                : Color(0xffb5ead7),
+                : Color(0xff7ed0b3),
       ),
       width: 16.0,
       height: 16.0,
@@ -346,44 +422,61 @@ class _EmotionCalendarState extends State<EmotionCalendar> with TickerProviderSt
   Widget _buildEventList(){
     return ListView(
       children: _selectedEvents
-        .map((event) => Container(
-          padding: EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            border: Border.all(width: 0.8),
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-          child: ListTile(
-            title: Text(
-              event.activity,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontFamily: 'Proxima Nova',
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            subtitle: Text.rich(
-              TextSpan(
-                text: "Done at: " + event.timestamp.day.toString() + 
-                      "/" + event.timestamp.month.toString() + 
-                      "/" + event.timestamp.year.toString() +
-                      " @ " + event.timestamp.hour.toString() +
-                      ":" + event.timestamp.minute.toString() + 
-                      "\n",
-                style: TextStyle(
-                  fontFamily: 'Proxima Nova',
-                  fontSize: 13,
-                ),
-                children: <InlineSpan>[
-                  TextSpan(text: "Emotion: " + event.emotion+"\n", style: TextStyle(fontFamily: 'Proxima Nova')),
-                  TextSpan(text: "Your rating for this activity: " + event.activityRate.toString(), style: TextStyle(fontFamily: 'Proxima Nova'))
-                ]
-              ),
-            ),
-            onTap: () => print('You tapped on: ${event.activity}')
-          ),
-        ))
+        .map((event) => Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+            elevation: 2,
+            child: ClipPath(
+              child: Container(
+                      height: 100,
+                      decoration: BoxDecoration(
+                      border: Border(right: BorderSide(color: Colors.green, width: 8))
+                      ),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.all(12.0),
+                        isThreeLine: true,
+                        tileColor: Colors.grey[200],
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+                        // leading: CircleAvatar(
+                        //   backgroundColor: Colors.black
+                        // ),
+                        title: Text(
+                          event.activity,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontFamily: 'Proxima Nova',
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        subtitle: Text.rich(
+                          TextSpan(
+                            text: "Done at: " + event.timestamp.day.toString() + 
+                                  "/" + event.timestamp.month.toString() + 
+                                  "/" + event.timestamp.year.toString() +
+                                  " @ " + event.timestamp.hour.toString() +
+                                  ":" + event.timestamp.minute.toString() + 
+                                  "\n",
+                            style: TextStyle(
+                              fontFamily: 'Proxima Nova',
+                              fontSize: 13,
+                            ),
+                            children: <InlineSpan>[
+                              TextSpan(text: "Emotion: " + event.emotion+"\n", style: TextStyle(fontFamily: 'Proxima Nova')),
+                              TextSpan(text: "Your rating for this activity: " + event.activityRate.toString()+"\n", style: TextStyle(fontFamily: 'Proxima Nova'))
+                            ]
+                          ),
+                        ),
+                      ),
+                    ),
+              clipper: ShapeBorderClipper(shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0))),
+                      ),
+          )
+        )
+        
+        )
         .toList(),
     );
   }

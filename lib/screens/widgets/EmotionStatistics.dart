@@ -1,8 +1,17 @@
+/* 
+The statistics should contain:
+    1.) "Your most felt emotion"
+    2.) Average time na nafeel yung most felt emotion
+    3.) Number of times app was open for a specific period of time
+    4.) Average satisfaction per activity
+*/
+
 import 'package:emotiovent/models/EmotionRecord.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
+import 'package:emotiovent/models/EmotionCounters.dart';
 
 class EmotionStatistics extends StatefulWidget {
   @override
@@ -13,6 +22,10 @@ class _EmotionStatisticsState extends State<EmotionStatistics> {
   
   @override
   Widget build(BuildContext context) {
+    // DailyEmotion dailyEmotion = DailyEmotion();
+    // WeeklyEmotion weeklyEmotion = WeeklyEmotion();
+    // MonthlyEmotion monthlyEmotion = MonthlyEmotion();
+    // YearlyEmotion yearlyEmotion = YearlyEmotion();
     int emotionCounter = 0;
     int sadCounter = 0;
     int happyCounter = 0;
