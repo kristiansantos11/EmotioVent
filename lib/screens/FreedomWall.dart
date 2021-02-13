@@ -40,26 +40,26 @@ class _FreedomWallState extends State<FreedomWall> {
     print("Current Number of Messages is ${FreedomWall.limit}");
     var _controller = TextEditingController();
     try{
-      return SafeArea(
-        child: Container(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
+      return Container(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
 
-                Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xffff8383),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(18.0),
-                      bottomRight: Radius.circular(18.0),
-                    ),
+              Container(
+                decoration: BoxDecoration(
+                  color: Color(0xffff8383),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(18.0),
+                    bottomRight: Radius.circular(18.0),
                   ),
+                ),
+                child: SafeArea(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
 
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
                         child: TextFormField(
                           controller: _controller,
                           onChanged: (text) {
@@ -131,8 +131,10 @@ class _FreedomWallState extends State<FreedomWall> {
                     ],
                   ),
                 ),
+              ),
 
-                
+              
+
 
                 Expanded(
                   child: ListView(
@@ -163,9 +165,9 @@ class _FreedomWallState extends State<FreedomWall> {
 
 
 
-              ],
-            ),
-        ),
+
+            ],
+          ),
       );
     }
     catch(e)
