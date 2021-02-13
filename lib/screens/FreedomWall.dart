@@ -13,7 +13,7 @@ import 'package:responsive_flutter/responsive_flutter.dart';
 class FreedomWall extends StatefulWidget {
   const FreedomWall({Key key}) : super(key: key);
 
-  static int limit = 7;
+  static int limit = 5;
 
   @override
   _FreedomWallState createState() => _FreedomWallState();
@@ -21,24 +21,6 @@ class FreedomWall extends StatefulWidget {
 
 class _FreedomWallState extends State<FreedomWall> {
   bool scroll = true;
-  ScrollController _scrollController = new ScrollController();
-  @override
-   void initState() {
-    super.initState();
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => scrollToBottom());
-  }
-
-  void scrollToBottom()
-  {
-      print("Scroll is: $scroll");
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-          if( _scrollController.hasClients){
-            _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-          }
-    });
-  }
-
   String username;
   String textMessage;
   DateTime currentTime;
@@ -66,7 +48,7 @@ class _FreedomWallState extends State<FreedomWall> {
 
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.red[300],
+                    color: Color(0xffff8383),
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(18.0),
                       bottomRight: Radius.circular(18.0),
@@ -93,7 +75,7 @@ class _FreedomWallState extends State<FreedomWall> {
                                                     ResponsiveFlutter.of(
                                                             context)
                                                         .scale(18),
-                                                color: Colors.red[300],
+                                                color: Color(0xffff8383),
                                             ),
                                             decoration: InputDecoration(
                                               contentPadding:
@@ -168,8 +150,11 @@ class _FreedomWallState extends State<FreedomWall> {
                             uniqueKey = UniqueKey();
                           });
                         },
-                        icon: Icon(Icons.add),
-                        label: Text("View More"),
+                        icon: Icon(Icons.add, color: Color(0xffff8383)),
+                        label: Text("View More", style: TextStyle(
+                          color: Color(0xffff8383),
+                          fontFamily: 'Proxima Nova'
+                        )),
                       ),
 
                     ],
@@ -191,13 +176,14 @@ class _FreedomWallState extends State<FreedomWall> {
 }
 
 class Posts extends StatefulWidget {
-  const Posts({Key key}) : super(key: key);
+  Posts({Key key}) : super(key: key);
 
   @override
   _PostsState createState() => _PostsState();
 }
 
 class _PostsState extends State<Posts> {
+
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<TheWall>>.value(
@@ -215,8 +201,8 @@ class MessageBanner extends StatefulWidget {
 }
 
 class _MessageBannerState extends State<MessageBanner> {
-  ScrollController _scrollController = new ScrollController();
-  
+  ScrollController scrollController = new ScrollController();
+
   @override
   Widget build(BuildContext context) {
     List<TheWall> wallData = context.watch<List<TheWall>>();
@@ -236,7 +222,7 @@ class _MessageBannerState extends State<MessageBanner> {
       return wallData != null ? 
         Container(
           child: ListView.builder(
-            controller: _scrollController,
+            controller: scrollController,
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             itemCount: ctr,
@@ -244,7 +230,7 @@ class _MessageBannerState extends State<MessageBanner> {
               return Padding(
                 padding: const EdgeInsets.fromLTRB(4, 2, 4, 2),
                 child: Card(
-                  color: Colors.red[300],
+                  color: Color(0xffff8383),
                   elevation: 2,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                   child: Container(

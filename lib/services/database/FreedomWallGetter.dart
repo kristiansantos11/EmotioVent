@@ -4,7 +4,7 @@ import 'package:emotiovent/models/TheWall.dart';
 class FreedomWallGetter
 {
   int limit;
-  FreedomWallGetter({this.limit = 7});
+  FreedomWallGetter({this.limit = 5});
 
   final CollectionReference freedomwall = FirebaseFirestore.instance.collection("Freedom Wall");
 

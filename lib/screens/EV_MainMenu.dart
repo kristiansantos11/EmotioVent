@@ -92,7 +92,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
                     child: TextButton(
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(Colors.red[300]),
+                              MaterialStateProperty.all(Color(0xffff8383)),
                           shape: MaterialStateProperty.all(
                               RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(18.0))),
@@ -119,7 +119,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all(CircleBorder()),
                           backgroundColor: MaterialStateProperty.all(
-                              (currentPage == 0) ? Colors.pink : Colors.grey)),
+                              (currentPage == 0) ? Color(0xffff8383) : Colors.grey)),
                       child: Icon(Icons.home_filled, color: Colors.white)
                   ),
                   // # Calendar button
@@ -133,7 +133,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all(CircleBorder()),
                           backgroundColor: MaterialStateProperty.all(
-                              (currentPage == 1) ? Colors.pink : Colors.grey)),
+                              (currentPage == 1) ? Color(0xffff8383) : Colors.grey)),
                       child: Icon(Icons.calendar_today, color: Colors.white)),
                   // # Freedom Wall Button
                   ElevatedButton(
@@ -146,7 +146,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all(CircleBorder()),
                           backgroundColor: MaterialStateProperty.all(
-                              (currentPage == 2) ? Colors.pink : Colors.grey)),
+                              (currentPage == 2) ? Color(0xffff8383) : Colors.grey)),
                       child: Icon(Icons.wysiwyg_sharp, color: Colors.white)),
                   // # App Settings button
                   ElevatedButton(
@@ -159,7 +159,7 @@ class _EVMainMenuState extends State<EVMainMenu> {
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all(CircleBorder()),
                           backgroundColor: MaterialStateProperty.all(
-                              (currentPage == 3) ? Colors.pink : Colors.grey)),
+                              (currentPage == 3) ? Color(0xffff8383) : Colors.grey)),
                       child: Icon(Icons.settings, color: Colors.white)),
                   
                 ],

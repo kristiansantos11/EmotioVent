@@ -171,8 +171,8 @@ class _EmotionStatisticsState extends State<EmotionStatistics> {
             statisticBox(
               context: context,
               color: Color(0xffffb7b2), // Pabago
-              title: "Average time you felt Sad:",
-              subtitle: "1 Day",
+              title: "Average time you felt {emotion}:",
+              subtitle: "Text",
             ),
           ]
         ),
@@ -184,13 +184,13 @@ class _EmotionStatisticsState extends State<EmotionStatistics> {
               context: context,
               color: Color(0xffe2f0cb), // Pabago
               title: "You already opened this app for",
-              subtitle: "25 times.",
+              subtitle: "{n times}",
             ),
             statisticBox(
               context: context,
               color: Color(0xffb5ead7), // Pabago
-              title: "Average satisfaction per activity:",
-              subtitle: "70",
+              title: "Average satisfaction per activity.",
+              subtitle: "{average}",
             ), 
           ]
         ),
@@ -205,39 +205,45 @@ Widget statisticBox({@required String title, @required String subtitle, @require
       borderRadius: BorderRadius.circular(18.0),
       child: Center(
         child: Container(
-          padding: EdgeInsets.all(18.0),
           width: getWidth(context) * 0.42,
           height: getWidth(context) * 0.31,
           decoration: BoxDecoration(
             color: color,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
             children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
 
-              Text(
-                title,
-                style: TextStyle(
-                  height: 1,
-                  color: Color(0xff3c3b3b),
-                  letterSpacing: -0.5,
-                  fontFamily: 'Proxima Nova',
-                  fontWeight: FontWeight.w700,
-                  fontSize: ResponsiveFlutter.of(context).scale(17),
+                    Text(
+                      title,
+                      style: TextStyle(
+                        height: 1,
+                        color: Color(0xff3c3b3b),
+                        letterSpacing: -0.5,
+                        fontFamily: 'Proxima Nova',
+                        fontWeight: FontWeight.w700,
+                        fontSize: ResponsiveFlutter.of(context).scale(17),
+                      ),
+                    ),
+
+                    Text(
+                      subtitle,
+                      style: TextStyle(
+                        letterSpacing: -0.5,
+                        color: Color(0xff3c3b3b),
+                        fontFamily: 'Proxima Nova',
+                        fontSize: ResponsiveFlutter.of(context).scale(13)
+                      ),
+                    ),
+                    
+                  ]
                 ),
               ),
-
-              Text(
-                subtitle,
-                style: TextStyle(
-                  letterSpacing: -0.5,
-                  color: Color(0xff3c3b3b),
-                  fontFamily: 'Proxima Nova',
-                  fontSize: ResponsiveFlutter.of(context).scale(15)
-                ),
-              ),
-              
             ]
           ),
         ),
