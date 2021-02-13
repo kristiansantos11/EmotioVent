@@ -79,7 +79,7 @@ class _EmotionStatisticsState extends State<EmotionStatistics> {
 
     String mostFeltEmotion;
     if(emotionCounter == 0){
-      
+      mostFeltEmotion = "Never vented before.";
     }
     else if (emotionCounter != 0 && emotionCounters.isNotEmpty){
       emotionCounters.sort((a, b) => a['counter'].compareTo(b['counter']));
@@ -120,7 +120,7 @@ class _EmotionStatisticsState extends State<EmotionStatistics> {
                 onPressed: () {},
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
-                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xffb5ead7)),
+                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xffe7f8f2)),
                 ),
                 child: Text(
                   "Week",
@@ -133,7 +133,7 @@ class _EmotionStatisticsState extends State<EmotionStatistics> {
                 onPressed: () {},
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
-                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xffb5ead7)),
+                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xffe7f8f2)),
                 ),
                 child: Text(
                   "Month",
@@ -146,7 +146,7 @@ class _EmotionStatisticsState extends State<EmotionStatistics> {
                 onPressed: () {},
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
-                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xffb5ead7)),
+                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xffe7f8f2)),
                 ),
                 child: Text(
                   "Year",
@@ -171,8 +171,8 @@ class _EmotionStatisticsState extends State<EmotionStatistics> {
             statisticBox(
               context: context,
               color: Color(0xffffb7b2), // Pabago
-              title: "Text",
-              subtitle: "Text",
+              title: "Average time you felt Sad:",
+              subtitle: "1 Day",
             ),
           ]
         ),
@@ -183,14 +183,14 @@ class _EmotionStatisticsState extends State<EmotionStatistics> {
             statisticBox(
               context: context,
               color: Color(0xffe2f0cb), // Pabago
-              title: "Text",
-              subtitle: "Text",
+              title: "You already opened this app for",
+              subtitle: "25 times.",
             ),
             statisticBox(
               context: context,
               color: Color(0xffb5ead7), // Pabago
-              title: "Text",
-              subtitle: "Text",
+              title: "Average satisfaction per activity:",
+              subtitle: "70",
             ), 
           ]
         ),
@@ -207,7 +207,7 @@ Widget statisticBox({@required String title, @required String subtitle, @require
         child: Container(
           padding: EdgeInsets.all(18.0),
           width: getWidth(context) * 0.42,
-          height: getWidth(context) * 0.30,
+          height: getWidth(context) * 0.31,
           decoration: BoxDecoration(
             color: color,
           ),
@@ -215,6 +215,7 @@ Widget statisticBox({@required String title, @required String subtitle, @require
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+
               Text(
                 title,
                 style: TextStyle(
@@ -223,9 +224,10 @@ Widget statisticBox({@required String title, @required String subtitle, @require
                   letterSpacing: -0.5,
                   fontFamily: 'Proxima Nova',
                   fontWeight: FontWeight.w700,
-                  fontSize: ResponsiveFlutter.of(context).scale(20),
+                  fontSize: ResponsiveFlutter.of(context).scale(17),
                 ),
               ),
+
               Text(
                 subtitle,
                 style: TextStyle(
@@ -235,6 +237,7 @@ Widget statisticBox({@required String title, @required String subtitle, @require
                   fontSize: ResponsiveFlutter.of(context).scale(15)
                 ),
               )
+              
             ]
           ),
         ),

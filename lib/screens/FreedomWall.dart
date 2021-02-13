@@ -72,9 +72,14 @@ class _FreedomWallState extends State<FreedomWall> {
                       textMessage = text;
                     },
                     decoration: InputDecoration(
-                      labelText: "Write Anything Here!"
+                      labelText: "Write Anything Here!",
+                      filled: true,
+                      focusColor: Colors.red[300],
+                      fillColor: Colors.red[300],
+                      labelStyle: TextStyle(color: Colors.white, fontFamily: 'Proxima Nova'),
                     ),
                     style: TextStyle(
+                      fontFamily: 'Proxima Nova',
                       fontSize: 20
                     ),
                   ),
