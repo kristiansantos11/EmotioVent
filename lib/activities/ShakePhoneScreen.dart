@@ -60,6 +60,12 @@ class _ShakePhoneActivityState extends State<ShakePhoneActivity> {
   }
 
   @override
+  void dispose(){
+    detector = null;
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       
