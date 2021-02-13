@@ -8,6 +8,7 @@ import 'package:emotiovent/services/database/FreedomWallGetter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_flutter/responsive_flutter.dart';
 
 class FreedomWall extends StatefulWidget {
   const FreedomWall({Key key}) : super(key: key);
@@ -63,57 +64,93 @@ class _FreedomWallState extends State<FreedomWall> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
 
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: TextFormField(
-                    controller: _controller,
-                    onChanged: (text) {
-                      print("Current text is: $text");
-                      textMessage = text;
-                    },
-                    decoration: InputDecoration(
-                      labelText: "Write Anything Here!",
-                      filled: true,
-                      focusColor: Colors.red[300],
-                      fillColor: Colors.red[300],
-                      labelStyle: TextStyle(color: Colors.white, fontFamily: 'Proxima Nova'),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.red[300],
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(18.0),
+                      bottomRight: Radius.circular(18.0),
                     ),
-                    style: TextStyle(
-                      fontFamily: 'Proxima Nova',
-                      fontSize: 20
-                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                        child: TextFormField(
+                          controller: _controller,
+                          onChanged: (text) {
+                            print("Current text is: $text");
+                            textMessage = text;
+                          },
+                          cursorColor: Color(0xfff77272),
+                                            style: TextStyle(
+                                                fontFamily: 'Proxima Nova',
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize:
+                                                    ResponsiveFlutter.of(
+                                                            context)
+                                                        .scale(18),
+                                                color: Colors.red[300],
+                                            ),
+                                            decoration: InputDecoration(
+                                              contentPadding:
+                                                  EdgeInsets.fromLTRB(
+                                                      20, 10, 20, 10),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.all(
+                                                  Radius.circular(100.0),
+                                                ),
+                                                borderSide: BorderSide.none,
+                                              ),
+                                              filled: true,
+                                              hintStyle: TextStyle(
+                                                  color: Colors.red[300]),
+                                              hintText: "Write anything here!",
+                                              fillColor: Colors.white,
+                                            ),
+                        ),
+                      ),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                            child: TextButton.icon(
+                              onPressed: () {
+                                _controller.clear();
+                                print("The text is $textMessage");
+                                DateTime now = DateTime.now();
+                                currentTime = now;
+                                //put to database ung text
+                                FreedomWallInsert().createData(username,textMessage,currentTime);
+                              },
+                              icon: Icon(Icons.textsms_rounded, color: Colors.white),
+                              label: Text("Write", style: TextStyle(color: Colors.white, fontFamily: 'Proxima Nova'))
+                            )
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 0, 20, 0),
+                            child: TextButton.icon(
+                              onPressed: () {
+                                _controller.clear();
+                              },
+                              icon: Icon(Icons.clear_rounded, color: Colors.white),
+                              label: Text("Clear", style: TextStyle(color: Colors.white, fontFamily: 'Proxima Nova'))
+                            )
+                          ),
+                        ]
+                      ),
+
+                    ],
                   ),
                 ),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      child: TextButton.icon(
-                        onPressed: () {
-                          print("The text is $textMessage");
-                          DateTime now = DateTime.now();
-                          currentTime = now;
-                          //put to database ung text
-                          FreedomWallInsert().createData(username,textMessage,currentTime);
-                        },
-                        icon: Icon(Icons.textsms_rounded),
-                        label: Text("Write")
-                      )
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      child: TextButton.icon(
-                        onPressed: () {
-                          _controller.clear();
-                        },
-                        icon: Icon(Icons.clear_rounded),
-                        label: Text("Clear")
-                      )
-                    ),
-                  ]
-                ),
+                
 
                 Expanded(
                   child: ListView(
@@ -205,18 +242,35 @@ class _MessageBannerState extends State<MessageBanner> {
             itemCount: ctr,
             itemBuilder: (context,index){
               return Padding(
-                padding: const EdgeInsets.all(8),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.black87,
-                  ),
-                  title: Text(
-                    messageData[index].username
-                  ),
-                  subtitle: Text(
-                    "${messageData[index].message}"
+                padding: const EdgeInsets.fromLTRB(4, 2, 4, 2),
+                child: Card(
+                  color: Colors.red[300],
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                  child: Container(
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        radius: 30,
+                        backgroundColor: Colors.white,
+                      ),
+                      title: Text(
+                        messageData[index].username,
+                        style: TextStyle(
+                          fontFamily: 'Proxima Nova',
+                          fontWeight: FontWeight.w700,
+                          fontSize: ResponsiveFlutter.of(context).scale(20.0),
+                          color: Colors.white,
+                        ),
+                      ),
+                      subtitle: Text(
+                        "${messageData[index].message}",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Proxima Nova',
+                        ),
+                        ),
                     ),
+                  ),
                 ),
               );
             },

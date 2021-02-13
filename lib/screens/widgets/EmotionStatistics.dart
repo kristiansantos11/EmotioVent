@@ -236,7 +236,7 @@ Widget statisticBox({@required String title, @required String subtitle, @require
                   fontFamily: 'Proxima Nova',
                   fontSize: ResponsiveFlutter.of(context).scale(15)
                 ),
-              )
+              ),
               
             ]
           ),
