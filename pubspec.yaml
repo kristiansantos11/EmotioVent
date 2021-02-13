@@ -35,6 +35,12 @@ dependencies:
   video_player: ^1.0.1
   # END
   
+  # Permission Handler
+  permission_handler: ^5.1.0+2
+
+  # Table Calendar
+  table_calendar: ^2.3.3
+
   # Share widget states across the entire application (?)
   provider: ^4.0.4
 

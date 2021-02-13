@@ -1,5 +1,6 @@
 import 'package:emotiovent/models/UserData.dart';
 import 'package:emotiovent/models/TheWall.dart';
+import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:emotiovent/services/database/FreedomWallInsert.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -8,16 +9,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
-class WallData extends StatefulWidget {
-  const WallData({Key key}) : super(key: key);
+class FreedomWall extends StatefulWidget {
+  const FreedomWall({Key key}) : super(key: key);
 
   static int limit = 7;
 
   @override
-  _WallDataState createState() => _WallDataState();
+  _FreedomWallState createState() => _FreedomWallState();
 }
 
-class _WallDataState extends State<WallData> {
+class _FreedomWallState extends State<FreedomWall> {
   bool scroll = true;
   ScrollController _scrollController = new ScrollController();
   @override
@@ -53,13 +54,13 @@ class _WallDataState extends State<WallData> {
     
     print("Current user is ${userData.username}");
     username = userData.username;
-    print("Current Number of Messages is ${WallData.limit}");
+    print("Current Number of Messages is ${FreedomWall.limit}");
     var _controller = TextEditingController();
     try{
-      return Center(
+      return SafeArea(
         child: Container(
-          child: ListView(
-              controller: _scrollController,
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
 
                 Padding(
@@ -106,21 +107,34 @@ class _WallDataState extends State<WallData> {
                         label: Text("Clear")
                       )
                     ),
-                  ]),
-                Posts(
-                  key: uniqueKey,
+                  ]
                 ),
-                TextButton.icon(
-                  onPressed: () {
-                    setState(() {
-                      //_scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-                      WallData.limit = WallData.limit + 3;
-                      uniqueKey = UniqueKey();
-                    });
-                  },
-                  icon: Icon(Icons.add),
-                  label: Text("View More"),
+
+                Expanded(
+                  child: ListView(
+                    children: [
+
+                      Posts(
+                        key: uniqueKey,
+                      ),
+
+                      TextButton.icon(
+                        onPressed: () {
+                          setState(() {
+                            //_scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+                            FreedomWall.limit = FreedomWall.limit + 3;
+                            uniqueKey = UniqueKey();
+                          });
+                        },
+                        icon: Icon(Icons.add),
+                        label: Text("View More"),
+                      ),
+
+                    ],
+                  ),
                 ),
+
+
 
               ],
             ),
@@ -145,7 +159,7 @@ class _PostsState extends State<Posts> {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<TheWall>>.value(
-      value: FreedomWallGetter(limit: WallData.limit).wallData,
+      value: FreedomWallGetter(limit: FreedomWall.limit).wallData,
       child: MessageBanner(),
     );
   }
@@ -164,7 +178,7 @@ class _MessageBannerState extends State<MessageBanner> {
   @override
   Widget build(BuildContext context) {
     List<TheWall> wallData = context.watch<List<TheWall>>();
-    print("(Builder) Current Limit of _WallDataState = ${WallData.limit}");
+    print("(Builder) Current Limit of _WallDataState = ${FreedomWall.limit}");
     print("Users' Message Fetched: ");
     if (wallData == null){
       return Center(child: CircularProgressIndicator());
@@ -177,31 +191,33 @@ class _MessageBannerState extends State<MessageBanner> {
         print("$ctr. ${x.username}");
         ctr++;
       }
-      return wallData != null ? Container(
-        child: ListView.builder(
-          controller: _scrollController,
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: ctr,
-          itemBuilder: (context,index){
-            return Padding(
-              padding: const EdgeInsets.all(8),
-              child: ListTile(
-                leading: CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.black87,
-                ),
-                title: Text(
-                  messageData[index].username
-                ),
-                subtitle: Text(
-                  "${messageData[index].message}"
+      return wallData != null ? 
+        Container(
+          child: ListView.builder(
+            controller: _scrollController,
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: ctr,
+            itemBuilder: (context,index){
+              return Padding(
+                padding: const EdgeInsets.all(8),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Colors.black87,
                   ),
-              ),
-            );
-          },
-        )
-      ):Container();
+                  title: Text(
+                    messageData[index].username
+                  ),
+                  subtitle: Text(
+                    "${messageData[index].message}"
+                    ),
+                ),
+              );
+            },
+          )
+        ) : 
+      Container();
     }
     catch(e)
     {

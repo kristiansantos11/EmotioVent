@@ -142,7 +142,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                       alignment: Alignment.center,
                       child: TextButton(
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(Color(0xff53B6AF)),
+                              backgroundColor: MaterialStateProperty.all<Color>(Color(0xffc1c1c1)),
                               shape: MaterialStateProperty.all<OutlinedBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(18.0),
@@ -158,7 +158,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                               "Back",
                               style: TextStyle(
                                 fontSize: ResponsiveFlutter.of(context).scale(14),
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: 0,
                                 )
@@ -185,8 +185,8 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                   child: Text(
                                     "What do you feel?",
                                     style: TextStyle(
-                                      fontFamily: 'Aileron',
-                                      color: Color(0xff53B6AF),
+                                      fontFamily: 'Proxima Nova',
+                                      color: Color(0xff38467f),
                                       fontStyle: FontStyle.normal,
                                       letterSpacing: -0.5,
                                       fontSize: ResponsiveFlutter.of(context).scale(35.0),
@@ -201,10 +201,10 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                 Text(
                                   "Choose an emotion box...",
                                   style: TextStyle(
-                                    fontFamily: 'Segoe UI',
+                                    fontFamily: 'Proxima Nova',
                                     fontWeight: FontWeight.w500,
                                     fontStyle: FontStyle.normal,
-                                    color: Color(0xff53B6AF),
+                                    color: Color(0xff666666),
                                     letterSpacing: 1,
                                     fontSize: ResponsiveFlutter.of(context).scale(15.0),
                                   ),
@@ -233,7 +233,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     ctx: context, 
                                     intervalStart: 0.4,
                                     intervalEnd: 0.6,
-                                    color: 0xc5D9D900, 
+                                    color: Color(0xffff9aa2), 
                                     emotion: "Happy",
                                     controller: controller,
                                   ),
@@ -242,7 +242,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     ctx: context, 
                                     intervalStart: 0.4,
                                     intervalEnd: 0.6,
-                                    color: 0xc5FF8B8B, 
+                                    color: Color(0xffffb7b2), 
                                     emotion: "Anger",
                                     controller: controller,
                                   ),
@@ -268,7 +268,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     ctx: context, 
                                     intervalStart: 0.6,
                                     intervalEnd: 0.8,
-                                    color: 0xc5E593FB, 
+                                    color: Color(0xffffdac1), 
                                     emotion: "Fear",
                                     controller: controller,
                                   ),
@@ -277,7 +277,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     ctx: context, 
                                     intervalStart: 0.6,
                                     intervalEnd: 0.8,
-                                    color: 0xc587A7FF, 
+                                    color: Color(0xffe2f0cb), 
                                     emotion: "Sad",
                                     controller: controller,
                                   ),
@@ -303,7 +303,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     ctx: context,
                                     intervalStart: 0.8,
                                     intervalEnd: 1.0,
-                                    color: 0xc570DB77, 
+                                    color: Color(0xffb5ead7), 
                                     emotion: "Disgust",
                                     controller: controller
                                   ),
@@ -312,7 +312,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     ctx: context,
                                     intervalStart: 0.8,
                                     intervalEnd: 1.0,
-                                    color: 0xc5EFA254,
+                                    color: Color(0xffc7ceea),
                                     emotion: "Alone",
                                     controller: controller,
                                   ),
@@ -340,7 +340,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
 class EmotionButton extends StatelessWidget{
   final double intervalStart;
   final double intervalEnd;
-  final int color;
+  final Color color;
   final String emotion;
   final BuildContext ctx;
   final AnimationController controller;
@@ -390,7 +390,7 @@ class EmotionButton extends StatelessWidget{
                         borderRadius: BorderRadius.circular(18.0),
                       ),
                     ),
-                    backgroundColor: MaterialStateProperty.all<Color>(Color(color)),
+                    backgroundColor: MaterialStateProperty.all<Color>(color),
                   ),
                   //minWidth: MediaQuery.of(context).size.width / 2.5,
                   //height: ResponsiveFlutter.of(context).hp(20),

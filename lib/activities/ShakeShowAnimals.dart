@@ -170,6 +170,7 @@ class _ShakeShowAnimalsState extends State<ShakeShowAnimals> with TickerProvider
         opacity: _shaken ? 1.0 : 0.0,
         duration: Duration(seconds: 1),
         child: FloatingActionButton.extended(
+          heroTag: null,
           label: Text("Continue", style: TextStyle(fontFamily: 'Roboto', fontStyle: FontStyle.normal)),
           icon: Icon(Icons.play_arrow),
           backgroundColor: Colors.orange[600],
