@@ -1,4 +1,5 @@
 import 'package:emotiovent/models/EmotionRecord.dart';
+import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
@@ -83,13 +84,25 @@ class _EmotionCalendarState extends State<EmotionCalendar> with TickerProviderSt
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
 
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/img/fading-dots.png'),
-                fit: BoxFit.contain,
+          Stack(
+            children: <Widget>[
+
+              Positioned(
+                left: getWidth(context) / 4,
+                top: -5,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/img/fading-dots.png'),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
               ),
-            ),
+
+              Container(
             alignment: Alignment.center,
             padding: EdgeInsets.all(20.0),
             child: Text(
@@ -102,6 +115,11 @@ class _EmotionCalendarState extends State<EmotionCalendar> with TickerProviderSt
               ),
             ),
           ),
+
+            ],
+          ),
+
+          
 
           Padding(
             padding: EdgeInsets.all(ResponsiveFlutter.of(context).scale(7.0)),
@@ -233,7 +251,7 @@ class _EmotionCalendarState extends State<EmotionCalendar> with TickerProviderSt
           fontWeight: FontWeight.w500,
         ),
         decoration: BoxDecoration(
-          color: Colors.red[200]
+          color: Color(0xffffb5b5),
         ),
       ),
       builders: CalendarBuilders(
