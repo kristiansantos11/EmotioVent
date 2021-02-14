@@ -21,6 +21,7 @@ class _EVInitialScreenState extends State<EVInitialScreen> {
     final firebaseUser = context.watch<User>();
 
     if (firebaseUser != null){
+      print("Current User: ${firebaseUser.email}");
       return EVMainMenu();
     } else {
       return EVStartScreen();
