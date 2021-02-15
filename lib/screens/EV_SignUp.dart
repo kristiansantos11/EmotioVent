@@ -233,7 +233,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                 ),
                                 filled: true,
                                 hintStyle: TextStyle(
-                                    color: Colors.white),
+                                    color: Colors.grey[400]),
                                 hintText: "Email",
                                 fillColor: Colors.grey[600],
                               ),
@@ -281,7 +281,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                     ),
                                     filled: true,
                                     hintStyle: TextStyle(
-                                        color: Colors.white),
+                                        color: Colors.grey[400]),
                                     hintText: "Password",
                                     fillColor: Colors.grey[600],
                                   ),
@@ -348,7 +348,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                     ),
                                     filled: true,
                                     hintStyle: TextStyle(
-                                        color: Colors.white),
+                                        color: Colors.grey[400]),
                                     hintText: "Confirm Password",
                                     fillColor: Colors.grey[600],
                                   ),
@@ -395,7 +395,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                       ),
                                       filled: true,
                                       hintStyle: TextStyle(
-                                          color: Colors.white),
+                                          color: Colors.grey[400]),
                                       hintText: "Username",
                                       fillColor: Colors.grey[600],
                                     ),
@@ -440,58 +440,71 @@ class _EVSignUpState extends State<EVSignUp> {
                                       ),
                                       filled: true,
                                       hintStyle: TextStyle(
-                                          color: Colors.white),
+                                          color: Colors.grey[400]),
                                       hintText: "Name",
                                       fillColor: Colors.grey[600],
                                     ),
                             ),
                           ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text("Birthday",
-                            style: TextStyle(
-                                fontFamily: 'Proxima Nova',
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.bold,
-                                fontSize:
-                                    ResponsiveFlutter.of(
-                                            context)
-                                        .scale(18),
-                                height: 0.5,
-                                color: Colors.black
-                            ),),
-                          ),
+                          // SizedBox(height: 20),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(8.0),
+                          //   child: Text("Birthday",
+                          //   style: TextStyle(
+                          //       fontFamily: 'Proxima Nova',
+                          //       fontStyle: FontStyle.normal,
+                          //       fontWeight: FontWeight.bold,
+                          //       fontSize:
+                          //           ResponsiveFlutter.of(
+                          //                   context)
+                          //               .scale(18),
+                          //       height: 0.5,
+                          //       color: Colors.black
+                          //   ),),
+                          // ),
 
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: DateField(
+                            child: DateTimeField(
+                              mode: DateTimeFieldPickerMode.date,
+                              dateTextStyle: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Proxima Nova',
+                                fontWeight: FontWeight.w700,
+                                fontSize: ResponsiveFlutter.of(context).scale(18.0),
+                              ),
                               decoration: InputDecoration(
-                                        contentPadding:
-                                            EdgeInsets.fromLTRB(
-                                                20, 10, 20, 10),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.all(
-                                            Radius.circular(100.0),
-                                          ),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                        filled: true,
-                                        hintStyle: TextStyle(
-                                            color: Colors.white),
-                                        hintText: "Name",
-                                        fillColor: Colors.grey[600],
-                                      ),
+                                contentPadding:
+                                    EdgeInsets.fromLTRB(
+                                        20, 10, 20, 10),
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(
+                                    Radius.circular(100.0),
+                                  ),
+                                  borderSide: BorderSide.none,
+                                ),
+                                filled: true,
+                                hintText: "Birthday",
+                                hintStyle: TextStyle(
+                                  color: Colors.grey[400],
+                                  fontFamily: 'Proxima Nova',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize:
+                                  ResponsiveFlutter.of(
+                                          context)
+                                      .scale(18),
+                                ),
+                                fillColor: Colors.grey[600],
+                              ),
                               onDateSelected: (DateTime value) {
                                 setState(() {
                                   birthday = value;
                                 });
                               }, 
-                              selectedDate: birthday,),
+                              selectedDate: birthday,
+                            ),
                           ),
-
-                          SizedBox(height: 10),
 
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -534,7 +547,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                         ),
                                         filled: true,
                                         hintStyle: TextStyle(
-                                            color: Colors.white),
+                                            color: Colors.grey[400]),
                                         hintText: "Contact Number",
                                         fillColor: Colors.grey[600],
                                       ),
@@ -578,7 +591,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                           ),
                                           filled: true,
                                           hintStyle: TextStyle(
-                                              color: Colors.white),
+                                              color: Colors.grey[400]),
                                           hintText: "Gender",
                                           fillColor: Colors.grey[600],
                                         ),

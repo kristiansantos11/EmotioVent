@@ -126,7 +126,7 @@ packages:
       name: date_field
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.2"
+    version: "1.0.5"
   esys_flutter_share:
     dependency: "direct main"
     description:
