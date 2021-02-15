@@ -164,6 +164,7 @@ class _EVSignUpState extends State<EVSignUp> {
                         "Register now:",
                         style: TextStyle(
                           letterSpacing: -1,
+                          height: 0.75,
                           fontFamily: 'Proxima Nova',
                           fontWeight: FontWeight.w800,
                           fontSize: ResponsiveFlutter.of(context).scale(40),
@@ -179,6 +180,7 @@ class _EVSignUpState extends State<EVSignUp> {
                         "Tell us who you are",
                         style: TextStyle(
                           letterSpacing: -1,
+                          height: 1,
                           fontFamily: 'Proxima Nova',
                           fontWeight: FontWeight.w700,
                           fontSize: ResponsiveFlutter.of(context).scale(20),
@@ -456,6 +458,7 @@ class _EVSignUpState extends State<EVSignUp> {
                                     ResponsiveFlutter.of(
                                             context)
                                         .scale(18),
+                                height: 0.5,
                                 color: Colors.black
                             ),),
                           ),
@@ -597,7 +600,13 @@ class _EVSignUpState extends State<EVSignUp> {
                                 child: TextButton(
                                   style: ButtonStyle(
                                     
+                                    minimumSize: MaterialStateProperty.all(Size(ResponsiveFlutter.of(context).scale(90.0), 0)),
                                     padding: MaterialStateProperty.all(EdgeInsets.all(15.0)),
+                                    shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20.0)
+                                      ),
+                                    ),
 
                                     backgroundColor: MaterialStateProperty.all(Color.fromARGB(255,154,162,255)),
                                   ),
@@ -609,6 +618,8 @@ class _EVSignUpState extends State<EVSignUp> {
                                     style: TextStyle(
                                       fontSize: ResponsiveFlutter.of(context).scale(15),
                                       color: Colors.white,
+                                      fontFamily: 'Proxima Nova',
+                                      fontWeight: FontWeight.w700,
                                     ),
                                   ),
                                 ),
@@ -623,14 +634,16 @@ class _EVSignUpState extends State<EVSignUp> {
                                       borderRadius: BorderRadius.circular(20.0)
                                     ),
                                   ),
-                                  backgroundColor: MaterialStateProperty.all(Color.fromARGB(226,240,203,255)),
+                                  backgroundColor: MaterialStateProperty.all(Color(0xffe3b0f7)),
                                 ),
                                 onPressed: () {register(context: context);},
                                 child: Text(
                                   "Register",
                                   style: TextStyle(
                                     fontSize: ResponsiveFlutter.of(context).scale(15),
-                                    color: Colors.white
+                                    color: Colors.white,
+                                    fontFamily: 'Proxima Nova',
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
                               ),
