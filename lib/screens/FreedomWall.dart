@@ -54,9 +54,9 @@ class _FreedomWallState extends State<FreedomWall> {
       return Center(child: CircularProgressIndicator());
     }
     
-    print("Current user is ${userData.username}");
+    //print("Current user is ${userData.username}");
     username = userData.username;
-    print("Current Number of Messages is ${FreedomWall.limit}");
+    //print("Current Number of Messages is ${FreedomWall.limit}");
     var _controller = TextEditingController();
     try{
       return Container(
@@ -82,7 +82,7 @@ class _FreedomWallState extends State<FreedomWall> {
                         child: TextFormField(
                           controller: _controller,
                           onChanged: (text) {
-                            print("Current text is: $text");
+                            //print("Current text is: $text");
                             textMessage = text;
                           },
                           cursorColor: Color(0xfff77272),
@@ -124,7 +124,7 @@ class _FreedomWallState extends State<FreedomWall> {
                             child: TextButton.icon(
                               onPressed: () {
                                 _controller.clear();
-                                print("The text is $textMessage");
+                                //print("The text is $textMessage");
                                 DateTime now = DateTime.now();
                                 currentTime = now;
                                 //put to database ung text
@@ -229,8 +229,8 @@ class _MessageBannerState extends State<MessageBanner> {
   @override
   Widget build(BuildContext context) {
     List<TheWall> wallData = context.watch<List<TheWall>>();
-    print("(Builder) Current Limit of _WallDataState = ${FreedomWall.limit}");
-    print("Users' Message Fetched: ");
+    //print("(Builder) Current Limit of _WallDataState = ${FreedomWall.limit}");
+    //print("Users' Message Fetched: ");
     if (wallData == null){
       return Center(child: CircularProgressIndicator());
     }
@@ -239,7 +239,7 @@ class _MessageBannerState extends State<MessageBanner> {
       dynamic messageData = wallData;
       for(var x in messageData)
       {
-        print("$ctr. ${x.username}");
+        //print("$ctr. ${x.username}");
         ctr++;
       }
       return wallData != null ? 

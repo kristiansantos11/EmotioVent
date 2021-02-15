@@ -6,6 +6,7 @@ import 'package:emotiovent/screens/EV_StartScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:emotiovent/services/database/Logging.dart';
 
 class EVInitialScreen extends StatefulWidget {
   static const routeName = '/main';
@@ -15,12 +16,11 @@ class EVInitialScreen extends StatefulWidget {
 
 class _EVInitialScreenState extends State<EVInitialScreen> {
   User firebaseUser;
-
   @override
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
-
     if (firebaseUser != null){
+      Logging(firebaseUser).Log();
       return EVMainMenu();
     } else {
       return EVStartScreen();
