@@ -1,7 +1,9 @@
+import 'package:emotiovent/models/UserData.dart';
 import 'package:emotiovent/services/EV_AuthService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
+import 'package:emotiovent/services/database/GetStatistics.dart';
 
 class AppSettings extends StatefulWidget {
   @override
@@ -22,8 +24,10 @@ class _AppSettingsState extends State<AppSettings> {
 
   @override
   Widget build(BuildContext context) {
+    final dynamic userData = Provider.of<UserData>(context); 
     return SafeArea(
-      child: Stack(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
             child: ElevatedButton(
@@ -31,6 +35,15 @@ class _AppSettingsState extends State<AppSettings> {
               onPressed:(){_signOut(context);},
             )
           ),
+          Center(
+            child: ElevatedButton(
+              child: Text("Get Statistics (DEBUG MODE)"),
+              onPressed:(){
+                GetStatistics(userData).GetData();
+              },
+            )
+          ),
+          
         ],
       ),
     );

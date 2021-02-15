@@ -19,7 +19,6 @@ class _EVInitialScreenState extends State<EVInitialScreen> {
   @override
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
-
     if (firebaseUser != null){
       print("Current User: ${firebaseUser.email}");
       return EVMainMenu();
