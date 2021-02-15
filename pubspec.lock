@@ -346,7 +346,7 @@ packages:
     source: hosted
     version: "1.1.6"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       url: "https://pub.dartlang.org"
@@ -539,6 +539,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  sortedmap:
+    dependency: "direct main"
+    description:
+      name: sortedmap
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.2+1"
   source_span:
     dependency: transitive
     description:

@@ -28,6 +28,8 @@ dependencies:
   # Si Jedi ang naglagay neto (✿◠‿◠)
   date_field: ^0.1.2
   page_transition: "^1.1.7+6"
+  sortedmap: ^0.4.2+1
+  intl: ^0.16.1
   
   # Experimentation purposes atm
   # START

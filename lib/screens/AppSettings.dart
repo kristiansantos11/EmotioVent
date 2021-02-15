@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import 'package:emotiovent/services/database/GetStatistics.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AppSettings extends StatefulWidget {
   @override
@@ -24,7 +25,7 @@ class _AppSettingsState extends State<AppSettings> {
 
   @override
   Widget build(BuildContext context) {
-    final dynamic userData = Provider.of<UserData>(context); 
+    final firebaseUser = context.watch<User>();
     return SafeArea(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -39,7 +40,7 @@ class _AppSettingsState extends State<AppSettings> {
             child: ElevatedButton(
               child: Text("Get Statistics (DEBUG MODE)"),
               onPressed:(){
-                GetStatistics(userData).GetData();
+                GetStatistics(firebaseUser).GetData();
               },
             )
           ),
