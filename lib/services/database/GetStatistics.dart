@@ -24,15 +24,19 @@ class GetStatistics
   Timestamp ts;
   List listOfData = [];
   List listOfEmotions = [];
+
+  // Use getter methods
   static String mostFeltEmotion;
   static String averageTime;
-  List listOfLog = [];
   static int averageSatisfaction;
-
-  // FOR LOG RECORD
   static int numberOfTimes;
 
-  Future GetData() async
+  List listOfLog = [];
+
+  // FOR LOG RECORD
+  
+
+  Future<void> getData() async
   {
     //EMOTION RECORD
     QuerySnapshot snapshot = await cr.doc(firebaseUser.email).collection("emotion_record").get();
@@ -186,48 +190,58 @@ class GetStatistics
   // METHOD 1: 
   String MostFeltEmotion(listOfEmotions)
   {
-    Map map = new SortedMap(Ordering.byValue());
-    List emotions = [];
-
-    listOfEmotions.forEach((x) => map[x] = !map.containsKey(x) ? (1) : (map[x] + 1));  
-
-    for(var x in map.keys)
+    try
     {
-      emotions.add(x);
+      Map map = new SortedMap(Ordering.byValue());
+      List emotions = [];
+
+      listOfEmotions.forEach((x) => map[x] = !map.containsKey(x) ? (1) : (map[x] + 1));  
+
+      for(var x in map.keys)
+      {
+        emotions.add(x);
+      }
+      return emotions.last;
+    } catch (e){
+      return "None";
     }
-    return emotions.last;
   }
 
   // METHOD 2: 
   String averageTimeOfEmotion(listOfData)
   {
-    int totalMinutes = 0;
-    int count = 0;
-    for(var x in listOfData)
+    try
     {
-      Timestamp myTimeStamp = x["Timestamp"];
-      DateTime myDateTime = myTimeStamp.toDate();
-      String hours = DateFormat.H().format(myDateTime);
-      String minute = DateFormat.m().format(myDateTime);
-      int hoursToMinute = int.parse(hours)*60;
-      int minuteToMinute = int.parse(minute);
-      totalMinutes = totalMinutes+hoursToMinute+minuteToMinute;
-      count = count+1;
+      int totalMinutes = 0;
+      int count = 0;
+      for(var x in listOfData)
+      {
+        Timestamp myTimeStamp = x["Timestamp"];
+        DateTime myDateTime = myTimeStamp.toDate();
+        String hours = DateFormat.H().format(myDateTime);
+        String minute = DateFormat.m().format(myDateTime);
+        int hoursToMinute = int.parse(hours)*60;
+        int minuteToMinute = int.parse(minute);
+        totalMinutes = totalMinutes+hoursToMinute+minuteToMinute;
+        count = count+1;
+      }
+      
+      String averageTime;
+      int averageMinutes = (totalMinutes/count).round();
+      if(averageMinutes>720)
+      {
+        averageMinutes = averageMinutes - 720;
+        averageTime = durationToString(averageMinutes) + " pm";
+      }
+      else
+      {
+        averageTime = durationToString(averageMinutes) + " am";
+      }
+      
+      return averageTime;
+    } catch (e) {
+      return "None";
     }
-    
-    String averageTime;
-    int averageMinutes = (totalMinutes/count).round();
-    if(averageMinutes>720)
-    {
-      averageMinutes = averageMinutes - 720;
-      averageTime = durationToString(averageMinutes) + " pm";
-    }
-    else
-    {
-      averageTime = durationToString(averageMinutes) + " am";
-    }
-    
-    return averageTime;
   }
 
   // METHOD 3:
@@ -244,19 +258,24 @@ class GetStatistics
   // METHOD 4
   int calculateAverageSatisfaction(listOfData)
   {
-    int rate;
-    int totalRate = 0;
-    int ctr = 0;
-    int average;
+    try
+    {  
+      int rate;
+      int totalRate = 0;
+      int ctr = 0;
+      int average;
 
-    for(var x in listOfData)
-    {
-      rate = x["Activity Rate"];
-      totalRate = totalRate+rate;
-      ctr = ctr+1;
+      for(var x in listOfData)
+      {
+        rate = x["Activity Rate"];
+        totalRate = totalRate+rate;
+        ctr = ctr+1;
+      }
+      average = (totalRate/ctr).round();
+
+      return average;
+    } catch (e) {
+      return 0;
     }
-    average = (totalRate/ctr).round();
-
-    return average;
   }
 }

@@ -30,25 +30,59 @@ class _AppSettingsState extends State<AppSettings> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(
-            child: ElevatedButton(
-              child: Text("Logout"),
-              onPressed:(){_signOut(context);},
-            )
+          ElevatedButton(
+            child: Text("Logout"),
+            onPressed:(){_signOut(context);},
           ),
-          Center(
-            child: ElevatedButton(
-              child: Text("Get Statistics (DEBUG MODE)"),
-              onPressed:() async{
-                // # SAMPLE ON USING THE CLASS. SET FREQUENCY BY 0 to 4. (Daily to Yearly)
-                await GetStatistics(firebaseUser:firebaseUser,frequency: 0).GetData();
-                print("Most Felt Emotion: ${GetStatistics.mostFeltEmotion}");
-                print("Average Time You Feel This Emotion: ${GetStatistics.averageTime}");
-                print("You open this app ${GetStatistics.numberOfTimes} times already.");
-                print("The average satisfaction per activity is ${GetStatistics.averageSatisfaction}");
-              },
-            )
+
+          ElevatedButton(
+            child: Text("Get Statistics DAILY (DEBUG MODE)"),
+            onPressed:() async{
+              // # SAMPLE ON USING THE CLASS. SET FREQUENCY BY 0 to 4. (Daily to Yearly)
+              await GetStatistics(firebaseUser:firebaseUser,frequency: 0).getData();
+              print("Most Felt Emotion: ${GetStatistics.mostFeltEmotion}");
+              print("Average Time You Feel This Emotion: ${GetStatistics.averageTime}");
+              print("You open this app ${GetStatistics.numberOfTimes} times already.");
+              print("The average satisfaction per activity is ${GetStatistics.averageSatisfaction}");
+            },
           ),
+
+          ElevatedButton(
+            child: Text("Get Statistics WEEKLY (DEBUG MODE)"),
+            onPressed:() async{
+              // # SAMPLE ON USING THE CLASS. SET FREQUENCY BY 0 to 4. (Daily to Yearly)
+              await GetStatistics(firebaseUser:firebaseUser,frequency: 1).getData();
+              print("Most Felt Emotion: ${GetStatistics.mostFeltEmotion}");
+              print("Average Time You Feel This Emotion: ${GetStatistics.averageTime}");
+              print("You open this app ${GetStatistics.numberOfTimes} times already.");
+              print("The average satisfaction per activity is ${GetStatistics.averageSatisfaction}");
+            },
+          ),
+
+          ElevatedButton(
+            child: Text("Get Statistics MONTHLY (DEBUG MODE)"),
+            onPressed:() async{
+              // # SAMPLE ON USING THE CLASS. SET FREQUENCY BY 0 to 4. (Daily to Yearly)
+              await GetStatistics(firebaseUser:firebaseUser,frequency: 2).getData();
+              print("Most Felt Emotion: ${GetStatistics.mostFeltEmotion}");
+              print("Average Time You Feel This Emotion: ${GetStatistics.averageTime}");
+              print("You open this app ${GetStatistics.numberOfTimes} times already.");
+              print("The average satisfaction per activity is ${GetStatistics.averageSatisfaction}");
+            },
+          ),
+
+          ElevatedButton(
+            child: Text("Get Statistics YEARLY (DEBUG MODE)"),
+            onPressed:() async{
+              // # SAMPLE ON USING THE CLASS. SET FREQUENCY BY 0 to 4. (Daily to Yearly)
+              await GetStatistics(firebaseUser:firebaseUser,frequency: 3).getData();
+              print("Most Felt Emotion: ${GetStatistics.mostFeltEmotion}");
+              print("Average Time You Feel This Emotion: ${GetStatistics.averageTime}");
+              print("You open this app ${GetStatistics.numberOfTimes} times already.");
+              print("The average satisfaction per activity is ${GetStatistics.averageSatisfaction}");
+            },
+          ),
+
         ],
       ),
     );

@@ -61,6 +61,10 @@ class _EmotionCalendarState extends State<EmotionCalendar> with TickerProviderSt
   Widget build(BuildContext context) {
     List<EmotionRecord> emotionRecord = context.watch<List<EmotionRecord>>();
 
+    if (emotionRecord == null){
+      return Center(child: CircularProgressIndicator());
+    }
+
     emotionRecord.forEach((record){
       var year = record.timestamp.year;
       var month = record.timestamp.month;
