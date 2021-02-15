@@ -64,136 +64,138 @@ class _EmotionStatisticsState extends State<EmotionStatistics> {
       key: statisticsUniqueKey,
       future: GetStatistics(firebaseUser: firebaseUser, frequency: counter).getData(),
       builder: (context, snapshot){
-        if (snapshot.hasError){
+        try
+        {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+
+              // # TODO: Pakibago yung color property sa loob ng bawat statisticBox depende sa color palette ng UI.
+
+              Container(
+                height: getHeight(context) / 15,
+                width: getWidth(context) * 0.75,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.0),
+                  color: Color(0xffe7f8f2),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          counter = 0;
+                        });
+                      },
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
+                        backgroundColor: MaterialStateProperty.all<Color>((counter == 0) ? Color(0xffb5ead7) : Color(0xffe7f8f2)),
+                      ),
+                      child: Text(
+                        "Today",
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          counter = 1;
+                        });
+                      },
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
+                        backgroundColor: MaterialStateProperty.all<Color>((counter == 1) ? Color(0xffb5ead7) : Color(0xffe7f8f2)),
+                      ),
+                      child: Text(
+                        "Weekly",
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          counter = 2;
+                        });
+                      },
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
+                        backgroundColor: MaterialStateProperty.all<Color>((counter == 2) ? Color(0xffb5ead7) : Color(0xffe7f8f2)),
+                      ),
+                      child: Text(
+                        "Monthly",
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          counter = 3;
+                        });
+                      },
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
+                        backgroundColor: MaterialStateProperty.all<Color>((counter == 3) ? Color(0xffb5ead7) : Color(0xffe7f8f2)),
+                      ),
+                      child: Text(
+                        "Yearly",
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  statisticBox(
+                    context: context,
+                    color: Color(0xffff8383), // Pabago
+                    title: "Most felt emotion:",
+                    subtitle: GetStatistics.mostFeltEmotion,
+                  ),
+                  statisticBox(
+                    context: context,
+                    color: Color(0xffffb7b2), // Pabago
+                    title: "Average time you felt ${GetStatistics.mostFeltEmotion}:",
+                    subtitle: GetStatistics.averageTime,
+                  ),
+                ]
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  statisticBox(
+                    context: context,
+                    color: Color(0xffe2f0cb), // Pabago
+                    title: "You already opened this app for",
+                    subtitle: "${GetStatistics.numberOfTimes}",
+                  ),
+                  statisticBox(
+                    context: context,
+                    color: Color(0xffb5ead7), // Pabago
+                    title: "Average satisfaction per activity.",
+                    subtitle: "${GetStatistics.averageSatisfaction}",
+                  ), 
+                ]
+              ),
+
+            ],
+          );
+        } catch (e) {
           return Center(child: CircularProgressIndicator());
         }
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-
-            // # TODO: Pakibago yung color property sa loob ng bawat statisticBox depende sa color palette ng UI.
-
-            Container(
-              height: getHeight(context) / 15,
-              width: getWidth(context) * 0.75,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0),
-                color: Color(0xffe7f8f2),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        counter = 0;
-                      });
-                    },
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
-                      backgroundColor: MaterialStateProperty.all<Color>((counter == 0) ? Color(0xffb5ead7) : Color(0xffe7f8f2)),
-                    ),
-                    child: Text(
-                      "Today",
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        counter = 1;
-                      });
-                    },
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
-                      backgroundColor: MaterialStateProperty.all<Color>((counter == 1) ? Color(0xffb5ead7) : Color(0xffe7f8f2)),
-                    ),
-                    child: Text(
-                      "Weekly",
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        counter = 2;
-                      });
-                    },
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
-                      backgroundColor: MaterialStateProperty.all<Color>((counter == 2) ? Color(0xffb5ead7) : Color(0xffe7f8f2)),
-                    ),
-                    child: Text(
-                      "Monthly",
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        counter = 3;
-                      });
-                    },
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
-                      backgroundColor: MaterialStateProperty.all<Color>((counter == 3) ? Color(0xffb5ead7) : Color(0xffe7f8f2)),
-                    ),
-                    child: Text(
-                      "Yearly",
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                statisticBox(
-                  context: context,
-                  color: Color(0xffff8383), // Pabago
-                  title: "Most felt emotion:",
-                  subtitle: GetStatistics.mostFeltEmotion,
-                ),
-                statisticBox(
-                  context: context,
-                  color: Color(0xffffb7b2), // Pabago
-                  title: "Average time you felt ${GetStatistics.mostFeltEmotion}:",
-                  subtitle: GetStatistics.averageTime,
-                ),
-              ]
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                statisticBox(
-                  context: context,
-                  color: Color(0xffe2f0cb), // Pabago
-                  title: "You already opened this app for",
-                  subtitle: "${GetStatistics.numberOfTimes}",
-                ),
-                statisticBox(
-                  context: context,
-                  color: Color(0xffb5ead7), // Pabago
-                  title: "Average satisfaction per activity.",
-                  subtitle: "${GetStatistics.averageSatisfaction}",
-                ), 
-              ]
-            ),
-
-          ],
-        );
       }
     );
   }
