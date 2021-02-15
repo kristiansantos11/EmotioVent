@@ -26,6 +26,25 @@ class _FreedomWallState extends State<FreedomWall> {
   DateTime currentTime;
 
   UniqueKey uniqueKey = new UniqueKey();
+  ScrollController _scrollController = new ScrollController();
+
+  @override
+   void initState() {
+    super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => scrollToBottom());
+  }
+
+  void scrollToBottom()
+  {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      print("scrolling to bottom.");
+      if( _scrollController.hasClients){
+        print("Scrolled to bottom!!!!!!!!");
+                _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +157,7 @@ class _FreedomWallState extends State<FreedomWall> {
 
                 Expanded(
                   child: ListView(
+                    controller: _scrollController,
                     children: [
 
                       Posts(
@@ -150,6 +170,7 @@ class _FreedomWallState extends State<FreedomWall> {
                             //_scrollController.jumpTo(_scrollController.position.maxScrollExtent);
                             FreedomWall.limit = FreedomWall.limit + 3;
                             uniqueKey = UniqueKey();
+                            scrollToBottom();
                           });
                         },
                         icon: Icon(Icons.add, color: Color(0xffff8383)),

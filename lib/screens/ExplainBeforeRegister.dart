@@ -84,8 +84,11 @@ class ExplainBeforeRegister extends StatelessWidget {
                   
                   SafeArea(
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(getWidth(context)/8, 10, getWidth(context)/8, 
-                      ResponsiveFlutter.of(context).scale(250) ),
+                      padding: EdgeInsets.fromLTRB(
+                        getWidth(context)/8, 
+                        getWidth(context)/17, 
+                        getWidth(context)/8, 
+                        getWidth(context)/9),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -159,29 +162,18 @@ class ExplainBeforeRegister extends StatelessWidget {
                             ],
                           ),
 
-                          
-                          
-                          
-                        ],
-                      ),
-                    ),
-                  ),
-
-                      SafeArea(
-                        child: Padding(
-                      padding: EdgeInsets.fromLTRB(getWidth(context)/8, 
-                      ResponsiveFlutter.of(context).scale(510), getWidth(context)/8, 0),
-                                      child: ShowUp(
+                          ShowUp(
                                 delay: msDuration + 500,
                                 child: Column(
                                   children: <Widget>[
+
                                     Text(
                                       "Would you like to register immediately or see the activities for venting out first?",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: 'Proxima Nova',
                                         fontSize: 14,
-                                        color: Colors.grey[500],
+                                        color: Colors.grey[600],
                                       ),
                                     ),
 
@@ -191,17 +183,27 @@ class ExplainBeforeRegister extends StatelessWidget {
 
                                         TextButton(
                                           style: ButtonStyle(
+                                            minimumSize: MaterialStateProperty.all<Size>(
+                                              Size(getWidth(context)/3.5,getWidth(context)/10)
+                                            ),
                                             shape: MaterialStateProperty.all(
                                               RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.circular(18.0),
                                                 side: BorderSide(
                                                   color: Color(0xfff77272),
-                                                  width: 1.0
+                                                  width: 2.0
                                                 )
                                               )
                                             ),
                                           ),
-                                          child: Text("REGISTER", style: TextStyle(fontFamily: 'Nexa', color: Color(0xfff77272))),
+                                          child: Text(
+                                            "REGISTER",
+                                            style: TextStyle(
+                                              fontFamily: 'Nexa',
+                                              fontWeight: FontWeight.w700,
+                                              color: Color(0xfff77272)
+                                            )
+                                          ),
                                           onPressed: (){
                                             Navigator.of(context).pushNamed(EVSignUp.routeName);
                                           },
@@ -209,6 +211,9 @@ class ExplainBeforeRegister extends StatelessWidget {
 
                                         ElevatedButton(
                                           style: ButtonStyle(
+                                            minimumSize: MaterialStateProperty.all<Size>(
+                                              Size(getWidth(context)/3.5,getWidth(context)/10)
+                                            ),
                                             backgroundColor: MaterialStateProperty.all<Color>(Color(0xfff77272)),
                                             shape: MaterialStateProperty.all(
                                               RoundedRectangleBorder(
@@ -216,7 +221,14 @@ class ExplainBeforeRegister extends StatelessWidget {
                                               )
                                             ),
                                           ),
-                                          child: Text("SHOW ME", style: TextStyle(fontFamily: 'Nexa', color: Colors.white)),
+                                          child: Text(
+                                            "SHOW ME",
+                                            style: TextStyle(
+                                              fontFamily: 'Nexa', 
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.white,
+                                            )
+                                          ),
                                           onPressed: (){
                                             Navigator.of(context).pushNamed(EVChooseEmotionScreen.routeName);
                                           },
@@ -227,8 +239,18 @@ class ExplainBeforeRegister extends StatelessWidget {
                                   ]
                                 ),
                               ),
+
+
+                          
+                          
+                          
+                        ],
                       ),
-                      )],
+                    ),
+                  ),
+
+                      
+                      ],
         ),
           ),
             
