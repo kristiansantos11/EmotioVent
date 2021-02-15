@@ -50,6 +50,12 @@ class _EmotionCalendarState extends State<EmotionCalendar> with TickerProviderSt
 
     _animationController.forward();
   }
+
+  @override
+  void dispose(){
+    _animationController.dispose();
+    super.dispose();
+  }
   
   @override
   Widget build(BuildContext context) {
