@@ -39,12 +39,16 @@ class _AppSettingsState extends State<AppSettings> {
           Center(
             child: ElevatedButton(
               child: Text("Get Statistics (DEBUG MODE)"),
-              onPressed:(){
-                GetStatistics(firebaseUser).GetData();
+              onPressed:() async{
+                // # SAMPLE ON USING THE CLASS. SET FREQUENCY BY 0 to 4. (Daily to Yearly)
+                await GetStatistics(firebaseUser:firebaseUser,frequency: 0).GetData();
+                print("Most Felt Emotion: ${GetStatistics.mostFeltEmotion}");
+                print("Average Time You Feel This Emotion: ${GetStatistics.averageTime}");
+                print("You open this app ${GetStatistics.numberOfTimes} times already.");
+                print("The average satisfaction per activity is ${GetStatistics.averageSatisfaction}");
               },
             )
           ),
-          
         ],
       ),
     );

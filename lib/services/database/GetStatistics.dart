@@ -7,9 +7,9 @@ import 'package:intl/intl.dart';
 class GetStatistics
 {
   User firebaseUser;
-  GetStatistics(this.firebaseUser);
+  int frequency;
 
-  int frequency = 0;
+  GetStatistics({this.firebaseUser,this.frequency});
   // 0 - today
   // 1 - week
   // 2 - month
@@ -24,13 +24,13 @@ class GetStatistics
   Timestamp ts;
   List listOfData = [];
   List listOfEmotions = [];
-  String mostFeltEmotion;
-  String averageTime;
+  static String mostFeltEmotion;
+  static String averageTime;
   List listOfLog = [];
-  int averageSatisaction;
+  static int averageSatisfaction;
 
   // FOR LOG RECORD
-  int numberOfTimes;
+  static int numberOfTimes;
 
   Future GetData() async
   {
@@ -141,19 +141,19 @@ class GetStatistics
       listOfEmotions.add(x["Emotion"]);
     }
     mostFeltEmotion = MostFeltEmotion(listOfEmotions);
-    print("Most Felt Emotion is $mostFeltEmotion");
+    //print("Most Felt Emotion is $mostFeltEmotion");
 
     //AVERAGE TIME OF MOST FELT EMOTION
     averageTime = averageTimeOfEmotion(listOfData);
-    print("Average Time You Felt $mostFeltEmotion: $averageTime");
+    //print("Average Time You Felt $mostFeltEmotion: $averageTime");
 
     //NUMBER OF TIMES APP WERE OPENED
     numberOfTimes = openedTheAppForNTimes(listOfLog);
-    print("You opened this app $numberOfTimes times already");
+    //print("You opened this app $numberOfTimes times already");
 
     //AVERAGE SATISFACTION PER ACTIVITY
-    averageSatisaction = calculateAverageSatisfaction(listOfData);
-    print("The average satisfaction per activity is $averageSatisaction");
+    averageSatisfaction = calculateAverageSatisfaction(listOfData);
+    //print("The average satisfaction per activity is $averageSatisaction");
   }
 
   // USED BY "averageTimeOfEmotion"
