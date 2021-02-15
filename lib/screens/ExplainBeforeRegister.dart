@@ -19,68 +19,63 @@ class ExplainBeforeRegister extends StatelessWidget {
             child: Stack (
                    children: <Widget> [ 
 
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(90,0,0,0),
-                          child: Column(
-                            children: [
-                              ShowUp(
-                                  delay: msDuration,
-                                  child: Container(
-                                  width: 200,
-                                  height: 250,
-                                  decoration: BoxDecoration(
-                                  image: DecorationImage (
-                                  image: AssetImage("assets/img/fading-dots.png"),
-                                  )
-                                  ), 
-                                  ),
-                                ),
-                            ],
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(90,0,0,0),
+                    child: Column(
+                      children: [
+                        ShowUp(
+                            delay: msDuration,
+                            child: Container(
+                            width: 200,
+                            height: 250,
+                            decoration: BoxDecoration(
+                            image: DecorationImage (
+                            image: AssetImage("assets/img/fading-dots.png"),
+                            )
+                            ), 
+                            ),
                           ),
-                        ),
+                      ],
+                    ),
+                  ),
                    
-                   Container(
+                  Container(
+                  decoration: BoxDecoration(
+                  image: DecorationImage(
+                  image: AssetImage("assets/img/ss-bg-redyellow.png"),
+                  fit: BoxFit.cover
+                  )
+                  )
+                  ),
+
+                  Container(
+                  decoration: BoxDecoration(
+                  image: DecorationImage(
+                  image: AssetImage("assets/img/ebr-bg-green.png"),
+                  fit: BoxFit.cover
+                  )
+                  )
+                  ),
+
+                  Container(
                     decoration: BoxDecoration(
                     image: DecorationImage(
-                    image: AssetImage("assets/img/ss-bg-redyellow.png"),
-                    fit: BoxFit.cover
-                    )
-                    )
+                    image: AssetImage("assets/img/ss-deco.png"),
+                    ), 
+                    )  
                     ),
-
-                    Container(
-                    decoration: BoxDecoration(
-                    image: DecorationImage(
-                    image: AssetImage("assets/img/ebr-bg-green.png"),
-                    fit: BoxFit.cover
-                    )
-                    )
-                    ),
-
-                    Container(
-                      decoration: BoxDecoration(
-                      image: DecorationImage(
-                      image: AssetImage("assets/img/ss-deco.png"),
-                      ), 
-                      )  
-                      ),
-                    
-                    Opacity(
-                      opacity: 0.5,
-                                  child: Container(
-                        decoration: BoxDecoration(
-                        image: DecorationImage(
-                        image: AssetImage("assets/img/ss-deco2.png"),
-                        ), 
-                        )  
-                        ),
-                    ),
-                    
-                    
-                      
                   
-                
-                      
+                  Opacity(
+                    opacity: 0.5,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("assets/img/ss-deco2.png"),
+                        ), 
+                      )  
+                    ),
+                  ),
+                    
                   
                   SafeArea(
                     child: Padding(
@@ -259,53 +254,3 @@ class ExplainBeforeRegister extends StatelessWidget {
     );
   }
 }
-
-/*
-class AnimatedText extends StatelessWidget {
-  final double initialOffsetX;
-  final double intervalStart;
-  final double intervalEnd;
-  final String text;
-  final TextStyle style;
-
-  const AnimatedText({
-    Key key,
-    this.initialOffsetX,
-    this.intervalStart,
-    this.intervalEnd, 
-    this.text, 
-    this.style,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final animation = Provider.of<Animation<double>>(context, listen: false);
-
-    return AnimatedBuilder(
-      animation: animation,
-      builder: (context, child){
-        return SlideTransition(
-          position: Tween<Offset>(
-            begin: Offset(initialOffsetX, 0),
-            end: Offset(0, 0),
-          ).animate(
-            CurvedAnimation(
-              curve: Interval(intervalStart, intervalEnd,
-                curve: Curves.easeInOutQuad),
-              parent: animation,
-            ),
-          )..addStatusListener((status) => {
-            // TODO: Optional if you want something to happen after the animation is done.
-          }),
-          child: child,
-        );
-      },
-      child: Text(
-        text,
-        textAlign: TextAlign.left,
-        style: style
-      ),
-    );
-  }
-}
-*/

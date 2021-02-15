@@ -4,6 +4,7 @@ import 'package:emotiovent/models/ScreenArguments.dart';
 import 'package:emotiovent/services/EV_SizeGetter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:responsive_flutter/responsive_flutter.dart';
 
@@ -35,16 +36,28 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
     });
   }
 
+  void requestPermission() async {
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.camera,
+      Permission.storage,
+      Permission.notification,
+      Permission.microphone,
+      Permission.photos,
+      Permission.mediaLibrary
+    ].request();
+  }
+
   @override
   void initState(){
     super.initState();
+    requestPermission();
 
     transitionController = AnimationController(
       vsync: this,
       duration: animationDuration,
     );
 
-    colorTween = ColorTween(begin: Color(0xff53B6AF), end: Colors.white).animate(transitionController);
+    colorTween = ColorTween(begin: Color(0xffff8383), end: Colors.white).animate(transitionController);
 
     controller = AnimationController(
       vsync: this,
@@ -99,7 +112,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
           child: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/img/ChooseLoginSignupBG.jpg"), fit: BoxFit.cover
+                image: AssetImage("assets/img/startup-bg.png"), fit: BoxFit.cover
               )
             ),
           ),
@@ -268,7 +281,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     ctx: context, 
                                     intervalStart: 0.6,
                                     intervalEnd: 0.8,
-                                    color: Color(0xffffdac1), 
+                                    color: Color(0xfff7c8a8), 
                                     emotion: "Fear",
                                     controller: controller,
                                   ),
@@ -277,7 +290,7 @@ class _EVChooseEmotionScreenState extends State<EVChooseEmotionScreen> with Tick
                                     ctx: context, 
                                     intervalStart: 0.6,
                                     intervalEnd: 0.8,
-                                    color: Color(0xffe2f0cb), 
+                                    color: Color(0xffd0e3b1), 
                                     emotion: "Sad",
                                     controller: controller,
                                   ),

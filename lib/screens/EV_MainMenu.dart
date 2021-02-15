@@ -29,16 +29,6 @@ class _EVMainMenuState extends State<EVMainMenu> {
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  void _signOut(BuildContext context) async {
-    await context
-        .read<AuthenticationService>()
-        .signOut()
-        .then((String successMsg) {
-      print(successMsg);
-      Phoenix.rebirth(context);
-    });
-  }
-
   @override
   void initState() {
     super.initState();

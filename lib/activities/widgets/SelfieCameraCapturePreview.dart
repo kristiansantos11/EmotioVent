@@ -45,6 +45,12 @@ class _SelfieCameraCapturePreviewState extends State<SelfieCameraCapturePreview>
       }
     );
   }
+
+  @override
+  void dispose(){
+    backgroundController.dispose();
+    super.dispose();
+  }
   
   @override
   Widget build(BuildContext context) {
