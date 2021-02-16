@@ -145,7 +145,7 @@ class _AppSettingsState extends State<AppSettings> {
                   ),
                   Center(
                     child: Text(
-                      "Veneracion, John Elbert A.",
+                      "Veneracion, John Elbert C.",
                       style: TextStyle(
                         fontFamily: 'Proxima Nova',
                         fontSize: ResponsiveFlutter.of(context).scale(13.0),

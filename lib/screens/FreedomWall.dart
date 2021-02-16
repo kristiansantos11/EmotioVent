@@ -26,6 +26,7 @@ class _FreedomWallState extends State<FreedomWall> {
   DateTime currentTime;
 
   UniqueKey uniqueKey = new UniqueKey();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   ScrollController _scrollController = new ScrollController();
 
   @override
@@ -80,39 +81,48 @@ class _FreedomWallState extends State<FreedomWall> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
                         child: TextFormField(
+                          key: formKey,
+                          validator: (val){
+                            if (val == null){
+                              return "You did not enter anything in the freedom wall.";
+                            } else {
+                              textMessage = val;
+                              return null;
+                            }
+                          },
                           controller: _controller,
                           onChanged: (text) {
                             //print("Current text is: $text");
                             textMessage = text;
                           },
                           cursorColor: Color(0xfff77272),
-                                            style: TextStyle(
-                                                fontFamily: 'Proxima Nova',
-                                                fontStyle: FontStyle.normal,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize:
-                                                    ResponsiveFlutter.of(
-                                                            context)
-                                                        .scale(18),
-                                                color: Color(0xffff8383),
-                                            ),
-                                            decoration: InputDecoration(
-                                              contentPadding:
-                                                  EdgeInsets.fromLTRB(
-                                                      20, 10, 20, 10),
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.all(
-                                                  Radius.circular(100.0),
-                                                ),
-                                                borderSide: BorderSide.none,
-                                              ),
-                                              filled: true,
-                                              hintStyle: TextStyle(
-                                                  color: Colors.red[300]),
-                                              hintText: "Write anything here!",
-                                              fillColor: Colors.white,
-                                            ),
+                            style: TextStyle(
+                                fontFamily: 'Proxima Nova',
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.bold,
+                                fontSize:
+                                    ResponsiveFlutter.of(
+                                            context)
+                                        .scale(18),
+                                color: Color(0xffff8383),
+                            ),
+                            decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(
+                                      20, 10, 20, 10),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(
+                                  Radius.circular(100.0),
+                                ),
+                                borderSide: BorderSide.none,
+                              ),
+                              filled: true,
+                              hintStyle: TextStyle(
+                                  color: Colors.red[300]),
+                              hintText: "Write anything here!",
+                              fillColor: Colors.white,
+                            ),
                         ),
                       ),
 
@@ -123,12 +133,16 @@ class _FreedomWallState extends State<FreedomWall> {
                             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                             child: TextButton.icon(
                               onPressed: () {
-                                _controller.clear();
-                                //print("The text is $textMessage");
-                                DateTime now = DateTime.now();
-                                currentTime = now;
-                                //put to database ung text
-                                FreedomWallInsert().createData(username,textMessage,currentTime);
+                                if (_controller.value.text != "")
+                                {
+                                  print("posted");
+                                  _controller.clear();
+                                  //print("The text is $textMessage");
+                                  DateTime now = DateTime.now();
+                                  currentTime = now;
+                                  //put to database ung text
+                                  FreedomWallInsert().createData(username,textMessage,currentTime);
+                                }
                               },
                               icon: Icon(Icons.textsms_rounded, color: Colors.white),
                               label: Text("Write", style: TextStyle(color: Colors.white, fontFamily: 'Proxima Nova'))
@@ -229,9 +243,10 @@ class _MessageBannerState extends State<MessageBanner> {
   @override
   Widget build(BuildContext context) {
     List<TheWall> wallData = context.watch<List<TheWall>>();
+    UserData userData = context.watch<UserData>();
     //print("(Builder) Current Limit of _WallDataState = ${FreedomWall.limit}");
     //print("Users' Message Fetched: ");
-    if (wallData == null){
+    if (wallData == null || userData == null){
       return Center(child: CircularProgressIndicator());
     }
     try{
@@ -261,9 +276,12 @@ class _MessageBannerState extends State<MessageBanner> {
                       leading: CircleAvatar(
                         radius: 30,
                         backgroundColor: Colors.white,
+                        backgroundImage: (messageData[index].username == userData.username) 
+                          ? NetworkImage(userData.profilePictureLink) 
+                          : AssetImage('assets/img/default_profile_picture.jpg'),
                       ),
                       title: Text(
-                        messageData[index].username,
+                        (messageData[index].username == userData.username) ? messageData[index].username : "Anonymous",
                         style: TextStyle(
                           fontFamily: 'Proxima Nova',
                           fontWeight: FontWeight.w700,
