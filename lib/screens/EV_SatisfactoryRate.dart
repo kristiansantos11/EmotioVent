@@ -11,6 +11,7 @@ import 'package:emotiovent/services/EV_ActivityRandomizer.dart';
 
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:responsive_flutter/responsive_flutter.dart';
 
 class EVSatisfactoryRate extends StatefulWidget {
 
@@ -64,111 +65,114 @@ class _EVSatisfactoryRateState extends State<EVSatisfactoryRate> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                fit: BoxFit.fill,
-                image: AssetImage('assets/img/satisfaction-rate-bg.jpg'),
+                fit: BoxFit.cover,
+                image: AssetImage('assets/img/StartScreenBG.png'),
               ),
             ),
           ),
 
           SafeArea(
-            child: AnimatedOpacity(
-              opacity: _showContent ? 1.0 : 0.0,
-              duration: Duration(seconds: 1),
-              child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.fromLTRB(getWidth(context) / 10,0,getWidth(context) / 10,0),
-                      child: Text(
-                        "How satisfied are you with the activity?",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.green[600],
-                          fontFamily: 'Aileron',
-                          fontStyle: FontStyle.normal,
-                          fontSize: getWidth(context) / 15,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: AnimatedOpacity(
+                opacity: _showContent ? 1.0 : 0.0,
+                duration: Duration(seconds: 1),
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.fromLTRB(getWidth(context) / 10,0,getWidth(context) / 10,0),
+                        child: Text(
+                          "How satisfied are you with the activity?",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xffff8383),
+                            fontFamily: 'Proxima Nova',
+                            fontWeight: FontWeight.w700,
+                            height: 1,
+                            fontSize: getWidth(context) / 15,
+                          ),
                         ),
                       ),
-                    ),
 
-                    SizedBox(
-                      height: getHeight(context) / 25,
-                    ),
-
-                     Slider(
-                      inactiveColor: Colors.green[100],
-                      activeColor: Colors.green[400],
-                      value: _currentSliderValue,
-                      min: _minSliderValue,
-                      max: _maxSliderValue,
-                      divisions: 10,
-                      label: _currentSliderValue.round().toString(),
-                      onChanged: (double value) {
-                        setState(() {
-                          _currentSliderValue = value;
-                        });
-                      },
-                    ),
-
-                    Text(
-                      "Drag the slider from left (0) to right (100)",
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontFamily: 'Roboto',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w100,
-                        fontSize: 12,
+                      SizedBox(
+                        height: getHeight(context) / 25,
                       ),
-                    ),
 
-                    SizedBox(
-                      height: getHeight(context) / 12,
-                    ),
-
-                    ElevatedButton(
-                      child: Icon(Icons.navigate_next),
-                      style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all(Size(45, 45)),
-                        backgroundColor: MaterialStateProperty.all(Colors.green[500]),
-                        shape: MaterialStateProperty.all(CircleBorder())
+                       Slider(
+                        inactiveColor: Color(0xffffc2c2),
+                        activeColor: Color(0xffff8383),
+                        value: _currentSliderValue,
+                        min: _minSliderValue,
+                        max: _maxSliderValue,
+                        divisions: 10,
+                        label: _currentSliderValue.round().toString(),
+                        onChanged: (double value) {
+                          setState(() {
+                            _currentSliderValue = value;
+                          });
+                        },
                       ),
-                      onPressed: () async {
-                        if(_currentSliderValue.round() < 50){
-                          Navigator.of(context).pushReplacementNamed(ActivityRandomizer.routeName, arguments: ScreenArguments(emotion: emotion));
-                        } else {
-                          if(firebaseUser == null){
-                            Navigator.of(context).pushNamed(
-                              EVSignUp.routeName,
-                              arguments: ScreenArguments(
-                                emotion: emotion,
-                                emotionRecord: EmotionRecord(
-                                  emotion: emotion,
-                                  activity: activity,
-                                  activityRate: _currentSliderValue.toInt(),
-                                  timestamp: DateTime.now()
-                                ),
-                              )
-                            );
+
+                      Text(
+                        "Drag the slider from left (0) to right (100)",
+                        style: TextStyle(
+                          color: Colors.grey[700],
+                          fontFamily: 'Proxima Nova',
+                          fontStyle: FontStyle.normal,
+                          fontSize: ResponsiveFlutter.of(context).scale(12.0)
+                        ),
+                      ),
+
+                      SizedBox(
+                        height: getHeight(context) / 12,
+                      ),
+
+                      ElevatedButton(
+                        child: Icon(Icons.navigate_next),
+                        style: ButtonStyle(
+                          minimumSize: MaterialStateProperty.all(Size(45, 45)),
+                          backgroundColor: MaterialStateProperty.all(Color(0xffff8383)),
+                          shape: MaterialStateProperty.all(CircleBorder())
+                        ),
+                        onPressed: () async {
+                          if(_currentSliderValue.round() < 50){
+                            Navigator.of(context).pushReplacementNamed(ActivityRandomizer.routeName, arguments: ScreenArguments(emotion: emotion));
                           } else {
-                            // TODO: Add code here to upload the record
-                            await SubmitActivityResult()
-                              .submit(
-                                user: firebaseUser,
-                                record: EmotionRecord(
+                            if(firebaseUser == null){
+                              Navigator.of(context).pushNamed(
+                                EVSignUp.routeName,
+                                arguments: ScreenArguments(
                                   emotion: emotion,
-                                  activity: activity,
-                                  activityRate: _currentSliderValue.toInt(),
-                                  timestamp: DateTime.now()
-                                ),
-                              ).then((_){
-                                Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
-                              });
+                                  emotionRecord: EmotionRecord(
+                                    emotion: emotion,
+                                    activity: activity,
+                                    activityRate: _currentSliderValue.toInt(),
+                                    timestamp: DateTime.now()
+                                  ),
+                                )
+                              );
+                            } else {
+                              // TODO: Add code here to upload the record
+                              await SubmitActivityResult()
+                                .submit(
+                                  user: firebaseUser,
+                                  record: EmotionRecord(
+                                    emotion: emotion,
+                                    activity: activity,
+                                    activityRate: _currentSliderValue.toInt(),
+                                    timestamp: DateTime.now()
+                                  ),
+                                ).then((_){
+                                  Navigator.of(context).popUntil(ModalRoute.withName(EVInitialScreen.routeName));
+                                });
+                            }
                           }
                         }
-                      }
-                    ),
-                  ]
+                      ),
+                    ]
+                  ),
                 ),
               ),
             ),

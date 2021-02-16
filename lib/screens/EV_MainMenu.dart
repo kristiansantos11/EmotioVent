@@ -140,17 +140,18 @@ class _EVMainMenuState extends State<EVMainMenu> {
                       child: Icon(Icons.wysiwyg_sharp, color: Colors.white)),
                   // # App Settings button
                   ElevatedButton(
-                      onPressed: () {
-                        pageController.animateToPage(3,
-                            duration: Duration(milliseconds: 300),
-                            curve: Curves.easeInOut);
-                        FreedomWall.limit = 7;
-                      },
-                      style: ButtonStyle(
-                          shape: MaterialStateProperty.all(CircleBorder()),
-                          backgroundColor: MaterialStateProperty.all(
-                              (currentPage == 3) ? Color(0xffff8383) : Colors.grey)),
-                      child: Icon(Icons.settings, color: Colors.white)),
+                    onPressed: () {
+                      pageController.animateToPage(3,
+                          duration: Duration(milliseconds: 300),
+                          curve: Curves.easeInOut);
+                      FreedomWall.limit = 7;
+                    },
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all(CircleBorder()),
+                        backgroundColor: MaterialStateProperty.all(
+                            (currentPage == 3) ? Color(0xffff8383) : Colors.grey)),
+                    child: Icon(Icons.settings, color: Colors.white)
+                  ),
                   
                 ],
               ),
@@ -190,12 +191,13 @@ class _EVMainMenuState extends State<EVMainMenu> {
                     children: <Widget>[
                       // Profile Card widget.
                       Flexible(
-                          flex: 7,
-                          child: Container(
-                            constraints: BoxConstraints.expand(),
-                            alignment: Alignment.center,
-                            child: ProfileCard(),
-                          )),
+                        flex: 7,
+                        child: Container(
+                          constraints: BoxConstraints.expand(),
+                          alignment: Alignment.center,
+                          child: ProfileCard(),
+                        ),
+                      ),
 
                       // Statistics widget.
                       Flexible(
